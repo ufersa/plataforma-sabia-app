@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, createRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Animated, View, TouchableOpacity } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';

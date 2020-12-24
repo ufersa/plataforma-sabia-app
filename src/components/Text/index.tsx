@@ -1,4 +1,5 @@
 import React from 'react';
+import AppLoading from 'expo-app-loading';
 import { Text } from 'react-native';
 import styled from 'styled-components';
 import { useFonts } from 'expo-font';
@@ -46,7 +47,7 @@ const TextWrapper = styled(Text)`
 
 const DefaultText = (props: any): JSX.Element => {
   const { children }: TextProps = props;
-  useFonts({
+  const [fontsLoaded] = useFonts({
     Rubik_300Light,
     Rubik_300Light_Italic,
     Rubik_400Regular,
@@ -78,7 +79,7 @@ const DefaultText = (props: any): JSX.Element => {
   });
 
   return (
-    <TextWrapper {...props}>{children}</TextWrapper>
+    !fontsLoaded ? <AppLoading /> : <TextWrapper {...props}>{children}</TextWrapper>
   );
 }
 

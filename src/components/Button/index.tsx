@@ -3,7 +3,6 @@ import { View, TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components';
 import DefaultText from '../Text';
 import Colors from '../../utils/colors';
-
 interface ButtonProps {
   onPress(): void
   children: string
