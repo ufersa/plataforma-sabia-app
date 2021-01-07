@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
+import React, { useState, Fragment } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import styled from 'styled-components';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, ScrollView } from 'react-native';
+import Search from './components/Search';
 import Technologies from './components/Technologies';
 import Banks from './components/Banks';
 
@@ -17,26 +17,30 @@ const Wrapper = styled(SafeAreaView)`
   height: 100%;
 `;
 
-const Container = styled(ScrollView)``;
+const Container = styled(ScrollView)`
+  marginVertical: 16px;
+`;
 
 const Home = ({ navigation }: HomeProps): JSX.Element => {
-  const [screenHeight, setScreenHeight] = useState(0);
-
-  const scrollEnabled: boolean = screenHeight > Dimensions.get('window').height; 
-
-  const onContentSizeChange = (contentWidth: number, contentHeight: number) => {
-    setScreenHeight(contentHeight);
-  };
+  const [isEditing, setEditing] = useState(false);
 
   return (
     <Wrapper>
       <StatusBar style="auto" />
       <Container
-        scrollEnabled={scrollEnabled}
-        onContentSizeChange={onContentSizeChange}
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
       >
-        <Technologies navigation={navigation} />
-        <Banks navigation={navigation} />
+        <Search
+          onFocus={() => setEditing(true)}
+          onBlur={() => setEditing(false)}
+        />
+        {!isEditing && (
+          <>
+            <Technologies navigation={navigation} />
+            <Banks navigation={navigation} />
+          </>
+        )}
       </Container>
     </Wrapper>
   );

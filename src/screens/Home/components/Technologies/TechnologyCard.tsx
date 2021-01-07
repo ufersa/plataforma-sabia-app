@@ -6,17 +6,18 @@ import { Card, DefaultText } from '../../../../components';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import Colors from '../../../../utils/colors';
 
+interface DataCardProps {
+  id: number
+  title: string
+  status: 'public' | 'private'
+  date: string
+  image: string
+  category: {
+    name: string
+  }
+}
 interface TechnologyCardProps {
-  data?: {
-    id: number
-    title: string
-    status: boolean
-    date: string
-    image: string
-    category: {
-      name: string
-    }
-  } | {}
+  data?: DataCardProps | {}
   style?: StyleProp<any>
   loading?: boolean
   navigation: StackNavigationProp<any, any>
@@ -167,7 +168,7 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
 };
 
 export default ({ data, navigation, loading = false, style = {} }: TechnologyCardProps): JSX.Element => {
-  const { status } = data;
+  const { status }: DataCardProps = data;
   return (
     <CardWrapper style={style}>
       <Card>
@@ -206,11 +207,11 @@ export default ({ data, navigation, loading = false, style = {} }: TechnologyCar
               </TouchableOpacity>
               <StatusWrapper>
                 <StatusIcon
-                  name={status ? "unlock" : "lock"}
+                  name={status === "public" ? "unlock" : "lock"}
                   size={16}
                   color={Colors.primary}
                 />
-                <Status>{status ? "Público" : "Privado"}</Status>
+                <Status>{status === "public" ? "Público" : "Privado"}</Status>
               </StatusWrapper>
               <DateWrapper>
                 <DateIcon

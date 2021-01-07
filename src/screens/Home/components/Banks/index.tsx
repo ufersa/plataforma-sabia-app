@@ -11,6 +11,7 @@ interface BanksProps {
 
 const BanksWrapper = styled(View)`
   padding: 16px;
+  flexWrap: wrap;
   flexDirection: row;
   justifyContent: space-between;
 `;
