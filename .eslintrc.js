@@ -5,10 +5,7 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb',
-  ],
+  extends: ['plugin:react/recommended', 'airbnb'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -17,10 +14,8 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', '@typescript-eslint'],
   rules: {
+    'react/jsx-filename-extension': 'off',
   },
 };

@@ -1,14 +1,16 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { TabBar } from './components'
-import { Home, Requests, Notifications, Favorite } from './screens';
+import { TabBar } from './components';
+import {
+  Home, Requests, Notifications, Favorite,
+} from './screens';
 
 const Tab = createBottomTabNavigator();
 
 const Root = (): JSX.Element => (
   <Tab.Navigator
     initialRouteName="Home"
-    tabBar={props => <TabBar {...props} />}  
+    tabBar={(props) => <TabBar {...props} />}
   >
     <Tab.Screen
       name="Home"
