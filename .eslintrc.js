@@ -18,6 +18,7 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'react/no-array-index-key': 'off',
     'import/extensions': 0,
+    'no-undef': 'off',
   },
   settings: {
     'import/resolver': {
