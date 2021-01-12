@@ -1,7 +1,6 @@
 module.exports = {
   env: {
     node: true,
-    browser: true,
     es2021: true,
     jest: true,
   },
@@ -17,5 +16,14 @@ module.exports = {
   plugins: ['react', '@typescript-eslint'],
   rules: {
     'react/jsx-filename-extension': 'off',
+    'react/no-array-index-key': 'off',
+    'import/extensions': 0,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };
