@@ -46,13 +46,13 @@ type BackgroundProps = {
 
 export const Background = styled.View<BackgroundProps>`
 ${({ isFocused }) => css`
-  width: 70px;
-  height: 70px;
+  width: 92px;
+  height: 92px;
   background-color: #fff;
-  border-radius: 100px;
+  border-radius: 50px;
   position: absolute;
-  left: -7px;
   z-index: -1;
+  left: -18px;
   top: ${isFocused ? '-10px' : '0px'};
   `}
 `;
