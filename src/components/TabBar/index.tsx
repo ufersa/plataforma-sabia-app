@@ -46,21 +46,22 @@ const TabBar = ({ state, navigation }: BottomTabBarProps): JSX.Element => {
         }, [isFocused]);
 
         return (
-          <Item
+          <Animated.View
+            style={{ transform: [{ translateY: animateTop }] }}
             key={`tab_${idx}`}
-            onPress={onPress}
-            onLongPress={onLongPress}
           >
-            <Animated.View
-              style={{ transform: [{ translateY: animateTop }] }}
+            <Item
+              onPress={onPress}
+              onLongPress={onLongPress}
+              isFocused={isFocused}
             >
               <ItemIcon
                 name={icons[routeName]}
                 size={20}
-                color={isFocused ? '#00a688' : '#a5a5a5'}
+                isFocused={isFocused}
               />
-            </Animated.View>
-          </Item>
+            </Item>
+          </Animated.View>
         );
       })}
     </TabContainer>

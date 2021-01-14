@@ -1,6 +1,7 @@
 import { View, TouchableOpacity } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import colors from '../../utils/colors';
 
 export const TabContainer = styled(View)`
   background-color: #ffffff;
@@ -10,12 +11,31 @@ export const TabContainer = styled(View)`
   justify-content: space-around;
 `;
 
-export const Item = styled(TouchableOpacity)`
+type ItemProps = {
+  isFocused: boolean
+}
+
+export const Item = styled(TouchableOpacity) <ItemProps>`
+${({ isFocused }) => css`
   width: 56px;
   height: 56px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  ${isFocused
+    && css`
+      background-color: ${colors.primary};
+      border-radius: 50px;
+      box-shadow: 0px 4px 16px #99DBCF;
+    `}
+  `}
 `;
 
-export const ItemIcon = styled(Feather)``;
+type ItemIconProps = {
+  isFocused: boolean
+}
+
+export const ItemIcon = styled(Feather) <ItemIconProps>`
+color: ${(props) => (props.isFocused ? '#ffffff' : '#a5a5a5')}
+`;
