@@ -19,6 +19,8 @@ module.exports = {
     'react/no-array-index-key': 'off',
     'import/extensions': 0,
     'no-undef': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'no-use-before-define': 'off',
   },
   settings: {
     'import/resolver': {
