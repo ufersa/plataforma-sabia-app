@@ -1,87 +1,58 @@
-import React, { useEffect, useRef, createRef } from 'react';
-import { Animated, View, TouchableOpacity } from 'react-native';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components/native';
+import colors from '../../utils/colors';
 
-const TabContainer = styled(View)`
-  backgroundColor: #ffffff;
+export const TabContainer = styled.View`
+  background-color: #ffffff;
   width: 100%;
   height: 80px;
-  flexDirection: row;
-  justifyContent: space-around;
+  flex-direction: row;
+  justify-content: space-around;
 `;
 
-const Item = styled(TouchableOpacity)`
+type ItemProps = {
+  isFocused: boolean
+}
+
+export const Item = styled.TouchableOpacity <ItemProps>`
+${({ isFocused }) => css`
   width: 56px;
   height: 56px;
-  flexDirection: row;
-  justifyContent: center;
-  alignItems: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  ${isFocused
+    && css`
+      background-color: ${colors.primary};
+      border-radius: 50px;
+      box-shadow: 0px 4px 16px #99DBCF;
+    `}
+  `}
 `;
 
-const ItemIcon = styled(Feather)``;
+type ItemIconProps = {
+  isFocused: boolean
+}
 
-export const Container = ({ state, navigation }: BottomTabBarProps): JSX.Element => {
-  const icons: string | any = {
-    Home: 'home',
-    Requests: 'package',
-    Notifications: 'bell',
-    Favorite: 'heart'
-  };
+export const ItemIcon = styled(Feather) <ItemIconProps>`
+  color: ${(props) => (props.isFocused ? '#ffffff' : '#a5a5a5')};
+  z-index: 1;
+`;
 
-  return (
-    <TabContainer>
-      {state.routes.map((route, idx) => {
-        const animateTop = useRef(new Animated.Value(0)).current;
-        const routeName: string = route.name;
-        const isFocused = state.index === idx;
+type BackgroundProps = {
+  isFocused: boolean
+}
 
-        const onPress = (): void => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true
-          });
-
-          if (!isFocused && !event.defaultPrevented) {
-            navigation.navigate(routeName);
-          }
-        };
-
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
-
-        useEffect(() => {
-          Animated.timing(animateTop, {
-            toValue: isFocused ? -4 : 0,
-            duration: 100,
-            useNativeDriver: true
-          }).start();
-        }, [isFocused]);
-
-        return (
-          <Item
-            key={`tab_${idx}`}
-            onPress={onPress}
-            onLongPress={onLongPress}
-          >
-            <Animated.View
-              style={{ transform: [{ translateY: animateTop }] }}
-            >
-              <ItemIcon
-                name={icons[routeName]}
-                size={20}
-                color={isFocused ? '#00a688' : '#a5a5a5'}
-              />
-            </Animated.View>
-          </Item>
-        );
-      })}
-    </TabContainer>
-  );
-};
+export const Background = styled.View<BackgroundProps>`
+${({ isFocused }) => css`
+  width: 92px;
+  height: 92px;
+  background-color: #fff;
+  border-radius: 50px;
+  position: absolute;
+  z-index: -1;
+  left: -18px;
+  top: ${isFocused ? '-10px' : '0px'};
+  `}
+`;
