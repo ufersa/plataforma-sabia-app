@@ -41,7 +41,7 @@ const ButtonText: any = styled(DefaultText)`
   `}
 `;
 
-const buildStyle = (variant: string = "primary") => {
+const buildStyle = (variant: string = 'primary') => {
   const colorsDefault: any = Colors;
   const variants: any = {
     primary: {

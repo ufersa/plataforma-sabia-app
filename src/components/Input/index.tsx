@@ -14,6 +14,7 @@ interface InputProps extends TextInputProps {
   type?: KeyboardTypeOptions
   multiline?: boolean
   returnKey?: ReturnKeyTypeOptions
+  size?: string
 };
 
 const InputWrapper = styled(View)`
@@ -41,8 +42,21 @@ const InputContainer = styled(TextInput)`
 const IconWrapper = styled(View)`
   paddingLeft: 14px;
 `;
+interface SizesProps {
+  [name: string]: number
+}
+
+const buildSize = (size: string = 'medium') => {
+  const sizes: SizesProps = {
+    medium: 56,
+    small: 48
+  };
+  return sizes[size];
+}; 
 
 const Input = (props: InputProps): JSX.Element => {
+  const { size, icon, type, returnKey } = props;
+
   const handleKeyDown = (ev: any) => {
     ev.nativeEvent.key === 'Enter' && Keyboard.dismiss();
   };
@@ -51,19 +65,19 @@ const Input = (props: InputProps): JSX.Element => {
     <InputWrapper
       style={{
         paddingVertical: props.multiline ? 12 : 0,
-        height: props.multiline ? 122 : 56
+        height: props.multiline ? 122 : buildSize(size)
       }}
     >
       {props.icon && (
         <IconWrapper>
-          {props.icon}
+          {icon}
         </IconWrapper>
       )}
       <InputContainer
         {...props}
-        keyboardType={props.type}
+        keyboardType={type}
         placeholderTextColor="#a5a5a5"
-        returnKeyType={props.returnKey}
+        returnKeyType={returnKey}
         onKeyPress={handleKeyDown}
       />
     </InputWrapper>
