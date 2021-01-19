@@ -14,6 +14,7 @@ interface ListProps {
 }
 
 const ListWrapper = styled(View)`
+  flex: 1;
   margin-top: 34px;
 `;
 
