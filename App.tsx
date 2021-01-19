@@ -5,6 +5,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Colors from './src/utils/colors';
 import Root from './src';
 import { Technology, RequestsFeedback, RequestsFinish } from './src/screens';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
+moment.locale('pt-br');
 
 const theme = {
   ...DefaultTheme,
