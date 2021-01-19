@@ -10,8 +10,8 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    ...Colors
-  }
+    ...Colors,
+  },
 };
 
 const Stack = createStackNavigator();

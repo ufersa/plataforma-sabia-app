@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 const Root = (): JSX.Element => (
   <Tab.Navigator
     initialRouteName="Home"
-    tabBar={props => <TabBar {...props} />}  
+    tabBar={(props) => <TabBar {...props} />}
   >
     <Tab.Screen
       name="Home"
