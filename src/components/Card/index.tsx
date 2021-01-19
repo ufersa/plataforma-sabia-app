@@ -1,9 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleProp, ViewStyle } from 'react-native';
 import styled from 'styled-components';
 
 interface CardProps {
-  children: JSX.Element
+  children: JSX.Element[] | JSX.Element
+  style?: StyleProp<ViewStyle>
 };
 
 const CardWrapper = styled(View)`
@@ -14,8 +15,8 @@ const CardWrapper = styled(View)`
   box-shadow: 0px 8px 24px #E8E8E8;
 `;
 
-const Card = ({ children }: CardProps) => (
-  <CardWrapper>
+const Card = ({ children, style }: CardProps) => (
+  <CardWrapper style={style}>
     {children}
   </CardWrapper>
 );
