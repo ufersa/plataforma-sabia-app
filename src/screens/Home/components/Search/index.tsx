@@ -19,7 +19,6 @@ const Search = ({ onFocus, onBlur }: SearchProps): JSX.Element => (
       icon={<Feather name="search" size={18} color="#a5a5a5" />}
       placeholder="Buscar tecnologias"
       type="default"
-      clearButtonMode="while-editing"
       onFocus={onFocus}
       onBlur={onBlur}
     />
