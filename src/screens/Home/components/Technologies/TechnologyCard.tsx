@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Animated, View, Image, TouchableOpacity, Easing, StyleProp } from 'react-native';
+import {
+  Animated,
+  Image,
+  TouchableOpacity,
+  Easing,
+  StyleProp,
+} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
-import { Card, DefaultText } from '../../../../components';
+import styled from 'styled-components/native';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import { Card, DefaultText } from '../../../../components';
 import Colors from '../../../../utils/colors';
 
 interface DataCardProps {
@@ -12,31 +18,32 @@ interface DataCardProps {
   status: 'public' | 'private'
   date: string
   image: string
+  amount: number
   category: {
     name: string
   }
 }
 interface TechnologyCardProps {
-  data?: DataCardProps | {}
-  style?: StyleProp<any>
-  loading?: boolean
+  data: DataCardProps
+  style: StyleProp<any>
+  loading: boolean
   navigation: StackNavigationProp<any, any>
-};
+}
 
 interface FavoriteProps {
-  favorite?: boolean
-};
+  favorite: boolean
+}
 
-const CardWrapper = styled(View)`
+const CardWrapper = styled.View`
   width: 248px;
   height: 381px;
 `;
 
-const CardContainer = styled(View)`
+const CardContainer = styled.View`
   padding: 16px;
 `;
 
-const CardImage = styled(View)`
+const CardImage = styled.View`
   backgroundColor: #f5f5f5;
   width: 216px;
   height: 216px;
@@ -53,7 +60,7 @@ const Title = styled(DefaultText)`
   marginTop: 16px;
 `;
 
-const StatusWrapper = styled(View)`
+const AmountWrapper = styled.View`
   marginTop: 8px;
   marginBottom: 16px;
   flexDirection: row;
@@ -61,7 +68,7 @@ const StatusWrapper = styled(View)`
   justifyContent: center;
 `;
 
-const Status = styled(DefaultText)`
+const Amount = styled(DefaultText)`
   fontFamily: Rubik_500Medium;
   fontWeight: 500;
   fontSize: 12px;
@@ -70,11 +77,7 @@ const Status = styled(DefaultText)`
   color: ${Colors.primary};
 `;
 
-const StatusIcon = styled(Feather)`
-  marginRight: 6px;
-`;
-
-const DateWrapper = styled(View)`
+const DateWrapper = styled.View`
   flexDirection: row;
   alignItems: center;
   justifyContent: center;
@@ -93,7 +96,7 @@ const DateIcon = styled(Feather)`
   marginRight: 6px;
 `;
 
-const Actions = styled(View)`
+const Actions = styled.View`
   width: 100%;
   height: 26px;
   flexDirection: row;
@@ -104,7 +107,7 @@ const Actions = styled(View)`
   zIndex: 1;
 `;
 
-const LabelWrapper = styled(View)`
+const LabelWrapper = styled.View`
   backgroundColor: #ccede7;
   width: auto;
   height: 26px;
@@ -139,7 +142,7 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
   const animatePulse = new Animated.Value(1);
   const scale = animatePulse.interpolate({
     inputRange: [0, 1],
-    outputRange: [1.1, 1]
+    outputRange: [1.1, 1],
   });
 
   useEffect(() => {
@@ -147,12 +150,12 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
       toValue: state ? 0 : 1,
       duration: state ? 100 : 50,
       easing: Easing.linear,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start();
   }, [state]);
 
   return (
-    <FavoriteButton onPress={() => setState(!state)}>
+    <FavoriteButton onPress={() => setState((previousState) => !previousState)}>
       <Animated.View
         style={{ transform: [{ scale }] }}
       >
@@ -167,8 +170,13 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
   );
 };
 
-export default ({ data, navigation, loading = false, style = {} }: TechnologyCardProps): JSX.Element => {
-  const { status }: DataCardProps = data;
+export default ({
+  data,
+  navigation,
+  loading = false,
+  style = {},
+}: TechnologyCardProps): JSX.Element => {
+  const { amount } = data;
   return (
     <CardWrapper style={style}>
       <Card>
@@ -178,41 +186,38 @@ export default ({ data, navigation, loading = false, style = {} }: TechnologyCar
               <CardImage>
                 <Actions>
                   <Label />
-                  <Favorite />
+                  <Favorite favorite={false} />
                 </Actions>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Technology')}
-                  activeOpacity={.7}  
+                  activeOpacity={0.7}
                 >
                   <Image
                     source={{
                       uri: 'https://fakeimg.pl/216x216/',
-                      cache: 'only-if-cached'
+                      cache: 'only-if-cached',
                     }}
                     style={{
                       width: 216,
                       height: 216,
-                      borderRadius: 8
+                      borderRadius: 8,
                     }}
                   />
                 </TouchableOpacity>
               </CardImage>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Technology')}
-                activeOpacity={.7}
+                activeOpacity={0.7}
               >
                 <Title numberOfLines={2}>
                   Test Very Long Title Technology
                 </Title>
               </TouchableOpacity>
-              <StatusWrapper>
-                <StatusIcon
-                  name={status === "public" ? "unlock" : "lock"}
-                  size={16}
-                  color={Colors.primary}
-                />
-                <Status>{status === "public" ? "Público" : "Privado"}</Status>
-              </StatusWrapper>
+              <AmountWrapper>
+                <Amount>
+                  {`R$ ${amount}`}
+                </Amount>
+              </AmountWrapper>
               <DateWrapper>
                 <DateIcon
                   name="calendar"
@@ -227,4 +232,4 @@ export default ({ data, navigation, loading = false, style = {} }: TechnologyCar
       </Card>
     </CardWrapper>
   );
-}
+};

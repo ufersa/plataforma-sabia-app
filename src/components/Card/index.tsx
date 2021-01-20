@@ -1,16 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 interface CardProps {
   children: JSX.Element
-};
+}
 
-const CardWrapper = styled(View)`
-  backgroundColor: #ffffff;
+const CardWrapper = styled.View`
+  background-color: #ffffff;
   width: 100%;
   height: 100%;
-  borderRadius: 8px;
+  border-radius: 8px;
   box-shadow: 0px 8px 24px #E8E8E8;
 `;
 

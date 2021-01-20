@@ -1,31 +1,26 @@
+/* eslint-disable global-require */
 import React from 'react';
-import { View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { DefaultText } from '../../../../components';
 import BankCard from './BankCard';
 
-interface BanksProps {
-  navigation: StackNavigationProp<any, any>
-};
-
-const BanksWrapper = styled(View)`
+const BanksWrapper = styled.View`
   padding: 16px;
-  flexWrap: wrap;
-  flexDirection: row;
-  justifyContent: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Title = styled(DefaultText)`
-  fontFamily: Rubik_500Medium;
-  fontWeight: 500;
-  fontSize: 24px;
-  lineHeight: 36px;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
   color: #4a4a4a;
-  paddingHorizontal: 16px;
+  padding-horizontal: 16px;
 `;
 
-const Banks = ({ navigation }: BanksProps): JSX.Element => {
+const Banks = (): JSX.Element => {
   const banks = [
     {
       title: 'Banco de Editais',
@@ -34,7 +29,7 @@ const Banks = ({ navigation }: BanksProps): JSX.Element => {
     {
       title: 'Banco de Ideias',
       background: require('../../../../../assets/images/ideas.png')
-    }
+    },
   ];
 
   return (
@@ -42,11 +37,7 @@ const Banks = ({ navigation }: BanksProps): JSX.Element => {
       <Title>Assim canta o Sabiá</Title>
       <BanksWrapper>
         {banks.map((bank, idx) => (
-          <BankCard
-            key={`bank_${idx}`}
-            data={bank}
-            navigation={navigation}
-          />
+          <BankCard key={`bank_${idx}`} data={bank} />
         ))}
       </BanksWrapper>
     </>

@@ -1,32 +1,44 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import TechnologyCard from './TechnologyCard';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
-};
+}
 
 interface TechnologiesItemProps {
-  id?: number
-  title?: string
-  status?: string
-  date?: string
-  image?: string
-  category?: {
+  id: number
+  title: string
+  status: 'public' | 'private'
+  date: string
+  image: string
+  amount: number
+  category: {
     name: string
   }
 }
 
-const TechnologiesWrapper = styled(ScrollView)`
-  marginTop: 32px;
+const TechnologiesWrapper = styled.ScrollView`
+  margin-top: 32px;
   height: 421px;
-  paddingLeft: 16px;
+  padding-left: 16px;
 `;
 
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
-  const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
+  const technologies: TechnologiesItemProps[] = [
+    {
+      id: 1,
+      title: 'Test Very Long Title Technology',
+      status: 'public',
+      date: '2020-12-01T23:59:59-03:00',
+      image: 'https://fakeimg.pl/216x216/',
+      amount: 48900,
+      category: {
+        name: 'Semiárido',
+      },
+    },
+  ];
 
   return (
     <TechnologiesWrapper
@@ -38,7 +50,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
       snapToInterval={248 - (16 + 10)}
       snapToAlignment="start"
       contentContainerStyle={{
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
       }}
     >
       {technologies.map((technology, idx) => (
@@ -48,12 +60,12 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           navigation={navigation}
           loading={false} // Eg.: technology?.id !== null
           style={{
-            marginRight: (idx + 1) === technologies.length ? 36 : 20
+            marginRight: (idx + 1) === technologies.length ? 36 : 20,
           }}
         />
       ))}
     </TechnologiesWrapper>
   );
-}
+};
 
 export default Technologies;

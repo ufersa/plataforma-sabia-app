@@ -4,10 +4,8 @@ import {
   ImageSourcePropType,
   TouchableOpacity,
   ImageBackground,
-  View
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { DefaultText } from '../../../../components';
 
 interface BankCardProps {
@@ -15,43 +13,42 @@ interface BankCardProps {
     title: string
     background: ImageSourcePropType
   }
-  navigation: StackNavigationProp<any, any>
-};
+}
 
 const cardWidth = (Dimensions.get('window').width / 2) - 26;
 
-const Container = styled(View)`
+const Container = styled.View`
   width: ${cardWidth}px;
   height: 80px;
-  borderRadius: 8px;
-  alignItems: center;
-  justifyContent: center;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Title = styled(DefaultText)`
   width: ${cardWidth - 4}px;
-  fontFamily: Rubik_500Medium;
-  fontWeight: 500;
-  fontSize: 18px;
-  lineHeight: 27px;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 27px;
   color: #ffffff;
-  borderWidth: 2px;
-  borderColor: #f5f5f5;
-  borderRadius: 8px;
-  paddingHorizontal: 8px;
-  paddingVertical: 22px;
+  border-width: 2px;
+  border-color: #f5f5f5;
+  border-radius: 8px;
+  padding-horizontal: 8px;
+  padding-vertical: 22px;
 `;
 
-export default ({ navigation, data }: BankCardProps): JSX.Element => {
+export default ({ data }: BankCardProps): JSX.Element => {
   const { title, background } = data;
 
   return (
-    <TouchableOpacity activeOpacity={.7}>
+    <TouchableOpacity activeOpacity={0.7}>
       <ImageBackground
         source={background}
         style={{
           width: cardWidth,
-          height: 80
+          height: 80,
         }}
       >
         <Container>
@@ -62,4 +59,4 @@ export default ({ navigation, data }: BankCardProps): JSX.Element => {
       </ImageBackground>
     </TouchableOpacity>
   );
-}
+};
