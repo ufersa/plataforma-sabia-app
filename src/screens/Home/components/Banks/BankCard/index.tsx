@@ -1,7 +1,10 @@
 import React from 'react';
-import { ImageSourcePropType, TouchableOpacity, ImageBackground } from 'react-native';
-import { cardWidth, Container, Title } from './styles';
+import {
+  ImageSourcePropType, TouchableOpacity, ImageBackground, Dimensions,
+} from 'react-native';
+import { Container, Title } from './styles';
 
+const cardWidth = (Dimensions.get('window').width / 2) - 26;
 interface BankCardProps {
   data: {
     title: string
@@ -21,8 +24,8 @@ export default ({ data }: BankCardProps): JSX.Element => {
           height: 80,
         }}
       >
-        <Container>
-          <Title numberOfLines={1}>
+        <Container style={{ width: cardWidth }}>
+          <Title style={{ width: cardWidth - 4 }}>
             {title}
           </Title>
         </Container>

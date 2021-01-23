@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components/native';
 import TechnologyCard from './TechnologyCard';
+import * as S from './styles';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
@@ -19,12 +19,6 @@ interface TechnologiesItemProps {
   }
 }
 
-const TechnologiesWrapper = styled.ScrollView`
-  margin-top: 32px;
-  height: 421px;
-  padding-left: 16px;
-`;
-
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   const technologies: TechnologiesItemProps[] = [
     {
@@ -41,7 +35,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   ];
 
   return (
-    <TechnologiesWrapper
+    <S.TechnologiesWrapper
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}
@@ -64,7 +58,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           }}
         />
       ))}
-    </TechnologiesWrapper>
+    </S.TechnologiesWrapper>
   );
 };
 

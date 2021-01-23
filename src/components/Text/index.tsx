@@ -38,11 +38,11 @@ import {
 
 interface TextProps {
   children: JSX.Element | string
-};
+}
 
 const TextWrapper = styled(Text)`
-  fontSize: 16px;
-  lineHeight: 24px;
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 const DefaultText = (props: any): JSX.Element => {
@@ -81,6 +81,6 @@ const DefaultText = (props: any): JSX.Element => {
   return (
     !fontsLoaded ? <AppLoading /> : <TextWrapper {...props}>{children}</TextWrapper>
   );
-}
+};
 
 export default DefaultText;

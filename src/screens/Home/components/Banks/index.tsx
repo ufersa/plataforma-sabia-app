@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
 import BankCard from './BankCard';
-import { BanksWrapper, Title } from './styles';
+import * as S from './styles';
 
 const Banks = (): JSX.Element => {
   const banks = [
@@ -17,12 +17,12 @@ const Banks = (): JSX.Element => {
 
   return (
     <>
-      <Title>Assim canta o Sabiá</Title>
-      <BanksWrapper>
+      <S.Title>Assim canta o Sabiá</S.Title>
+      <S.BanksWrapper>
         {banks.map((bank, idx) => (
           <BankCard key={`bank_${idx}`} data={bank} />
         ))}
-      </BanksWrapper>
+      </S.BanksWrapper>
     </>
   );
 };

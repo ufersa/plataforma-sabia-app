@@ -29,8 +29,8 @@ const App = () => (
           headerBackTitleVisible: false,
           headerTintColor: '#ffffff',
           headerStyle: {
-            backgroundColor: '#00a688'
-          }
+            backgroundColor: '#00a688',
+          },
         }}
         name="Technology"
         component={Technology}
