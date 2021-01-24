@@ -21,6 +21,7 @@ module.exports = {
     'no-undef': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-use-before-define': 'off',
+    'import/prefer-default-export': 'off',
   },
   settings: {
     'import/resolver': {

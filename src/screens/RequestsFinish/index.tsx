@@ -1,61 +1,31 @@
+/* eslint-disable react/style-prop-object */
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components/native';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, KeyboardAvoidingView } from 'react-native';
 import {
   Button,
-  DefaultText,
   Input,
   Select,
 } from '../../components';
 import Card from './components/Card';
+import * as S from './styles';
 
 interface RequestsFinishProps {
   navigation: StackNavigationProp<any, any>
 }
 
-const Wrapper = styled.SafeAreaView`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-`;
-
-const Container = styled.View`
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-horizontal: 16px;
-`;
-
-const Page = styled.ScrollView`
-  height: 100%;
-  padding-top: 16px;
-  margin-bottom: 16px;
-`;
-
-const Title = styled(DefaultText)`
-  font-size: 18px;
-  font-family: Rubik_500Medium;
-  font-weight: 500;
-  line-height: 27px;
-  margin-top: 24px;
-  margin-bottom: 8px;
-`;
-
 const RequestsFinish = ({ navigation }: RequestsFinishProps): JSX.Element => (
-  <Wrapper>
+  <S.Wrapper>
     <StatusBar style="light" />
-    <Container>
+    <S.Container>
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'position' : 'height'}
       >
-        <Page showsVerticalScrollIndicator={false}>
+        <S.Page showsVerticalScrollIndicator={false}>
           <Card />
-          <Title>Uso da tecnologia</Title>
+          <S.Title>Uso da tecnologia</S.Title>
           <Select
             placeholder="Uso da tecnologia"
             value="Privado"
@@ -88,7 +58,7 @@ const RequestsFinish = ({ navigation }: RequestsFinishProps): JSX.Element => (
             onPress={() => {}}
           />
 
-          <Title>Deseja financiamento?</Title>
+          <S.Title>Deseja financiamento?</S.Title>
           <Select
             placeholder="Deseja financiamento?"
             value={0}
@@ -105,21 +75,21 @@ const RequestsFinish = ({ navigation }: RequestsFinishProps): JSX.Element => (
             onPress={() => {}}
           />
 
-          <Title>Observações</Title>
+          <S.Title>Observações</S.Title>
           <Input
             placeholder="Gostaria de auxílio na instalação"
             type="default"
             multiline
           />
-        </Page>
+        </S.Page>
       </KeyboardAvoidingView>
       <Button
         onPress={() => navigation.navigate('RequestsFeedback', { feedback: 'success' })}
       >
         Finalizar pedido
       </Button>
-    </Container>
-  </Wrapper>
+    </S.Container>
+  </S.Wrapper>
 );
 
 export default RequestsFinish;

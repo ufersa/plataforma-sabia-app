@@ -9,8 +9,8 @@ const theme = {
       card: '#ffffff',
       text: '',
       border: '#f5f5f5',
-      notification: ''
-    }
+      notification: '',
+    },
   },
   dark: {
     dark: true,
@@ -21,9 +21,9 @@ const theme = {
       card: '#ffffff',
       text: '',
       border: '#f5f5f5',
-      notification: ''
-    }
-  }
+      notification: '',
+    },
+  },
 };
 
 export default theme[defaultTheme].colors;

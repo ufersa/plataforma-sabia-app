@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import {
-  TabContainer, Item, ItemIcon, Background,
-} from './styles';
+import * as S from './styles';
 
 const TabBar = ({ state, navigation }: BottomTabBarProps): JSX.Element => {
   const icons: string | any = {
@@ -14,7 +12,7 @@ const TabBar = ({ state, navigation }: BottomTabBarProps): JSX.Element => {
   };
 
   return (
-    <TabContainer>
+    <S.TabContainer>
       {state.routes.map((route, idx) => {
         const animateTop = useRef(new Animated.Value(0)).current;
         const routeName: string = route.name;
@@ -52,22 +50,22 @@ const TabBar = ({ state, navigation }: BottomTabBarProps): JSX.Element => {
             style={{ transform: [{ translateY: animateTop }], position: 'relative' }}
             key={`tab_${idx}`}
           >
-            <Item
+            <S.Item
               onPress={onPress}
               onLongPress={onLongPress}
               isFocused={isFocused}
             >
-              <ItemIcon
+              <S.ItemIcon
                 name={icons[routeName]}
                 size={20}
                 isFocused={isFocused}
               />
-            </Item>
-            <Background isFocused={isFocused} />
+            </S.Item>
+            <S.Background isFocused={isFocused} />
           </Animated.View>
         );
       })}
-    </TabContainer>
+    </S.TabContainer>
   );
 };
 

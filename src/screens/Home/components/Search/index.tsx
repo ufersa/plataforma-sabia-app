@@ -1,20 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
-import styled from 'styled-components';
 import { Feather } from '@expo/vector-icons';
 import { Input } from '../../../../components';
+import * as S from './styles';
 
 interface SearchProps {
   onFocus: () => void
   onBlur: () => void
-};
-
-const Container = styled(View)`
-  paddingHorizontal: 16px;
-`;
+}
 
 const Search = ({ onFocus, onBlur }: SearchProps): JSX.Element => (
-  <Container>
+  <S.Container>
     <Input
       icon={<Feather name="search" size={18} color="#a5a5a5" />}
       placeholder="Buscar tecnologias"
@@ -22,7 +17,7 @@ const Search = ({ onFocus, onBlur }: SearchProps): JSX.Element => (
       onFocus={onFocus}
       onBlur={onBlur}
     />
-  </Container>
+  </S.Container>
 );
 
 export default Search;
