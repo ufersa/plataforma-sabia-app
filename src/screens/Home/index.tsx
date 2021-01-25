@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/style-prop-object */
+import React, { useState, Fragment } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import Search from './components/Search';
@@ -15,7 +16,7 @@ const Home = ({ navigation }: HomeProps): JSX.Element => {
 
   return (
     <S.Wrapper>
-      <StatusBar />
+      <StatusBar style="auto" />
       <S.Container
         scrollEnabled
         showsVerticalScrollIndicator={false}
@@ -27,7 +28,7 @@ const Home = ({ navigation }: HomeProps): JSX.Element => {
         {!isEditing && (
           <>
             <Technologies navigation={navigation} />
-            <Banks />
+            <Banks navigation={navigation} />
           </>
         )}
       </S.Container>

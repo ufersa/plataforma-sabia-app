@@ -1,25 +1,25 @@
+/* eslint-disable react/style-prop-object */
 import React from 'react';
-import styled from 'styled-components';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from 'react-native';
-
-const Container = styled(View)`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  justifyContent: center;
-  alignItems: center;
-`;
-
-const Title = styled(Text)`
-  fontSize: 18px;
-`;
+import List from './components/List';
+import * as S from './styles';
 
 const Requests = (): JSX.Element => (
-  <Container>
+  <S.Wrapper>
     <StatusBar style="auto" />
-    <Title>Requests</Title>
-  </Container>
+    <S.Container>
+      <S.Title>Meus pedidos</S.Title>
+      <List
+        data={[
+          {
+            title: 'Test Very Long Title Technology',
+            amount: 48900,
+            status: 'send',
+          },
+        ]}
+      />
+    </S.Container>
+  </S.Wrapper>
 );
 
 export default Requests;

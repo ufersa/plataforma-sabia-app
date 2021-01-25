@@ -15,6 +15,7 @@ const Root = (): JSX.Element => (
       component={Home}
     />
     <Tab.Screen
+      options={{ unmountOnBlur: true }}
       name="Requests"
       component={Requests}
     />

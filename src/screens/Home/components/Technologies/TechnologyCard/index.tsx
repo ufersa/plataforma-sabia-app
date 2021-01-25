@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Animated,
-  Image,
-  TouchableOpacity,
-  Easing,
-  StyleProp,
+  Animated, Image, TouchableOpacity, Easing, StyleProp,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Card } from '../../../../../components';
+import Colors from '../../../../../utils/colors';
 import * as S from './styles';
 
 interface DataCardProps {
@@ -16,20 +13,19 @@ interface DataCardProps {
   status: 'public' | 'private'
   date: string
   image: string
-  amount: number
   category: {
     name: string
   }
 }
 interface TechnologyCardProps {
-  data: DataCardProps
+  data: DataCardProps | {}
   style: StyleProp<any>
   loading: boolean
   navigation: StackNavigationProp<any, any>
 }
 
 interface FavoriteProps {
-  favorite: boolean
+  favorite?: boolean
 }
 
 const Label = (): JSX.Element => (
@@ -72,12 +68,9 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
 };
 
 export default ({
-  data,
-  navigation,
-  loading = false,
-  style = {},
+  data, navigation, loading = false, style = {},
 }: TechnologyCardProps): JSX.Element => {
-  const { amount } = data;
+  const { status }: DataCardProps = data;
   return (
     <S.CardWrapper style={style}>
       <Card>
@@ -87,7 +80,7 @@ export default ({
               <S.CardImage>
                 <S.Actions>
                   <Label />
-                  <Favorite favorite={false} />
+                  <Favorite />
                 </S.Actions>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('Technology')}
@@ -114,11 +107,14 @@ export default ({
                   Test Very Long Title Technology
                 </S.Title>
               </TouchableOpacity>
-              <S.AmountWrapper>
-                <S.Amount>
-                  {`R$ ${amount}`}
-                </S.Amount>
-              </S.AmountWrapper>
+              <S.StatusWrapper>
+                <S.StatusIcon
+                  name={status === 'public' ? 'unlock' : 'lock'}
+                  size={16}
+                  color={Colors.primary}
+                />
+                <S.Status>{status === 'public' ? 'Público' : 'Privado'}</S.Status>
+              </S.StatusWrapper>
               <S.DateWrapper>
                 <S.DateIcon
                   name="calendar"
