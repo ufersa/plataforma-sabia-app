@@ -38,7 +38,7 @@ export const Title = styled(DefaultText)`
 export const Amount = styled(DefaultText)`
   font-family: Rubik_500Medium;
   font-weight: 500;
-  font: 14px;
+  font-size: 14px;
   line-height: 21px;
   color: ${Colors.primary};
 `;

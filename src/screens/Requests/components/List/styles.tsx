@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const ListWrapper = styled.View`
   flex: 1;
-  margin-top: 34px;
+  margin-top: 18px;
 `;
 
 export const ListContainer = styled.FlatList`

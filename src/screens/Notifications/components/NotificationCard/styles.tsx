@@ -13,7 +13,7 @@ export const HeaderTitle = styled(DefaultText)`
   line-height: 21px;
   font-size: 14px;
   color: #777777;
-  padding: 0 16px;
+  padding-horizontal: 16px;
 `;
 
 export const ItemsWrapper = styled.View``;
