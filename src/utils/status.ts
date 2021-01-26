@@ -3,5 +3,5 @@ interface RequestsStatusProps {
 }
 
 export const RequestsStatus: RequestsStatusProps = {
-  send: 'Pedido enviado'
+  send: 'Pedido enviado',
 };
