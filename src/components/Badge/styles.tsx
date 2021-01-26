@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { DefaultText } from '../index';
+import DefaultText from '../Text';
 
 export const BadgeWrapper = styled.View`
   background-color: #e8e8e8;

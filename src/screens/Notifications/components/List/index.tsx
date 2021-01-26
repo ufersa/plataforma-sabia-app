@@ -1,13 +1,17 @@
 import React from 'react';
-import { ListRenderItemInfo } from 'react-native';
-import { DefaultText } from '../../../../components';
-import RequestCard from '../RequestCard';
+import { View, ListRenderItemInfo } from 'react-native';
+import NotificationCard from '../NotificationCard';
 import * as S from './styles';
 
-interface ListItemProps {
+interface NotificationsProps {
   title: string
-  amount: number
-  status: string
+  body: string
+  date: string
+}
+
+interface ListItemProps {
+  date: string
+  notifications: NotificationsProps[]
 }
 
 interface ListProps {
@@ -20,14 +24,12 @@ const List = ({ data }: ListProps): JSX.Element => (
       <S.ListContainer
         data={data}
         renderItem={({ item }: ListRenderItemInfo<any>) => (
-          <RequestCard {...item} />
+          <NotificationCard {...item} />
         )}
-        keyExtractor={(_, idx) => idx.toString()}
+        keyExtractor={(item, idx) => idx.toString()}
       />
     ) : (
-      <S.Empty>
-        <DefaultText>Nenhum pedido</DefaultText>
-      </S.Empty>
+      <View />
     )}
   </S.ListWrapper>
 );

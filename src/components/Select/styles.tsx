@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { DefaultText } from '..';
+import DefaultText from '../Text';
 import Colors from '../../utils/colors';
 
 export const SelectWrapper = styled.TouchableOpacity`

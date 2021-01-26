@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { Modal } from '..';
+import Modal from '../Modal';
 import * as S from './styles';
 
 interface SelectOptionProps {

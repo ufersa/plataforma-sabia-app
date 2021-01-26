@@ -1,25 +1,45 @@
+/* eslint-disable react/style-prop-object */
 import React from 'react';
-import styled from 'styled-components';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from 'react-native';
-
-const Container = styled(View)`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  justifyContent: center;
-  alignItems: center;
-`;
-
-const Title = styled(Text)`
-  fontSize: 18px;
-`;
+import List from './components/List';
+import * as S from './styles';
 
 const Notifications = (): JSX.Element => (
-  <Container>
+  <S.Wrapper>
     <StatusBar style="auto" />
-    <Title>Notifications</Title>
-  </Container>
+    <S.Container>
+      <S.Title>Notificações</S.Title>
+      <List
+        data={[
+          {
+            date: '2020-12-01T23:59:59-03:00',
+            notifications: [
+              {
+                title: 'Pedido enviado',
+                body: 'Seu pedido Bomba Subterrânea, foi recebido pelo responsável.',
+                date: '2020-12-01T23:59:59-03:00',
+              },
+              {
+                title: 'Sending Requets',
+                body: 'Seu pedido Bomba Subterrânea, foi recebido pelo responsável.',
+                date: '2020-12-10T23:59:59-03:00',
+              },
+            ],
+          },
+          {
+            date: '2020-11-01T23:59:59-03:00',
+            notifications: [
+              {
+                title: 'Bem vindo a plataforma Sabiá!',
+                body: 'Seu cadastro está ativo, agora você pode adquirir e cadastrar tecnologias.',
+                date: '2020-11-01T23:59:59-03:00',
+              },
+            ],
+          },
+        ]}
+      />
+    </S.Container>
+  </S.Wrapper>
 );
 
 export default Notifications;
