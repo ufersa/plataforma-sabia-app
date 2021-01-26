@@ -1,25 +1,13 @@
+/* eslint-disable react/style-prop-object */
 import React from 'react';
-import styled from 'styled-components';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text } from 'react-native';
-
-const Container = styled(View)`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  justifyContent: center;
-  alignItems: center;
-`;
-
-const Title = styled(Text)`
-  fontSize: 18px;
-`;
+import * as S from './styles';
 
 const Favorite = (): JSX.Element => (
-  <Container>
+  <S.Container>
     <StatusBar style="auto" />
-    <Title>Favorite</Title>
-  </Container>
+    <S.Title>Favorite</S.Title>
+  </S.Container>
 );
 
 export default Favorite;

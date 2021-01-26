@@ -1,9 +1,14 @@
 import React from 'react';
 import { Image } from 'react-native';
-import { Card, InputNumber } from '../../../../components';
+import { Card, Badge } from '../../../../components';
 import * as S from './styles';
 
-export default () => (
+interface RequestCardProps {
+  title: string
+  status: string
+}
+
+const RequestCard = ({ title, status }: RequestCardProps): JSX.Element => (
   <S.CardWrapper>
     <Card>
       <S.CardContainer>
@@ -21,17 +26,15 @@ export default () => (
           />
         </S.CardImage>
         <S.CardDetails>
-          <S.Title numberOfLines={1}>
-            Test Very Long Title Technology
-          </S.Title>
-          <S.CardInfo>
-            <S.CardInput>
-              <InputNumber onChange={() => {}} />
-            </S.CardInput>
-            <S.Amount>R$ 489,00</S.Amount>
-          </S.CardInfo>
+          <S.Title numberOfLines={1}>{title}</S.Title>
+          <S.Amount>R$ 489,00</S.Amount>
+          <S.Status>
+            <Badge status={status} />
+          </S.Status>
         </S.CardDetails>
       </S.CardContainer>
     </Card>
   </S.CardWrapper>
 );
+
+export default RequestCard;

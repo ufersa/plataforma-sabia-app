@@ -33,8 +33,8 @@ const App = () => (
           headerBackTitleVisible: false,
           headerTintColor: '#ffffff',
           headerStyle: {
-            backgroundColor: Colors.primary
-          }
+            backgroundColor: Colors.primary,
+          },
         }}
         name="Technology"
         component={Technology}
@@ -50,8 +50,8 @@ const App = () => (
           headerBackTitleVisible: false,
           headerTintColor: '#ffffff',
           headerStyle: {
-            backgroundColor: Colors.primary
-          }
+            backgroundColor: Colors.primary,
+          },
         }}
         name="RequestsFinish"
         component={RequestsFinish}

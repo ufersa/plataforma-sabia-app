@@ -1,12 +1,11 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import styled from 'styled-components';
 import TechnologyCard from './TechnologyCard';
+import * as S from './styles';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
-};
+}
 
 interface TechnologiesItemProps {
   id?: number
@@ -19,17 +18,11 @@ interface TechnologiesItemProps {
   }
 }
 
-const TechnologiesWrapper = styled(ScrollView)`
-  marginTop: 32px;
-  height: 421px;
-  paddingLeft: 16px;
-`;
-
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
 
   return (
-    <TechnologiesWrapper
+    <S.TechnologiesWrapper
       horizontal
       pagingEnabled
       showsHorizontalScrollIndicator={false}
@@ -38,7 +31,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
       snapToInterval={248 - (16 + 10)}
       snapToAlignment="start"
       contentContainerStyle={{
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
       }}
     >
       {technologies.map((technology, idx) => (
@@ -48,12 +41,12 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           navigation={navigation}
           loading={false} // Eg.: technology?.id !== null
           style={{
-            marginRight: (idx + 1) === technologies.length ? 36 : 20
+            marginRight: (idx + 1) === technologies.length ? 36 : 20,
           }}
         />
       ))}
-    </TechnologiesWrapper>
+    </S.TechnologiesWrapper>
   );
-}
+};
 
 export default Technologies;

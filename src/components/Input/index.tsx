@@ -1,47 +1,21 @@
 import React from 'react';
 import {
-  View,
-  TextInput,
   Keyboard,
   TextInputProps,
   KeyboardTypeOptions,
-  ReturnKeyTypeOptions
+  ReturnKeyTypeOptions,
 } from 'react-native';
-import styled from 'styled-components';
+
+import * as S from './styles';
 
 interface InputProps extends TextInputProps {
   icon?: JSX.Element
-  type?: KeyboardTypeOptions
+  type: KeyboardTypeOptions
   multiline?: boolean
   returnKey?: ReturnKeyTypeOptions
+  onSubmitEditing?: () => void
   size?: string
-};
-
-const InputWrapper = styled(View)`
-  backgroundColor: #e8e8e8;
-  width: 100%;
-  borderRadius: 8px;
-  flexDirection: row;
-  alignItems: center;
-  paddingLeft: 6px;
-  paddingRight: 6px;
-`;
-
-const InputContainer = styled(TextInput)`
-  width: 100%;
-  height: 100%;
-  fontFamily: Rubik_500Medium;
-  fontWeight: 500;
-  lineHeight: 20px;
-  fontSize: 16px;
-  color: #a5a5a5;
-  paddingLeft: 14px;
-  paddingRight: 20px;
-`;
-
-const IconWrapper = styled(View)`
-  paddingLeft: 14px;
-`;
+}
 interface SizesProps {
   [name: string]: number
 }
@@ -49,39 +23,49 @@ interface SizesProps {
 const buildSize = (size: string = 'medium') => {
   const sizes: SizesProps = {
     medium: 56,
-    small: 48
+    small: 48,
   };
   return sizes[size];
-}; 
+};
 
 const Input = (props: InputProps): JSX.Element => {
-  const { size, icon, type, returnKey } = props;
-
-  const handleKeyDown = (ev: any) => {
-    ev.nativeEvent.key === 'Enter' && Keyboard.dismiss();
-  };
+  const {
+    size,
+    icon,
+    type,
+    returnKey,
+    multiline,
+  } = props;
 
   return (
-    <InputWrapper
+    <S.InputWrapper
       style={{
-        paddingVertical: props.multiline ? 12 : 0,
-        height: props.multiline ? 122 : buildSize(size)
+        paddingVertical: multiline ? 12 : 0,
+        height: multiline ? 122 : buildSize(size),
       }}
     >
-      {props.icon && (
-        <IconWrapper>
+      {icon && (
+        <S.IconWrapper>
           {icon}
-        </IconWrapper>
+        </S.IconWrapper>
       )}
-      <InputContainer
+      <S.InputContainer
         {...props}
         keyboardType={type}
         placeholderTextColor="#a5a5a5"
         returnKeyType={returnKey}
-        onKeyPress={handleKeyDown}
+        onSubmitEditing={() => Keyboard.dismiss()}
       />
-    </InputWrapper>
+    </S.InputWrapper>
   );
+};
+
+Input.defaultProps = {
+  icon: null,
+  multiline: false,
+  returnKey: 'done',
+  onSubmitEditing: () => {},
+  size: 'medium',
 };
 
 export default Input;

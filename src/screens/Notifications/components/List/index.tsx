@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, FlatList, ListRenderItemInfo } from 'react-native';
-import styled from 'styled-components';
-import NotificationCard from './NotificationCard';
+import { View, ListRenderItemInfo } from 'react-native';
+import NotificationCard from '../NotificationCard';
+import * as S from './styles';
 
 interface NotificationsProps {
   title: string
@@ -12,37 +12,26 @@ interface NotificationsProps {
 interface ListItemProps {
   date: string
   notifications: NotificationsProps[]
-};
+}
 
 interface ListProps {
   data: ListItemProps[]
 }
 
-const ListWrapper = styled(View)`
-  flex: 1;
-  margin-top: 10px;
-`;
-
-const ListContainer = styled(FlatList)`
-  padding-vertical: 16px;
-`;
-
-const List = ({ data }: ListProps): JSX.Element => {
-  return (
-    <ListWrapper>
-      {data && data.length > 0 ? (
-        <ListContainer
-          data={data}
-          renderItem={({ item }: ListRenderItemInfo<any>) => (
-            <NotificationCard {...item} />
-          )}
-          keyExtractor={(item, idx) => idx.toString()}
-        />
-      ) : (
-        <View></View>
-      )}
-    </ListWrapper>
-  );
-};
+const List = ({ data }: ListProps): JSX.Element => (
+  <S.ListWrapper>
+    {data && data.length > 0 ? (
+      <S.ListContainer
+        data={data}
+        renderItem={({ item }: ListRenderItemInfo<any>) => (
+          <NotificationCard {...item} />
+        )}
+        keyExtractor={(item, idx) => idx.toString()}
+      />
+    ) : (
+      <View />
+    )}
+  </S.ListWrapper>
+);
 
 export default List;
