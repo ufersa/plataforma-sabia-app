@@ -3,16 +3,17 @@ import { View, TouchableOpacity } from 'react-native';
 import styled, { css } from 'styled-components';
 import DefaultText from '../Text';
 import Colors from '../../utils/colors';
+
 interface ButtonProps {
   onPress(): void
   children: string
   variant?: string
-};
+}
 
 interface ButtonContainerProps {
   variant?: string
   children: string
-};
+}
 
 const ButtonInteraction = styled(TouchableOpacity)`
   width: 100%;
@@ -41,21 +42,25 @@ const ButtonText: any = styled(DefaultText)`
   `}
 `;
 
-const buildStyle = (variant: string = "primary") => {
+const buildStyle = (variant: string) => {
   const colorsDefault: any = Colors;
   const variants: any = {
     primary: {
       backgroundColor: colorsDefault[variant],
-      color: "#ffffff"
+      color: '#ffffff',
+    },
+    secondary: {
+      backgroundColor: colorsDefault[variant],
+      color: '#ffffff',
     },
     danger: {
       backgroundColor: colorsDefault[variant],
-      color: "#ffffff"
-    }
+      color: '#ffffff',
+    },
   };
 
   return variants[variant];
-}; 
+};
 
 const ButtonContainer = ({ variant, children }: ButtonContainerProps) => (
   <ButtonWrapper variant={variant}>
@@ -63,12 +68,20 @@ const ButtonContainer = ({ variant, children }: ButtonContainerProps) => (
   </ButtonWrapper>
 );
 
+ButtonContainer.defaultProps = {
+  variant: 'primary',
+};
+
 const Button = ({ onPress, children, variant }: ButtonProps): JSX.Element => (
-  <ButtonInteraction onPress={onPress} activeOpacity={.7}>
+  <ButtonInteraction onPress={onPress} activeOpacity={0.7}>
     <ButtonContainer variant={variant}>
       {children}
     </ButtonContainer>
   </ButtonInteraction>
 );
+
+Button.defaultProps = {
+  variant: 'primary',
+};
 
 export default Button;

@@ -26,10 +26,11 @@ const App = () => (
       />
       <Stack.Screen
         options={{
+          title: '',
           headerBackTitleVisible: false,
-          headerTintColor: '#ffffff',
+          headerTintColor: '#4A4A4A',
           headerStyle: {
-            backgroundColor: '#00a688',
+            backgroundColor: '#f5f5f5',
           },
         }}
         name="Technology"

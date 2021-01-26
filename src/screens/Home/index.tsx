@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
@@ -15,7 +16,7 @@ const Home = ({ navigation }: HomeProps): JSX.Element => {
 
   return (
     <S.Wrapper>
-      <StatusBar />
+      <StatusBar style="dark" />
       <S.Container
         scrollEnabled
         showsVerticalScrollIndicator={false}

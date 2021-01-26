@@ -77,7 +77,7 @@ export default ({
   loading = false,
   style = {},
 }: TechnologyCardProps): JSX.Element => {
-  const { amount } = data;
+  const { amount, id } = data;
   return (
     <S.CardWrapper style={style}>
       <Card>
@@ -90,7 +90,7 @@ export default ({
                   <Favorite favorite={false} />
                 </S.Actions>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Technology')}
+                  onPress={() => navigation.navigate('Technology', { id })}
                   activeOpacity={0.7}
                 >
                   <Image

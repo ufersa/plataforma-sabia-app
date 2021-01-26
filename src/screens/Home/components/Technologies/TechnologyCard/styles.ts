@@ -85,7 +85,7 @@ export const LabelWrapper = styled.View`
   height: 26px;
   padding: 4px 8px;
   border-top-right-radius: 8px;
-  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 `;
 
 export const LabelText = styled(DefaultText)`
