@@ -1,10 +1,16 @@
 /* eslint-disable react/style-prop-object */
 import React from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { Button } from '../../components';
+import { About, Rating } from './components';
 import * as S from './styles';
 
-const Technology = (): JSX.Element => (
+interface TechnologyProps {
+  navigation: StackNavigationProp<any, any>
+}
+
+const Technology = ({ navigation }: TechnologyProps): JSX.Element => (
   <S.Wrapper>
     <StatusBar style="dark" />
     <S.Container>
@@ -34,9 +40,11 @@ const Technology = (): JSX.Element => (
           </S.Date>
         </S.HeaderDetails>
       </S.Header>
+      <About />
+      <Rating />
     </S.Container>
     <S.ButtonWrapper>
-      <Button onPress={() => {}}>
+      <Button onPress={() => navigation.navigate('RequestsFinish')}>
         Adquirir tecnologia
       </Button>
     </S.ButtonWrapper>
