@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Animated,
-  Image,
-  TouchableOpacity,
-  Easing,
-  StyleProp,
+  Animated, Image, TouchableOpacity, Easing, StyleProp,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Card } from '../../../../../components';
+import Colors from '../../../../../utils/colors';
 import * as S from './styles';
 
 interface DataCardProps {
@@ -16,7 +13,6 @@ interface DataCardProps {
   status: 'public' | 'private'
   date: string
   image: string
-  amount: number
   category: {
     name: string
   }
@@ -29,7 +25,8 @@ interface TechnologyCardProps {
 }
 
 interface FavoriteProps {
-  favorite: boolean
+  // eslint-disable-next-line react/require-default-props
+  favorite?: boolean
 }
 
 const Label = (): JSX.Element => (
@@ -38,7 +35,7 @@ const Label = (): JSX.Element => (
   </S.LabelWrapper>
 );
 
-const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
+const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
   const [state, setState] = useState(favorite);
   const animatePulse = new Animated.Value(1);
   const scale = animatePulse.interpolate({
@@ -72,65 +69,62 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
 };
 
 export default ({
-  data,
-  navigation,
-  loading = false,
-  style = {},
-}: TechnologyCardProps): JSX.Element => {
-  const { amount, id } = data;
-  return (
-    <S.CardWrapper style={style}>
-      <Card>
-        <S.CardContainer>
-          {!loading && (
-            <>
-              <S.CardImage>
-                <S.Actions>
-                  <Label />
-                  <Favorite favorite={false} />
-                </S.Actions>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Technology', { id })}
-                  activeOpacity={0.7}
-                >
-                  <Image
-                    source={{
-                      uri: 'https://fakeimg.pl/216x216/',
-                      cache: 'only-if-cached',
-                    }}
-                    style={{
-                      width: 216,
-                      height: 216,
-                      borderRadius: 8,
-                    }}
-                  />
-                </TouchableOpacity>
-              </S.CardImage>
+  data, navigation, loading = false, style = {},
+}: TechnologyCardProps): JSX.Element => (
+  <S.CardWrapper style={style}>
+    <Card>
+      <S.CardContainer>
+        {!loading && (
+          <>
+            <S.CardImage>
+              <S.Actions>
+                <Label />
+                <Favorite />
+              </S.Actions>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Technology')}
+                onPress={() => navigation.navigate('Technology', { id: data.id })}
                 activeOpacity={0.7}
               >
-                <S.Title numberOfLines={2}>
-                  Test Very Long Title Technology
-                </S.Title>
-              </TouchableOpacity>
-              <S.AmountWrapper>
-                <S.Amount>
-                  {`R$ ${amount}`}
-                </S.Amount>
-              </S.AmountWrapper>
-              <S.DateWrapper>
-                <S.DateIcon
-                  name="calendar"
-                  size={16}
-                  color="#a5a5a5"
+                <Image
+                  source={{
+                    uri: 'https://fakeimg.pl/216x216/',
+                    cache: 'only-if-cached',
+                  }}
+                  style={{
+                    width: 216,
+                    height: 216,
+                    borderRadius: 8,
+                  }}
                 />
-                <S.Date>Há 2 meses atrás</S.Date>
-              </S.DateWrapper>
-            </>
-          )}
-        </S.CardContainer>
-      </Card>
-    </S.CardWrapper>
-  );
-};
+              </TouchableOpacity>
+            </S.CardImage>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Technology')}
+              activeOpacity={0.7}
+            >
+              <S.Title numberOfLines={2}>
+                Test Very Long Title Technology
+              </S.Title>
+            </TouchableOpacity>
+            <S.StatusWrapper>
+              <S.StatusIcon
+                name={data.status === 'public' ? 'unlock' : 'lock'}
+                size={16}
+                color={Colors.primary}
+              />
+              <S.Status>{data.status === 'public' ? 'Público' : 'Privado'}</S.Status>
+            </S.StatusWrapper>
+            <S.DateWrapper>
+              <S.DateIcon
+                name="calendar"
+                size={16}
+                color="#a5a5a5"
+              />
+              <S.Date>Há 2 meses atrás</S.Date>
+            </S.DateWrapper>
+          </>
+        )}
+      </S.CardContainer>
+    </Card>
+  </S.CardWrapper>
+);

@@ -1,12 +1,14 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import * as S from './styles';
 
 interface CardProps {
-  children: JSX.Element
+  children: JSX.Element[] | JSX.Element
+  style?: StyleProp<ViewStyle>
 }
 
-const Card = ({ children }: CardProps) => (
-  <S.CardWrapper>
+const Card = ({ children, style }: CardProps) => (
+  <S.CardWrapper style={style}>
     {children}
   </S.CardWrapper>
 );

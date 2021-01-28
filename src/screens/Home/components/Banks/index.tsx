@@ -1,9 +1,13 @@
-/* eslint-disable global-require */
 import React from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import BankCard from './BankCard';
 import * as S from './styles';
 
-const Banks = (): JSX.Element => {
+interface BanksProps {
+  navigation: StackNavigationProp<any, any>
+}
+
+const Banks = ({ navigation }: BanksProps): JSX.Element => {
   const banks = [
     {
       title: 'Banco de Editais',
@@ -20,7 +24,11 @@ const Banks = (): JSX.Element => {
       <S.Title>Assim canta o Sabiá</S.Title>
       <S.BanksWrapper>
         {banks.map((bank, idx) => (
-          <BankCard key={`bank_${idx}`} data={bank} />
+          <BankCard
+            key={`bank_${idx}`}
+            data={bank}
+            navigation={navigation}
+          />
         ))}
       </S.BanksWrapper>
     </>

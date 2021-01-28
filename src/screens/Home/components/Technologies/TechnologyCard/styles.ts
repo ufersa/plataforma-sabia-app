@@ -1,8 +1,5 @@
 import styled from 'styled-components/native';
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
-import {
-  TouchableOpacity,
-} from 'react-native';
 import Colors from '../../../../../utils/colors';
 import { DefaultText } from '../../../../../components';
 
@@ -32,7 +29,7 @@ export const Title = styled(DefaultText)`
   margin-top: 16px;
 `;
 
-export const AmountWrapper = styled.View`
+export const StatusWrapper = styled.View`
   margin-top: 8px;
   margin-bottom: 16px;
   flex-direction: row;
@@ -40,13 +37,17 @@ export const AmountWrapper = styled.View`
   justify-content: center;
 `;
 
-export const Amount = styled(DefaultText)`
+export const Status = styled(DefaultText)`
   font-family: Rubik_500Medium;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
   text-align: center;
   color: ${Colors.primary};
+`;
+
+export const StatusIcon = styled(Feather)`
+  margin-right: 6px;
 `;
 
 export const DateWrapper = styled.View`
@@ -96,7 +97,7 @@ export const LabelText = styled(DefaultText)`
   color: ${Colors.primary};
 `;
 
-export const FavoriteButton = styled(TouchableOpacity)`
+export const FavoriteButton = styled.TouchableOpacity`
   margin-right: 18px;
 `;
 

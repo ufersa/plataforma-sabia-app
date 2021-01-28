@@ -8,31 +8,18 @@ interface TechnologiesProps {
 }
 
 interface TechnologiesItemProps {
-  id: number
-  title: string
-  status: 'public' | 'private'
-  date: string
-  image: string
-  amount: number
-  category: {
+  id?: number
+  title?: string
+  status?: string
+  date?: string
+  image?: string
+  category?: {
     name: string
   }
 }
 
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
-  const technologies: TechnologiesItemProps[] = [
-    {
-      id: 1,
-      title: 'Test Very Long Title Technology',
-      status: 'public',
-      date: '2020-12-01T23:59:59-03:00',
-      image: 'https://fakeimg.pl/216x216/',
-      amount: 48900,
-      category: {
-        name: 'Semiárido',
-      },
-    },
-  ];
+  const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
 
   return (
     <S.TechnologiesWrapper
