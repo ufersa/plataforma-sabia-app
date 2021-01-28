@@ -18,7 +18,13 @@ export default ({ navigation, data }: BankCardProps): JSX.Element => {
   const { title, background } = data;
 
   return (
-    <TouchableOpacity activeOpacity={0.7}>
+    <TouchableOpacity
+      style={{
+        overflow: 'hidden',
+        borderRadius: 8,
+      }}
+      activeOpacity={0.7}
+    >
       <ImageBackground
         source={background}
         style={{
