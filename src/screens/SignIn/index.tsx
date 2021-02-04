@@ -137,7 +137,6 @@ const SignIn = (): JSX.Element => {
       </KeyboardAvoidingView>
 
       <S.CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
-        {/* <Icon name="log-in" size={20} color="#FF9000" /> */}
         Criar uma conta
       </S.CreateAccountButton>
     </>
