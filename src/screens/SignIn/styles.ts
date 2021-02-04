@@ -2,6 +2,8 @@ import styled from 'styled-components/native';
 
 import { Platform } from 'react-native';
 
+import { Button } from '../../components';
+
 export const Container = styled.View`
   flex: 1;
   align-items: center;
@@ -18,6 +20,16 @@ export const Title = styled.Text`
   margin: 64px 0 24px;
 `;
 
+export const SignInButton = styled(Button)`
+  height: 56px;
+  background: #F5F5F5;
+  border-radius: 8px;
+
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;
+
 export const ForgotPassword = styled.TouchableOpacity`
   margin-top: 24px;
 `;
@@ -28,24 +40,12 @@ export const ForgotPasswordText = styled.Text`
   font-family: 'Rubik_500Medium';
 `;
 
-export const CreateAccountButton = styled.TouchableOpacity`
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
+export const CreateAccountButton = styled(Button)`
   background: #312e38;
   border-top-width: 1px;
   border-color: #232129;
-  padding: 16px 0;
 
   justify-content: center;
   align-items: center;
   flex-direction: row;
-`;
-
-export const CreateAccountButtonText = styled.Text`
-  color: #ff9000;
-  font-size: 18px;
-  font-family: 'Rubik_500Medium';
-  margin-left: 16px;
 `;
