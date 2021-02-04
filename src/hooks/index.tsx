@@ -2,7 +2,7 @@ import React from 'react';
 
 import { AuthProvider } from './useAuth';
 
-const AppProvider: React.FC = ({ children }: any) => (
+const AppProvider = ({ children }: JSX.Element) => (
   <AuthProvider>{children}</AuthProvider>
 );
 
