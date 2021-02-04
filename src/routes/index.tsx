@@ -4,6 +4,7 @@ import AuthRoutes from './auth.routes';
 import AppRoutes from './app.routes';
 
 import { useAuth } from '../hooks/useAuth';
+import colors from '../utils/colors';
 
 const Routes: React.FC = () => {
   const { user, loading } = useAuth();
@@ -11,7 +12,7 @@ const Routes: React.FC = () => {
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={colors.ligthGrey} />
+        <ActivityIndicator size="large" color={colors.border} />
       </View>
     );
   }
