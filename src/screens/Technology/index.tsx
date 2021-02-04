@@ -3,7 +3,12 @@ import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { Button } from '../../components';
-import { About, Rating, FAQ } from './components';
+import {
+  About,
+  Details,
+  Rating,
+  FAQ,
+} from './components';
 import * as S from './styles';
 
 interface TechnologyProps {
@@ -41,6 +46,7 @@ const Technology = ({ navigation }: TechnologyProps): JSX.Element => (
         </S.HeaderDetails>
       </S.Header>
       <About />
+      <Details />
       <FAQ />
       <Rating />
     </S.Container>

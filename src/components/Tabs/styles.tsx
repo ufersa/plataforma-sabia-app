@@ -23,7 +23,6 @@ const TabItem = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-bottom-width: 2px;
-  border-bottom-color: ${({ selected }: any) => (selected ? Colors.primary : '#d2d2d2')};
 `;
 
 const TabTitle = styled(DefaultText)`
@@ -35,7 +34,11 @@ const TabTitle = styled(DefaultText)`
 `;
 
 export const Tab = ({ title, selected, onSelect }: TabProps) => (
-  <TabItem onPress={onSelect} activeOpacity={0.7} selected={selected}>
+  <TabItem
+    onPress={onSelect}
+    activeOpacity={0.7}
+    style={{ borderBottomColor: selected ? Colors.primary : '#d2d2d2' }}
+  >
     <TabTitle selected={selected}>{title}</TabTitle>
   </TabItem>
 );
