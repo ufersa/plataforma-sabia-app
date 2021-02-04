@@ -5,3 +5,5 @@ export { default as RequestsFinish } from './RequestsFinish';
 export { default as Notifications } from './Notifications';
 export { default as Favorite } from './Favorite';
 export { default as Technology } from './Technology';
+export { default as SignIn } from './SignIn';
+export { default as SignUp } from './SignUp';
