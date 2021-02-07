@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const InputWrapper = styled.View`
-  background-color: #e8e8e8;
+  background-color: ${({ variant }) => (variant && variant === 'dark' ? '#00856d' : '#e8e8e8')};
   width: 100%;
   border-radius: 8px;
   flex-direction: row;
@@ -17,7 +17,7 @@ export const InputContainer = styled.TextInput`
   font-weight: 500;
   line-height: 20px;
   font-size: 16px;
-  color: #a5a5a5;
+  color: ${({ variant }) => (variant && variant === 'dark' ? '#ffffff' : '#a5a5a5')};
   padding-left: 14px;
   padding-right: 20px;
 `;
