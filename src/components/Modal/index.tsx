@@ -9,7 +9,7 @@ interface ModalProps extends ModalBaseProps {
 }
 
 const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
-  const { title, onClose } = props;
+  const { title = '', onClose } = props;
 
   return (
     <S.Wrapper>
@@ -36,10 +36,6 @@ const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
       </ModalRN>
     </S.Wrapper>
   );
-};
-
-Modal.defaultProps = {
-  title: '',
 };
 
 export default Modal;
