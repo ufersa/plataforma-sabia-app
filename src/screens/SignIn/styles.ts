@@ -45,4 +45,5 @@ export const ForgotPasswordText = styled(DefaultText)`
 
 export const ButtonWrapper = styled.TouchableOpacity`
   padding-horizontal: 16px;
+  margin-bottom: 40px;
 `;
