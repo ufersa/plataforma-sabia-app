@@ -34,11 +34,11 @@ const buildSize = (size: string = 'medium') => {
 
 const Input = (props: InputProps): JSX.Element => {
   const {
-    size,
-    icon,
+    size = 'medium',
+    icon = null,
     type,
-    returnKey,
-    multiline,
+    returnKey = 'done',
+    multiline = false,
     variant,
     style,
   } = props;
@@ -66,14 +66,6 @@ const Input = (props: InputProps): JSX.Element => {
       />
     </S.InputWrapper>
   );
-};
-
-Input.defaultProps = {
-  icon: null,
-  multiline: false,
-  returnKey: 'done',
-  onSubmitEditing: () => {},
-  size: 'medium',
 };
 
 export default Input;

@@ -30,7 +30,7 @@ const Option = ({ selected, label, ...props }: any): JSX.Element => (
 );
 
 const Select = (props: SelectProps): JSX.Element => {
-  const { value, options, placeholder } = props;
+  const { value = '', options, placeholder = '' } = props;
   const getSelectedValue = options.find((option) => option.value === value);
 
   const [showOptions, setShowOptions] = useState(false);
@@ -69,11 +69,6 @@ const Select = (props: SelectProps): JSX.Element => {
       </Modal>
     </>
   );
-};
-
-Select.defaultProps = {
-  placeholder: '',
-  value: '',
 };
 
 export default Select;
