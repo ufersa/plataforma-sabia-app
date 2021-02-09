@@ -27,5 +27,6 @@ export const InputWrapper = styled.View`
 `;
 
 export const ButtonWrapper = styled.TouchableOpacity`
-  padding-horizontal: 16px;
+  padding: 0px 16px;
+  margin-bottom: 40px;
 `;

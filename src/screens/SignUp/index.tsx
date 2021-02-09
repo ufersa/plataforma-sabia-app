@@ -24,24 +24,13 @@ const SignUp = (): JSX.Element => (
           keyboardShouldPersistTaps="handled"
         >
           <S.Container>
-            <S.TitleWrapper>
-              <S.Title>Informações Pessoais</S.Title>
-            </S.TitleWrapper>
-            <S.InputWrapper>
-              <Input type="default" placeholder="Nome completo" />
-            </S.InputWrapper>
-            <S.InputWrapper>
-              <Input type="email-address" placeholder="E-mail" />
-            </S.InputWrapper>
-            <S.TitleWrapper>
-              <S.Title>Credenciais</S.Title>
-            </S.TitleWrapper>
-            <S.InputWrapper>
-              <Input type="default" placeholder="Senha" />
-            </S.InputWrapper>
-            <S.InputWrapper>
-              <Input type="default" placeholder="Repetir senha" />
-            </S.InputWrapper>
+            <S.Title>Informações Pessoais</S.Title>
+            <Input type="default" placeholder="Nome completo" style={{ marginBottom: 24 }} />
+            <Input type="email-address" placeholder="E-mail" style={{ marginBottom: 24 }} />
+
+            <S.Title>Credenciais</S.Title>
+            <Input type="default" placeholder="Senha" style={{ marginBottom: 24 }} />
+            <Input type="default" placeholder="Repetir senha" style={{ marginBottom: 24 }} />
           </S.Container>
           <S.ButtonWrapper>
             <Button variant="secondary" onPress={() => {}}>

@@ -27,8 +27,7 @@ export const Title = styled(DefaultText)`
 `;
 
 export const InputWrapper = styled.View`
-  margin-horizontal: 16px;
-  margin-bottom: 24px;
+  margin: 0px 0px 24px;
 `;
 
 export const ForgotPassword = styled.TouchableOpacity`
@@ -44,5 +43,6 @@ export const ForgotPasswordText = styled(DefaultText)`
 `;
 
 export const ButtonWrapper = styled.TouchableOpacity`
-  padding-horizontal: 16px;
+  padding: 0px 16px;
+  margin-bottom: 40px;
 `;
