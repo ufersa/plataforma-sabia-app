@@ -15,6 +15,7 @@ export const ButtonWrapper = styled.View`
   border-top-color: #e8e8e8;
   padding-top: 12px;
   padding-horizontal: 16px;
+  margin-bottom: 10px;
 `;
 
 export const Container = styled.ScrollView``;

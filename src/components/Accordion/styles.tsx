@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
-import { DefaultText } from '..';
+import DefaultText from '../Text';
 
 export const AccordionWrapper = styled.View``;
 
