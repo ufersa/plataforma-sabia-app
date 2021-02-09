@@ -18,8 +18,7 @@ export const InputContainer = styled.TextInput`
   line-height: 20px;
   font-size: 16px;
   color: ${({ variant }) => (variant && variant === 'dark' ? '#ffffff' : '#a5a5a5')};
-  padding-left: 14px;
-  padding-right: 20px;
+  padding: 0px 20px 0px 14px;
 `;
 
 export const IconWrapper = styled.View`

@@ -62,54 +62,50 @@ const SignIn = (): JSX.Element => {
           >
             <S.Container>
               <Image source={Logo} />
-              <S.TitleWrapper>
-                <S.Title>Oxe, ta esperando o que?</S.Title>
-              </S.TitleWrapper>
+              <S.Title>Oxe, ta esperando o que?</S.Title>
               <>
-                <S.InputWrapper>
-                  <Controller
-                    name="email"
-                    control={control}
-                    defaultValue=""
-                    render={({ onChange, onBlur, value }) => (
-                      <Input
-                        type="default"
-                        icon={<Feather name="user" size={18} color="#ffffff" />}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        keyboardType="email-address"
-                        placeholder="E-mail"
-                        returnKeyType="next"
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        variant="dark"
-                      />
-                    )}
-                  />
-                </S.InputWrapper>
-                <S.InputWrapper>
-                  <Controller
-                    name="password"
-                    control={control}
-                    defaultValue=""
-                    render={({ onChange, onBlur, value }) => (
-                      <Input
-                        type="default"
-                        icon={<Feather name="lock" size={18} color="#ffffff" />}
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        secureTextEntry
-                        placeholder="Senha"
-                        returnKeyType="send"
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                        variant="dark"
-                      />
-                    )}
-                  />
-                </S.InputWrapper>
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue=""
+                  render={({ onChange, onBlur, value }) => (
+                    <Input
+                      type="default"
+                      icon={<Feather name="user" size={18} color="#ffffff" />}
+                      autoCorrect={false}
+                      autoCapitalize="none"
+                      keyboardType="email-address"
+                      placeholder="E-mail"
+                      returnKeyType="next"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      variant="dark"
+                      style={{ marginBottom: 24 }}
+                    />
+                  )}
+                />
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue=""
+                  render={({ onChange, onBlur, value }) => (
+                    <Input
+                      type="default"
+                      icon={<Feather name="lock" size={18} color="#ffffff" />}
+                      autoCorrect={false}
+                      autoCapitalize="none"
+                      secureTextEntry
+                      placeholder="Senha"
+                      returnKeyType="send"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      variant="dark"
+                      style={{ marginBottom: 24 }}
+                    />
+                  )}
+                />
                 <Button disabled={false} variant="white" onPress={handleSubmit(handleSignIn)}>
                   Fazer Login
                 </Button>
