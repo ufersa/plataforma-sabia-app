@@ -18,13 +18,14 @@ interface DataCardProps {
   }
 }
 interface TechnologyCardProps {
-  data: DataCardProps | {}
+  data: DataCardProps
   style: StyleProp<any>
   loading: boolean
   navigation: StackNavigationProp<any, any>
 }
 
 interface FavoriteProps {
+  // eslint-disable-next-line react/require-default-props
   favorite?: boolean
 }
 
@@ -34,7 +35,7 @@ const Label = (): JSX.Element => (
   </S.LabelWrapper>
 );
 
-const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
+const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
   const [state, setState] = useState(favorite);
   const animatePulse = new Animated.Value(1);
   const scale = animatePulse.interpolate({
@@ -69,64 +70,61 @@ const Favorite = ({ favorite = false }: FavoriteProps): JSX.Element => {
 
 export default ({
   data, navigation, loading = false, style = {},
-}: TechnologyCardProps): JSX.Element => {
-  const { status }: DataCardProps = data;
-  return (
-    <S.CardWrapper style={style}>
-      <Card>
-        <S.CardContainer>
-          {!loading && (
-            <>
-              <S.CardImage>
-                <S.Actions>
-                  <Label />
-                  <Favorite />
-                </S.Actions>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('Technology')}
-                  activeOpacity={0.7}
-                >
-                  <Image
-                    source={{
-                      uri: 'https://fakeimg.pl/216x216/',
-                      cache: 'only-if-cached',
-                    }}
-                    style={{
-                      width: 216,
-                      height: 216,
-                      borderRadius: 8,
-                    }}
-                  />
-                </TouchableOpacity>
-              </S.CardImage>
+}: TechnologyCardProps): JSX.Element => (
+  <S.CardWrapper style={style}>
+    <Card>
+      <S.CardContainer>
+        {!loading && (
+          <>
+            <S.CardImage>
+              <S.Actions>
+                <Label />
+                <Favorite />
+              </S.Actions>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Technology')}
+                onPress={() => navigation.navigate('Technology', { id: data.id })}
                 activeOpacity={0.7}
               >
-                <S.Title numberOfLines={2}>
-                  Test Very Long Title Technology
-                </S.Title>
+                <Image
+                  source={{
+                    uri: 'https://fakeimg.pl/216x216/',
+                    cache: 'only-if-cached',
+                  }}
+                  style={{
+                    width: 216,
+                    height: 216,
+                    borderRadius: 8,
+                  }}
+                />
               </TouchableOpacity>
-              <S.StatusWrapper>
-                <S.StatusIcon
-                  name={status === 'public' ? 'unlock' : 'lock'}
-                  size={16}
-                  color={Colors.primary}
-                />
-                <S.Status>{status === 'public' ? 'Público' : 'Privado'}</S.Status>
-              </S.StatusWrapper>
-              <S.DateWrapper>
-                <S.DateIcon
-                  name="calendar"
-                  size={16}
-                  color="#a5a5a5"
-                />
-                <S.Date>Há 2 meses atrás</S.Date>
-              </S.DateWrapper>
-            </>
-          )}
-        </S.CardContainer>
-      </Card>
-    </S.CardWrapper>
-  );
-};
+            </S.CardImage>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Technology')}
+              activeOpacity={0.7}
+            >
+              <S.Title numberOfLines={2}>
+                Test Very Long Title Technology
+              </S.Title>
+            </TouchableOpacity>
+            <S.StatusWrapper>
+              <S.StatusIcon
+                name={data.status === 'public' ? 'unlock' : 'lock'}
+                size={16}
+                color={Colors.primary}
+              />
+              <S.Status>{data.status === 'public' ? 'Público' : 'Privado'}</S.Status>
+            </S.StatusWrapper>
+            <S.DateWrapper>
+              <S.DateIcon
+                name="calendar"
+                size={16}
+                color="#a5a5a5"
+              />
+              <S.Date>Há 2 meses atrás</S.Date>
+            </S.DateWrapper>
+          </>
+        )}
+      </S.CardContainer>
+    </Card>
+  </S.CardWrapper>
+);

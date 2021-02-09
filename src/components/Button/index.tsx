@@ -21,6 +21,10 @@ const ButtonContainer = ({ variant, children, style }: ButtonContainerProps) => 
   </S.ButtonWrapper>
 );
 
+ButtonContainer.defaultProps = {
+  variant: 'primary',
+};
+
 const Button = ({
   onPress,
   children,
@@ -39,5 +43,9 @@ const Button = ({
     </ButtonContainer>
   </S.ButtonInteraction>
 );
+
+Button.defaultProps = {
+  variant: 'primary',
+};
 
 export default Button;

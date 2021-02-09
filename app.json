@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "PlataformaSabiaApp",
-    "slug": "PlataformaSabiaApp",
+    "name": "Plataforma Sabiá",
+    "slug": "plataforma-sabia",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,9 +17,11 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.plataformasabia.app",
       "supportsTablet": false
     },
     "android": {
+      "package": "com.plataformasabia.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#00a688"
