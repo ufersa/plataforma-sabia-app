@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 import React, {
   createContext,
   useCallback,
@@ -64,8 +66,6 @@ const AuthProvider = ({ children }: any): JSX.Element => {
     api.defaults.headers.authorization = `Bearer ${token}`;
 
     response = await api.get('user/me', {});
-
-    // eslint-disable-next-line camelcase
     const { id, full_name } = response.data;
 
     const user = { id, name: full_name, email };
@@ -99,7 +99,11 @@ const AuthProvider = ({ children }: any): JSX.Element => {
   return (
     <AuthContext.Provider
       value={{
-        user: data.user, loading, signIn, signOut, updateUser,
+        user: data.user,
+        loading,
+        signIn,
+        signOut,
+        updateUser,
       }}
     >
       {children}

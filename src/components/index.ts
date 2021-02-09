@@ -7,3 +7,5 @@ export { default as Select } from './Select';
 export { default as TabBar } from './TabBar';
 export { default as Badge } from './Badge';
 export { default as Modal } from './Modal';
+export { default as Tabs } from './Tabs';
+export { default as Accordion } from './Accordion';

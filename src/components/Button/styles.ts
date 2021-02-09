@@ -9,6 +9,18 @@ const buildStyle = (variant: string = 'primary') => {
       backgroundColor: colorsDefault[variant],
       color: '#ffffff',
     },
+    'primary-light': {
+      backgroundColor: colorsDefault.primaryLight,
+      color: colorsDefault.primary,
+    },
+    secondary: {
+      backgroundColor: colorsDefault[variant],
+      color: '#ffffff',
+    },
+    white: {
+      backgroundColor: '#ffffff',
+      color: colorsDefault.primary,
+    },
     danger: {
       backgroundColor: colorsDefault[variant],
       color: '#ffffff',
@@ -40,6 +52,7 @@ export const ButtonWrapper = styled.View<ButtonWrapperProps>`
 `;
 
 export const ButtonText = styled(DefaultText)`
+font-family: Rubik_500Medium;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;

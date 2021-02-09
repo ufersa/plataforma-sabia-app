@@ -16,7 +16,7 @@ const Home = ({ navigation }: HomeProps): JSX.Element => {
 
   return (
     <S.Wrapper>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
       <S.Container
         scrollEnabled
         showsVerticalScrollIndicator={false}
