@@ -1,51 +1,49 @@
 import styled from 'styled-components/native';
-
 import { Platform } from 'react-native';
-
-import { Button } from '../../components';
+import { DefaultText } from '../../components';
 
 export const Container = styled.View`
   flex: 1;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  padding: 0 30px ${Platform.OS === 'android' ? 120 : 40}px;
+  padding-horizontal: 16px;
+  padding-bottom: ${Platform.OS === 'android' ? 120 : 40}px;
 `;
 
-export const Title = styled.Text`
+export const TitleWrapper = styled.View`
+  width: 100%;
+`;
+
+export const Title = styled(DefaultText)`
+  width: 100%;
+  color: #ffffff;
+  font-family: Rubik_500Medium;
   font-size: 24px;
-  color: #f4ede8;
-  font-family: 'Rubik_500Medium';
-
-  margin: 64px 0 24px;
+  font-weight: 500;
+  line-height: 36px;
+  margin-top: 32px;
+  margin-bottom: 24px;
 `;
 
-export const SignInButton = styled(Button)`
-  height: 56px;
-  background: #F5F5F5;
-  border-radius: 8px;
-
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+export const InputWrapper = styled.View`
+  margin-horizontal: 16px;
+  margin-bottom: 24px;
 `;
 
 export const ForgotPassword = styled.TouchableOpacity`
-  margin-top: 24px;
+  margin-top: 32px;
 `;
 
-export const ForgotPasswordText = styled.Text`
-  color: #f4ede8;
+export const ForgotPasswordText = styled(DefaultText)`
+  color: #ffffff;
+  font-family: Rubik_500Medium;
   font-size: 16px;
-  font-family: 'Rubik_500Medium';
+  font-weight: 500;
+  line-height: 24px;
 `;
 
-export const CreateAccountButton = styled(Button)`
-  background: #312e38;
-  border-top-width: 1px;
-  border-color: #232129;
-
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+export const ButtonWrapper = styled.TouchableOpacity`
+  padding-horizontal: 16px;
+  margin-bottom: 40px;
 `;

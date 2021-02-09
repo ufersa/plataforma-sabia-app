@@ -1,25 +1,21 @@
+/* eslint-disable react/style-prop-object */
 import React, { useCallback } from 'react';
 import {
-  View,
+  SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
   Alert,
   Image,
 } from 'react-native';
-
-import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { StatusBar } from 'expo-status-bar';
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
-
 import { useAuth } from '../../hooks/useAuth';
-
-import Input from '../../components/Input';
-
+import { Input, Button } from '../../components';
 import * as S from './styles';
-
-import logoImg from '../../../assets/logo/Logo-color.png';
+import Logo from '../../../assets/logo/Logo-color.png';
 
 interface SignInFormData {
   email: string;
@@ -29,7 +25,7 @@ interface SignInFormData {
 const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
   const { signIn, signOut } = useAuth();
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit } = useForm();
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -53,92 +49,83 @@ const SignIn = (): JSX.Element => {
 
   return (
     <>
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled
-      >
-        <ScrollView
-          contentContainerStyle={{ flex: 1 }}
-          keyboardShouldPersistTaps="handled"
+      <StatusBar style="light" />
+      <SafeAreaView style={{ flex: 1 }}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          enabled
         >
-          <S.Container>
-            <Image source={logoImg} />
-
-            <View>
-              <S.Title>Oxe, ta esperando o que?</S.Title>
-            </View>
-
-            <View>
-
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                render={({ onChange, onBlur, value }) => (
-                  <Input
-                    type="default"
-                    icon={<Entypo name="email" size={18} color="#a5a5a5" />}
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    placeholder="E-mail"
-                    returnKeyType="next"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
+          <ScrollView
+            contentContainerStyle={{ flex: 1 }}
+            keyboardShouldPersistTaps="handled"
+          >
+            <S.Container>
+              <Image source={Logo} />
+              <S.TitleWrapper>
+                <S.Title>Oxe, ta esperando o que?</S.Title>
+              </S.TitleWrapper>
+              <>
+                <S.InputWrapper>
+                  <Controller
+                    name="email"
+                    control={control}
+                    defaultValue=""
+                    render={({ onChange, onBlur, value }) => (
+                      <Input
+                        type="default"
+                        icon={<Feather name="user" size={18} color="#ffffff" />}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        placeholder="E-mail"
+                        returnKeyType="next"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        variant="dark"
+                      />
+                    )}
                   />
-                )}
-              />
-
-              <View
-                style={{
-                  marginTop: 15,
-                }}
-              />
-
-              <Controller
-                name="password"
-                control={control}
-                defaultValue=""
-                render={({ onChange, onBlur, value }) => (
-                  <Input
-                    type="default"
-                    icon={<MaterialCommunityIcons name="onepassword" size={18} color="#a5a5a5" />}
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    secureTextEntry
-                    placeholder="Senha"
-                    returnKeyType="send"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
+                </S.InputWrapper>
+                <S.InputWrapper>
+                  <Controller
+                    name="password"
+                    control={control}
+                    defaultValue=""
+                    render={({ onChange, onBlur, value }) => (
+                      <Input
+                        type="default"
+                        icon={<Feather name="lock" size={18} color="#ffffff" />}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        secureTextEntry
+                        placeholder="Senha"
+                        returnKeyType="send"
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        variant="dark"
+                      />
+                    )}
                   />
-                )}
-              />
-
-              <View
-                style={{
-                  marginTop: 15,
-                }}
-              />
-
-              <S.SignInButton
-                onPress={handleSubmit(handleSignIn)}
-              >
-                Fazer Login
-              </S.SignInButton>
-            </View>
-            <S.ForgotPassword>
-              <S.ForgotPasswordText>Esqueci minha senha</S.ForgotPasswordText>
-            </S.ForgotPassword>
-          </S.Container>
-        </ScrollView>
-      </KeyboardAvoidingView>
-
-      <S.CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
-        Criar uma conta
-      </S.CreateAccountButton>
+                </S.InputWrapper>
+                <Button disabled={false} variant="white" onPress={handleSubmit(handleSignIn)}>
+                  Fazer Login
+                </Button>
+              </>
+              <S.ForgotPassword>
+                <S.ForgotPasswordText>Esqueci minha senha</S.ForgotPasswordText>
+              </S.ForgotPassword>
+            </S.Container>
+          </ScrollView>
+        </KeyboardAvoidingView>
+        <S.ButtonWrapper>
+          <Button variant="secondary" onPress={() => navigation.navigate('SignUp')}>
+            Ainda não possui conta?
+          </Button>
+        </S.ButtonWrapper>
+      </SafeAreaView>
     </>
   );
 };

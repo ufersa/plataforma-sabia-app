@@ -1,19 +1,16 @@
 import React from 'react';
-
 import { createStackNavigator } from '@react-navigation/stack';
-
 import { SignIn, SignUp } from '../screens';
-import colors from '../utils/colors';
+import Colors from '../utils/colors';
 
 const Auth = createStackNavigator();
 
-const AuthRoutes: React.FC = () => (
+const AuthRoutes = (): JSX.Element => (
   <Auth.Navigator
     screenOptions={{
       headerShown: false,
-      cardStyle: { backgroundColor: colors.primary },
+      cardStyle: { backgroundColor: Colors.primary },
     }}
-
   >
     <Auth.Screen name="SignIn" component={SignIn} />
     <Auth.Screen
