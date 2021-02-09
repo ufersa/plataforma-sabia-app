@@ -15,6 +15,10 @@ interface InputProps extends TextInputProps {
   returnKey?: ReturnKeyTypeOptions
   onSubmitEditing?: () => void
   size?: string
+  variant?: string
+  style?: {
+    [property: string]: string | number
+  }
 }
 interface SizesProps {
   [name: string]: number
@@ -35,14 +39,17 @@ const Input = (props: InputProps): JSX.Element => {
     type,
     returnKey,
     multiline,
+    variant,
+    style,
   } = props;
 
   return (
     <S.InputWrapper
-      style={{
+      style={[{
         paddingVertical: multiline ? 12 : 0,
         height: multiline ? 122 : buildSize(size),
-      }}
+      }, style]}
+      variant={variant}
     >
       {icon && (
         <S.IconWrapper>
@@ -52,9 +59,10 @@ const Input = (props: InputProps): JSX.Element => {
       <S.InputContainer
         {...props}
         keyboardType={type}
-        placeholderTextColor="#a5a5a5"
+        placeholderTextColor={variant === 'dark' ? '#ffffff' : '#a5a5a5'}
         returnKeyType={returnKey}
         onSubmitEditing={() => Keyboard.dismiss()}
+        style={{ paddingBottom: 0 }}
       />
     </S.InputWrapper>
   );

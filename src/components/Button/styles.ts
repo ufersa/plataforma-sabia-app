@@ -13,6 +13,14 @@ const buildStyle = (variant: string = 'primary') => {
       backgroundColor: colorsDefault.primaryLight,
       color: colorsDefault.primary,
     },
+    secondary: {
+      backgroundColor: colorsDefault[variant],
+      color: '#ffffff',
+    },
+    white: {
+      backgroundColor: '#ffffff',
+      color: colorsDefault.primary,
+    },
     danger: {
       backgroundColor: colorsDefault[variant],
       color: '#ffffff',
