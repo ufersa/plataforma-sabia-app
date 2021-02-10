@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   Platform,
   Alert,
   Image,
+  TextInput,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
@@ -26,6 +27,8 @@ const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
   const { signIn, signOut } = useAuth();
   const { control, handleSubmit } = useForm();
+
+  const passwordRef = useRef<TextInput | null>(null);
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -59,6 +62,7 @@ const SignIn = (): JSX.Element => {
           <ScrollView
             contentContainerStyle={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
+
           >
             <S.Container>
               <Image source={Logo} />
@@ -82,6 +86,9 @@ const SignIn = (): JSX.Element => {
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
+                      onSubmitEditing={() => {
+                        passwordRef.current?.focus();
+                      }}
                     />
                   )}
                 />
@@ -89,7 +96,9 @@ const SignIn = (): JSX.Element => {
                   name="password"
                   control={control}
                   defaultValue=""
-                  render={({ onChange, onBlur, value }) => (
+                  render={({
+                    onChange, onBlur, value,
+                  }) => (
                     <Input
                       type="default"
                       icon={<Feather name="lock" size={18} color="#ffffff" />}
@@ -97,12 +106,14 @@ const SignIn = (): JSX.Element => {
                       autoCapitalize="none"
                       secureTextEntry
                       placeholder="Senha"
-                      returnKeyType="send"
+                      returnKeyType="go"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
+                      refs={passwordRef}
+                      onSubmitEditing={handleSubmit(handleSignIn)}
                     />
                   )}
                 />
