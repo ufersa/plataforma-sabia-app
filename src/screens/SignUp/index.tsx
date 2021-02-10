@@ -1,11 +1,10 @@
 /* eslint-disable react/style-prop-object */
-import React, { useRef } from 'react';
+import React from 'react';
 import {
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
-  TextInput,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
@@ -14,10 +13,7 @@ import * as S from './styles';
 
 const SignUp = (): JSX.Element => {
   const { control } = useForm();
-
-  const emailRef = useRef<TextInput | null>(null);
-  const passwordRef = useRef<TextInput | null>(null);
-  const repeatPasswordRef = useRef<TextInput | null>(null);
+  const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
 
   return (
     <>
@@ -38,18 +34,16 @@ const SignUp = (): JSX.Element => {
                 name="name"
                 control={control}
                 defaultValue=""
-                render={({ onChange, onBlur, value }) => (
+                render={({ onChange, value }) => (
                   <Input
                     type="default"
                     placeholder="Nome completo"
                     returnKeyType="next"
-                    onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
                     style={{ marginBottom: 24 }}
-                    onSubmitEditing={() => {
-                      emailRef.current?.focus();
-                    }}
+                    onBlur={() => setFocusedInput(null)}
+                    onSubmitEditing={() => setFocusedInput('email')}
                   />
                 )}
               />
@@ -57,21 +51,19 @@ const SignUp = (): JSX.Element => {
                 name="email"
                 control={control}
                 defaultValue=""
-                render={({ onChange, onBlur, value }) => (
+                render={({ onChange, value }) => (
                   <Input
                     type="email-address"
                     autoCorrect={false}
                     autoCapitalize="none"
                     placeholder="E-mail"
                     returnKeyType="next"
-                    onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
                     style={{ marginBottom: 24 }}
-                    onSubmitEditing={() => {
-                      passwordRef.current?.focus();
-                    }}
-                    refs={emailRef}
+                    focus={focusedInput === 'email'}
+                    onSubmitEditing={() => setFocusedInput('password')}
+                    onBlur={() => setFocusedInput(null)}
                   />
                 )}
               />
@@ -81,7 +73,7 @@ const SignUp = (): JSX.Element => {
                 name="password"
                 control={control}
                 defaultValue=""
-                render={({ onChange, onBlur, value }) => (
+                render={({ onChange, value }) => (
                   <Input
                     type="default"
                     secureTextEntry
@@ -89,14 +81,12 @@ const SignUp = (): JSX.Element => {
                     autoCapitalize="none"
                     placeholder="Senha"
                     returnKeyType="next"
-                    onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
                     style={{ marginBottom: 24 }}
-                    onSubmitEditing={() => {
-                      repeatPasswordRef.current?.focus();
-                    }}
-                    refs={passwordRef}
+                    focus={focusedInput === 'password'}
+                    onBlur={() => setFocusedInput(null)}
+                    onSubmitEditing={() => setFocusedInput('repeatPassword')}
                   />
                 )}
               />
@@ -104,7 +94,7 @@ const SignUp = (): JSX.Element => {
                 name="repeatPassword"
                 control={control}
                 defaultValue=""
-                render={({ onChange, onBlur, value }) => (
+                render={({ onChange, value }) => (
                   <Input
                     type="default"
                     secureTextEntry
@@ -112,22 +102,22 @@ const SignUp = (): JSX.Element => {
                     autoCapitalize="none"
                     placeholder="Repetir senha"
                     returnKeyType="done"
-                    onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
                     style={{ marginBottom: 24 }}
-                    refs={repeatPasswordRef}
+                    onBlur={() => setFocusedInput(null)}
+                    focus={focusedInput === 'repeatPassword'}
                   />
                 )}
               />
             </S.Container>
-            <S.ButtonWrapper>
-              <Button variant="secondary" onPress={() => {}}>
-                Cadastrar
-              </Button>
-            </S.ButtonWrapper>
           </ScrollView>
         </KeyboardAvoidingView>
+        <S.ButtonWrapper>
+          <Button variant="secondary" onPress={() => { }}>
+            Cadastrar
+          </Button>
+        </S.ButtonWrapper>
       </SafeAreaView>
     </>
   );

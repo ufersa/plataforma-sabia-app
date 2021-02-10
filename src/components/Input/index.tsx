@@ -1,5 +1,5 @@
 import React, {
-  RefObject, useCallback, useRef, useState,
+  RefObject, useCallback, useRef, useState, useEffect,
 } from 'react';
 import {
   Keyboard,
@@ -24,7 +24,7 @@ interface InputProps extends TextInputProps {
   style?: {
     [property: string]: string | number
   },
-  focus?: string
+  focus?: boolean
 }
 interface SizesProps {
   [name: string]: number
@@ -40,7 +40,6 @@ const buildSize = (size: string = 'medium') => {
 
 const Input = (props: InputProps): JSX.Element => {
   const {
-    refs = useRef(null),
     size = 'medium',
     icon = null,
     type,
@@ -49,16 +48,34 @@ const Input = (props: InputProps): JSX.Element => {
     multiline = false,
     variant,
     style,
+    focus = false,
+    onBlur,
+    onFocus,
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
+  const ref = useRef<TextInput | null>(null);
 
-  const handleInputFocus = useCallback(() => {
+  useEffect(() => {
+    if (ref.current && focus) {
+      ref.current.focus();
+    }
+  }, [ref.current, focus]);
+
+  const handleInputFocus = useCallback((event) => {
     setIsFocused(true);
+
+    if (onFocus) {
+      onFocus(event);
+    }
   }, []);
 
-  const handleInputBlur = useCallback(() => {
+  const handleInputBlur = useCallback((event) => {
     setIsFocused(false);
+
+    if (onBlur) {
+      onBlur(event);
+    }
   }, []);
 
   return (
@@ -84,7 +101,7 @@ const Input = (props: InputProps): JSX.Element => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         style={{ paddingBottom: 0 }}
-        ref={refs}
+        ref={ref}
       />
     </S.InputWrapper>
   );
