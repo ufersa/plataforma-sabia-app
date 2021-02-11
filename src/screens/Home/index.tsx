@@ -1,39 +1,32 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState, Fragment } from 'react';
+import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import Search from './components/Search';
+import Header from './components/Header';
 import Technologies from './components/Technologies';
 import Banks from './components/Banks';
+import Services from './components/Services';
 import * as S from './styles';
 
 interface HomeProps {
   navigation: StackNavigationProp<any, any>
 }
 
-const Home = ({ navigation }: HomeProps): JSX.Element => {
-  const [isEditing, setEditing] = useState(false);
-
-  return (
+const Home = ({ navigation }: HomeProps): JSX.Element => (
+  <>
+    <Header />
     <S.Wrapper>
       <StatusBar style="dark" />
       <S.Container
         scrollEnabled
         showsVerticalScrollIndicator={false}
       >
-        <Search
-          onFocus={() => setEditing(true)}
-          onBlur={() => setEditing(false)}
-        />
-        {!isEditing && (
-          <>
-            <Technologies navigation={navigation} />
-            <Banks navigation={navigation} />
-          </>
-        )}
+        <Technologies navigation={navigation} />
+        <Banks navigation={navigation} />
+        <Services navigation={navigation} />
       </S.Container>
     </S.Wrapper>
-  );
-};
+  </>
+);
 
 export default Home;
