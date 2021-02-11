@@ -66,7 +66,9 @@ const SignIn = (): JSX.Element => {
           >
             <S.Container>
               <Image source={Logo} />
-              <S.Title>Oxe, ta esperando o que?</S.Title>
+              <S.TitleWrapper>
+                <S.Title>Oxe, ta esperando o que?</S.Title>
+              </S.TitleWrapper>
               <>
                 <Controller
                   name="email"
