@@ -1,24 +1,30 @@
-import React from 'react';
+import React, {
+  RefObject, useCallback, useRef, useState, useEffect,
+} from 'react';
 import {
   Keyboard,
   TextInputProps,
   KeyboardTypeOptions,
   ReturnKeyTypeOptions,
+  TextInput,
 } from 'react-native';
 
 import * as S from './styles';
 
 interface InputProps extends TextInputProps {
+  // eslint-disable-next-line no-unused-vars
+  refs?: ((instance: TextInput | null) => void) | RefObject<TextInput> | null | undefined
   icon?: JSX.Element
   type: KeyboardTypeOptions
   multiline?: boolean
-  returnKey?: ReturnKeyTypeOptions
+  returnKeyType?: ReturnKeyTypeOptions
   onSubmitEditing?: () => void
   size?: string
   variant?: string
   style?: {
     [property: string]: string | number
-  }
+  },
+  focus?: boolean
 }
 interface SizesProps {
   [name: string]: number
@@ -37,11 +43,40 @@ const Input = (props: InputProps): JSX.Element => {
     size = 'medium',
     icon = null,
     type,
-    returnKey = 'done',
+    returnKeyType = 'done',
+    onSubmitEditing = () => Keyboard.dismiss(),
     multiline = false,
     variant,
     style,
+    focus = false,
+    onBlur,
+    onFocus,
   } = props;
+
+  const [isFocused, setIsFocused] = useState(false);
+  const ref = useRef<TextInput | null>(null);
+
+  useEffect(() => {
+    if (ref.current && focus) {
+      ref.current.focus();
+    }
+  }, [ref.current, focus]);
+
+  const handleInputFocus = useCallback((event) => {
+    setIsFocused(true);
+
+    if (onFocus) {
+      onFocus(event);
+    }
+  }, []);
+
+  const handleInputBlur = useCallback((event) => {
+    setIsFocused(false);
+
+    if (onBlur) {
+      onBlur(event);
+    }
+  }, []);
 
   return (
     <S.InputWrapper
@@ -50,6 +85,7 @@ const Input = (props: InputProps): JSX.Element => {
         height: multiline ? 122 : buildSize(size),
       }, style]}
       variant={variant}
+      isFocused={isFocused}
     >
       {icon && (
         <S.IconWrapper>
@@ -60,9 +96,12 @@ const Input = (props: InputProps): JSX.Element => {
         {...props}
         keyboardType={type}
         placeholderTextColor={variant === 'dark' ? '#ffffff' : '#a5a5a5'}
-        returnKeyType={returnKey}
-        onSubmitEditing={() => Keyboard.dismiss()}
+        returnKeyType={returnKeyType}
+        onSubmitEditing={onSubmitEditing}
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
         style={{ paddingBottom: 0 }}
+        ref={ref}
       />
     </S.InputWrapper>
   );

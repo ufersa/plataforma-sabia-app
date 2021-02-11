@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,6 +7,7 @@ import {
   Platform,
   Alert,
   Image,
+  TextInput,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
@@ -26,6 +27,9 @@ const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
   const { signIn, signOut } = useAuth();
   const { control, handleSubmit } = useForm();
+
+  const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
+  const passwordRef = useRef<TextInput | null>(null);
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -68,7 +72,7 @@ const SignIn = (): JSX.Element => {
                   name="email"
                   control={control}
                   defaultValue=""
-                  render={({ onChange, onBlur, value }) => (
+                  render={({ onChange, value }) => (
                     <Input
                       type="default"
                       icon={<Feather name="user" size={18} color="#ffffff" />}
@@ -77,11 +81,12 @@ const SignIn = (): JSX.Element => {
                       keyboardType="email-address"
                       placeholder="E-mail"
                       returnKeyType="next"
-                      onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
+                      onSubmitEditing={() => setFocusedInput('password')}
+                      onBlur={() => setFocusedInput(null)}
                     />
                   )}
                 />
@@ -89,7 +94,9 @@ const SignIn = (): JSX.Element => {
                   name="password"
                   control={control}
                   defaultValue=""
-                  render={({ onChange, onBlur, value }) => (
+                  render={({
+                    onChange, value,
+                  }) => (
                     <Input
                       type="default"
                       icon={<Feather name="lock" size={18} color="#ffffff" />}
@@ -97,12 +104,15 @@ const SignIn = (): JSX.Element => {
                       autoCapitalize="none"
                       secureTextEntry
                       placeholder="Senha"
-                      returnKeyType="send"
-                      onBlur={onBlur}
+                      returnKeyType="go"
                       onChangeText={onChange}
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
+                      refs={passwordRef}
+                      focus={focusedInput === 'password'}
+                      onSubmitEditing={handleSubmit(handleSignIn)}
+                      onBlur={() => setFocusedInput(null)}
                     />
                   )}
                 />

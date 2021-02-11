@@ -3,9 +3,10 @@ import { DefaultText } from '../../components';
 
 export const Container = styled.View`
   flex: 1;
-  width: 100%;
-  height: 100%;
-  padding-top: 32px;
+  padding-top: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   padding-horizontal: 16px;
 `;
 
