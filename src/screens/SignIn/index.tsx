@@ -28,6 +28,7 @@ const SignIn = (): JSX.Element => {
   const { signIn, signOut } = useAuth();
   const { control, handleSubmit } = useForm();
 
+  const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
   const passwordRef = useRef<TextInput | null>(null);
 
   const handleSignIn = useCallback(
@@ -62,7 +63,6 @@ const SignIn = (): JSX.Element => {
           <ScrollView
             contentContainerStyle={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
-
           >
             <S.Container>
               <Image source={Logo} />
@@ -72,7 +72,7 @@ const SignIn = (): JSX.Element => {
                   name="email"
                   control={control}
                   defaultValue=""
-                  render={({ onChange, onBlur, value }) => (
+                  render={({ onChange, value }) => (
                     <Input
                       type="default"
                       icon={<Feather name="user" size={18} color="#ffffff" />}
@@ -81,14 +81,12 @@ const SignIn = (): JSX.Element => {
                       keyboardType="email-address"
                       placeholder="E-mail"
                       returnKeyType="next"
-                      onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
-                      onSubmitEditing={() => {
-                        passwordRef.current?.focus();
-                      }}
+                      onSubmitEditing={() => setFocusedInput('password')}
+                      onBlur={() => setFocusedInput(null)}
                     />
                   )}
                 />
@@ -97,7 +95,7 @@ const SignIn = (): JSX.Element => {
                   control={control}
                   defaultValue=""
                   render={({
-                    onChange, onBlur, value,
+                    onChange, value,
                   }) => (
                     <Input
                       type="default"
@@ -107,13 +105,14 @@ const SignIn = (): JSX.Element => {
                       secureTextEntry
                       placeholder="Senha"
                       returnKeyType="go"
-                      onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
                       refs={passwordRef}
+                      focus={focusedInput === 'password'}
                       onSubmitEditing={handleSubmit(handleSignIn)}
+                      onBlur={() => setFocusedInput(null)}
                     />
                   )}
                 />

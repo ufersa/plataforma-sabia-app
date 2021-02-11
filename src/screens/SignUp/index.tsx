@@ -41,7 +41,7 @@ const SignUp = (): JSX.Element => {
                     returnKeyType="next"
                     onChangeText={onChange}
                     value={value}
-                    style={{ marginBottom: 24 }}
+                    style={{ marginBottom: 16 }}
                     onBlur={() => setFocusedInput(null)}
                     onSubmitEditing={() => setFocusedInput('email')}
                   />

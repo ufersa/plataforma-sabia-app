@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import { Platform } from 'react-native';
 import { DefaultText } from '../../components';
 
 export const Container = styled.View`
@@ -8,7 +7,6 @@ export const Container = styled.View`
   align-items: center;
   justify-content: center;
   padding-horizontal: 16px;
-  padding-bottom: ${Platform.OS === 'android' ? 120 : 40}px;
 `;
 
 export const TitleWrapper = styled.View`
