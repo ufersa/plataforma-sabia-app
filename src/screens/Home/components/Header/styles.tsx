@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../../../utils/colors';
 import { DefaultText } from '../../../../components';
@@ -59,8 +60,15 @@ const UserWrapper = styled.View`
   border-radius: 8px;
 `;
 
-export const User = (): JSX.Element => (
-  <Touch activeOpacity={0.7}>
-    <UserWrapper />
-  </Touch>
-);
+export const User = (): JSX.Element => {
+  const navigation = useNavigation();
+
+  return (
+    <Touch
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('Account')}
+    >
+      <UserWrapper />
+    </Touch>
+  );
+};

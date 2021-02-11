@@ -1,7 +1,12 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Root from '..';
-import { Technology, RequestsFeedback, RequestsFinish } from '../screens';
+import {
+  Technology,
+  RequestsFeedback,
+  RequestsFinish,
+  Account,
+} from '../screens';
 import Colors from '../utils/colors';
 
 const App = createStackNavigator();
@@ -15,10 +20,23 @@ const AppRoutes: React.FC = () => (
     />
     <App.Screen
       options={{
+        title: '',
         headerBackTitleVisible: false,
-        headerTintColor: '#ffffff',
+        headerTintColor: '#4a4a4a',
         headerStyle: {
-          backgroundColor: Colors.primary,
+          backgroundColor: Colors.background,
+        },
+      }}
+      name="Account"
+      component={Account}
+    />
+    <App.Screen
+      options={{
+        title: '',
+        headerBackTitleVisible: false,
+        headerTintColor: '#4a4a4a',
+        headerStyle: {
+          backgroundColor: Colors.background,
         },
       }}
       name="Technology"
