@@ -8,7 +8,7 @@ import React, {
   useEffect,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import api from '../services/api';
+import { login } from '../services/auth';
 
 interface User {
   id: string;
@@ -56,26 +56,18 @@ const AuthProvider = ({ children }: any): JSX.Element => {
   }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
-    let response = await api.post('auth/login', {
-      email,
-      password,
-    });
+    const response = await login(email, password);
 
-    const { token } = response.data;
+    if (response && response.token) {
+      const { token, user } = response;
 
-    api.defaults.headers.authorization = `Bearer ${token}`;
+      await AsyncStorage.multiSet([
+        ['@Sabia:token', token],
+        ['@Sabia:user', JSON.stringify(user)],
+      ]);
 
-    response = await api.get('user/me', {});
-    const { id, full_name } = response.data;
-
-    const user = { id, name: full_name, email };
-
-    await AsyncStorage.multiSet([
-      ['@Sabia:token', token],
-      ['@Sabia:user', JSON.stringify(user)],
-    ]);
-
-    setData({ token, user });
+      setData(response);
+    }
   }, []);
 
   const signOut = useCallback(async () => {
