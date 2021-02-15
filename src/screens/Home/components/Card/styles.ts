@@ -1,11 +1,11 @@
 import styled from 'styled-components/native';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
-import Colors from '../../../../../utils/colors';
-import { DefaultText } from '../../../../../components';
+import { FontAwesome5 } from '@expo/vector-icons';
+import Colors from '../../../../utils/colors';
+import { DefaultText } from '../../../../components';
 
 export const CardWrapper = styled.View`
   width: 248px;
-  height: 381px;
+  height: 345px;
 `;
 
 export const CardContainer = styled.View`
@@ -29,44 +29,24 @@ export const Title = styled(DefaultText)`
   margin-top: 16px;
 `;
 
-export const StatusWrapper = styled.View`
-  margin-top: 8px;
-  margin-bottom: 16px;
+export const AmountWrapper = styled.View`
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+  margin-top: 8px;
 `;
 
-export const Status = styled(DefaultText)`
-  font-family: Rubik_500Medium;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
+export const Amount = styled(DefaultText)`
+  font-family: ${({ bold }) => (bold ? 'Rubik_500Medium' : 'Rubik_400Regular')};
+  font-weight: ${({ bold }) => (bold ? '500' : '400')};
+  font-size: ${({ bold }) => (bold ? '16px' : '12px')};
+  line-height: ${({ bold }) => (bold ? '21px' : '18px')};;
   text-align: center;
   color: ${Colors.primary};
-`;
 
-export const StatusIcon = styled(Feather)`
-  margin-right: 6px;
-`;
-
-export const DateWrapper = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Date = styled(DefaultText)`
-  font-family: Rubik_500Medium;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 18px;
-  text-align: center;
-  color: #a5a5a5;
-`;
-
-export const DateIcon = styled(Feather)`
-  margin-right: 6px;
+  ${({ bold }) => bold && `
+    margin-horizontal: 3px;
+  `};
 `;
 
 export const Actions = styled.View`

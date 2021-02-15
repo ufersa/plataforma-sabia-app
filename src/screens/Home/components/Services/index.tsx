@@ -18,12 +18,12 @@ interface TechnologiesItemProps {
   }
 }
 
-const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
+const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
   const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
 
   return (
     <>
-      <S.Title>Tecnologias em destaque</S.Title>
+      <S.Title>Serviços em destaque</S.Title>
       <S.TechnologiesWrapper
         horizontal
         pagingEnabled
@@ -52,4 +52,4 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   );
 };
 
-export default Technologies;
+export default Services;

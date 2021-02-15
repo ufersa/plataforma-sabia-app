@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabBar } from './components';
 import {
-  Home, Requests, Notifications, SignIn,
+  Home, Requests, Notifications, Favorite,
 } from './screens';
 
 const Tab = createBottomTabNavigator();
@@ -27,7 +27,7 @@ const Root = (): JSX.Element => (
     />
     <Tab.Screen
       name="Favorite"
-      component={SignIn}
+      component={Favorite}
     />
   </Tab.Navigator>
 );

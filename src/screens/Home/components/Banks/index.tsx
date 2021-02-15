@@ -18,11 +18,14 @@ const Banks = ({ navigation }: BanksProps): JSX.Element => {
       title: 'Banco de Ideias',
       background: require('../../../../../assets/images/ideas.png'),
     },
+    {
+      title: 'Banco de Pequisadores',
+      background: require('../../../../../assets/images/researchers.png'),
+    },
   ];
 
   return (
     <>
-      <S.Title>Assim canta o Sabiá</S.Title>
       <S.BanksWrapper>
         {banks.map((bank, idx) => (
           <BankCard

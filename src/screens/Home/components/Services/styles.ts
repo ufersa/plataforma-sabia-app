@@ -12,6 +12,6 @@ export const Title = styled(DefaultText)`
   font-family: Rubik_500Medium;
   font-weight: 500;
   color: #4a4a4a;
-  margin-bottom: 12px;
+  margin-vertical: 12px;
   padding-horizontal: 16px;
 `;

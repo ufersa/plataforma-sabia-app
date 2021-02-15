@@ -5,7 +5,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as S from './styles';
 
-const cardWidth = (Dimensions.get('window').width / 2) - 26;
+const cardWidth = (Dimensions.get('window').width / 3) - 26;
 interface BankCardProps {
   data: {
     title: string
@@ -21,7 +21,7 @@ export default ({ navigation, data }: BankCardProps): JSX.Element => {
     <TouchableOpacity
       style={{
         overflow: 'hidden',
-        borderRadius: 8,
+        borderRadius: 4,
       }}
       activeOpacity={0.7}
     >

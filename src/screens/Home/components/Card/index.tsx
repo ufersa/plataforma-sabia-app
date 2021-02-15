@@ -3,15 +3,12 @@ import {
   Animated, Image, TouchableOpacity, Easing, StyleProp,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Card } from '../../../../../components';
-import Colors from '../../../../../utils/colors';
+import { Card } from '../../../../components';
 import * as S from './styles';
 
 interface DataCardProps {
   id: number
   title: string
-  status: 'public' | 'private'
-  date: string
   image: string
   category: {
     name: string
@@ -106,22 +103,11 @@ export default ({
                 Test Very Long Title Technology
               </S.Title>
             </TouchableOpacity>
-            <S.StatusWrapper>
-              <S.StatusIcon
-                name={data.status === 'public' ? 'unlock' : 'lock'}
-                size={16}
-                color={Colors.primary}
-              />
-              <S.Status>{data.status === 'public' ? 'Público' : 'Privado'}</S.Status>
-            </S.StatusWrapper>
-            <S.DateWrapper>
-              <S.DateIcon
-                name="calendar"
-                size={16}
-                color="#a5a5a5"
-              />
-              <S.Date>Há 2 meses atrás</S.Date>
-            </S.DateWrapper>
+            <S.AmountWrapper>
+              <S.Amount>R$</S.Amount>
+              <S.Amount bold>489</S.Amount>
+              <S.Amount>,00</S.Amount>
+            </S.AmountWrapper>
           </>
         )}
       </S.CardContainer>
