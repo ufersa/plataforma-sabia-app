@@ -6,6 +6,7 @@ import * as S from './styles';
 const TabBar = ({ state, navigation }: BottomTabBarProps): JSX.Element => {
   const icons: string | any = {
     Home: 'home',
+    Search: 'search',
     Requests: 'package',
     Notifications: 'bell',
     Favorite: 'heart',
