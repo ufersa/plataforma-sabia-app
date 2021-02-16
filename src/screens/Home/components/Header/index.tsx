@@ -14,9 +14,7 @@ const Header = (): JSX.Element => (
       </S.CardWrapper>
     </S.Touch>
     <Image source={Logo} style={{ width: 120, height: 35 }} />
-    <S.Touch activeOpacity={0.7}>
-      <S.UserWrapper />
-    </S.Touch>
+    <S.User />
   </S.Wrapper>
 );
 
