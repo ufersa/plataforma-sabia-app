@@ -13,11 +13,11 @@ export const Wrapper = styled.View`
   padding: 8px 16px;
 `;
 
-const Touch = styled.TouchableOpacity``;
+export const Touch = styled.TouchableOpacity``;
 
-const CardWrapper = styled.View``;
+export const CardWrapper = styled.View``;
 
-const CardBadge = styled.View`
+export const CardBadge = styled.View`
   background-color: ${Colors.secondary};
   width: 16px;
   height: 16px;
@@ -30,7 +30,7 @@ const CardBadge = styled.View`
   justify-content: center;
 `;
 
-const CardBadgeText = styled(DefaultText)`
+export const CardBadgeText = styled(DefaultText)`
   font-family: Montserrat_700Bold;
   font-weight: 700;
   font-size: 12px;
@@ -42,18 +42,7 @@ export const CartIcon = styled(Feather).attrs({
   name: 'shopping-cart',
 })``;
 
-export const Cart = (): JSX.Element => (
-  <Touch activeOpacity={0.7}>
-    <CardWrapper>
-      <CardBadge>
-        <CardBadgeText>1</CardBadgeText>
-      </CardBadge>
-      <CartIcon size={30} color="#4a4a4a" />
-    </CardWrapper>
-  </Touch>
-);
-
-const UserWrapper = styled.View`
+export const UserWrapper = styled.View`
   background-color: #ccc;
   width: 40px;
   height: 40px;

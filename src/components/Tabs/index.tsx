@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Colors from '../../utils/colors';
 import * as S from './styles';
 
 interface TabOptionsProps {
@@ -17,15 +18,19 @@ const Tabs = ({ tabs }: TabProps) => {
     <S.TabsWrapper>
       <S.TabHeader>
         {tabs && tabs.map(({ title }, idx) => (
-          <S.Tab
+          <S.TabItem
             key={`tab_${idx}`}
-            title={title}
-            selected={tabSelected === idx}
-            onSelect={() => setTabSelected(idx)}
-          />
+            onPress={() => setTabSelected(idx)}
+            activeOpacity={0.7}
+            style={{ borderBottomColor: tabSelected === idx ? Colors.primary : '#d2d2d2' }}
+          >
+            <S.TabTitle selected={tabSelected === idx}>{title}</S.TabTitle>
+          </S.TabItem>
         ))}
       </S.TabHeader>
-      <S.TabContent data={tabs[tabSelected].content} />
+      <S.TabContentWrapper>
+        {tabs[tabSelected].content}
+      </S.TabContentWrapper>
     </S.TabsWrapper>
   );
 };
