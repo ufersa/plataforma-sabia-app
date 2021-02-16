@@ -8,6 +8,7 @@ export const TabContainer = styled.View`
   height: 80px;
   flex-direction: row;
   justify-content: space-around;
+  padding-horizontal: 16px;
 `;
 
 type ItemProps = {
