@@ -25,6 +25,10 @@ const buildStyle = (variant: string = 'primary') => {
       backgroundColor: colorsDefault[variant],
       color: '#ffffff',
     },
+    info: {
+      backgroundColor: colorsDefault[variant],
+      color: '#ffffff',
+    },
   };
 
   return variants[variant];
