@@ -2,6 +2,7 @@
   "expo": {
     "name": "Plataforma Sabiá",
     "slug": "plataforma-sabia",
+    "owner": "plataformasabia",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
