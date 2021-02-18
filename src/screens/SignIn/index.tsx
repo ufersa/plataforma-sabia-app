@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,7 +7,6 @@ import {
   Platform,
   Alert,
   Image,
-  TextInput,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
@@ -29,7 +28,6 @@ const SignIn = (): JSX.Element => {
   const { control, handleSubmit } = useForm();
 
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
-  const passwordRef = useRef<TextInput | null>(null);
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
@@ -111,7 +109,6 @@ const SignIn = (): JSX.Element => {
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
-                      refs={passwordRef}
                       focus={focusedInput === 'password'}
                       onSubmitEditing={handleSubmit(handleSignIn)}
                       onBlur={() => setFocusedInput(null)}
