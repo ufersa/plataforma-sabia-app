@@ -32,7 +32,7 @@ export async function login(email: string, password: string) {
 }
 
 interface RegisterProps {
-  fullname: string;
+  full_name: string;
   email: string;
   password: string;
   disclaimers: number[]
@@ -46,10 +46,10 @@ interface RegisterProps {
  * @param {string} password User password.
  */
 export async function register({
-  fullname, email, password, disclaimers,
+  full_name, email, password, disclaimers,
 }: RegisterProps): Promise<any> {
   return api.post('auth/register', {
-    full_name: fullname,
+    full_name,
     email,
     password,
     disclaimers,

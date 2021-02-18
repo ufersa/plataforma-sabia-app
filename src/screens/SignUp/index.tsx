@@ -17,8 +17,8 @@ import { register } from '../../services/auth';
 
 interface SignUpFormData {
   name: string
-  signUpEmail: string;
-  signUpPassword: string;
+  email: string;
+  password: string;
   repeatPassword: string;
 }
 
@@ -32,16 +32,16 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
 
   const handleSignUp = useCallback(
     async (data: SignUpFormData) => {
-      if (data.signUpPassword !== data.repeatPassword) {
+      if (data.password !== data.repeatPassword) {
         Alert.alert(
           'Erro no cadastro',
           'As senhas não coincidem',
         );
       } else {
         await register({
-          fullname: data.name,
-          email: data.signUpEmail,
-          password: data.signUpPassword,
+          full_name: data.name,
+          email: data.email,
+          password: data.password,
           disclaimers: [1, 2, 3, 4, 5, 6, 7], // #TODO coletar da interface
         }).then(() => {
           Alert.alert('Plataforma Sabia', '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.');
@@ -86,12 +86,12 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     value={value}
                     style={{ marginBottom: 16 }}
                     onBlur={() => setFocusedInput(null)}
-                    onSubmitEditing={() => setFocusedInput('signUpEmail')}
+                    onSubmitEditing={() => setFocusedInput('email')}
                   />
                 )}
               />
               <Controller
-                name="signUpEmail"
+                name="email"
                 control={control}
                 defaultValue=""
                 render={({ onChange, value }) => (
@@ -104,8 +104,8 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     onChangeText={onChange}
                     value={value}
                     style={{ marginBottom: 24 }}
-                    focus={focusedInput === 'signUpEmail'}
-                    onSubmitEditing={() => setFocusedInput('signUpPassword')}
+                    focus={focusedInput === 'email'}
+                    onSubmitEditing={() => setFocusedInput('password')}
                     onBlur={() => setFocusedInput(null)}
                   />
                 )}
@@ -113,7 +113,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
 
               <S.Title>Credenciais</S.Title>
               <Controller
-                name="signUpPassword"
+                name="password"
                 control={control}
                 defaultValue=""
                 render={({ onChange, value }) => (
@@ -127,7 +127,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     onChangeText={onChange}
                     value={value}
                     style={{ marginBottom: 24 }}
-                    focus={focusedInput === 'signUpPassword'}
+                    focus={focusedInput === 'password'}
                     onBlur={() => setFocusedInput(null)}
                     onSubmitEditing={() => setFocusedInput('repeatPassword')}
                   />
