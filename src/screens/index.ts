@@ -1,4 +1,5 @@
 export { default as Account } from './Account';
+export { default as Cart } from './Cart';
 export { default as Home } from './Home';
 export { default as Requests } from './Requests';
 export { default as RequestsFeedback } from './RequestsFeedback';
