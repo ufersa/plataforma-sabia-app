@@ -95,7 +95,7 @@ export const Total = ({ amount }: TotalProps): JSX.Element => (
 );
 
 export const ButtonWrapper = styled.TouchableOpacity`
-  padding: 0px 16px;
+  padding: 0px 16px 16px;
 `;
 
 export const ModalContent = styled.View`

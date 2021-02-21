@@ -36,11 +36,12 @@ const Cart = (): JSX.Element => {
             <S.CartWrapper>
               <S.Items
                 data={[
-                  { title: 'Service name' },
+                  { title: 'Service One' },
+                  { title: 'Service Two' },
                 ]}
                 onEdit={(item) => setSelectedItem(item)}
               />
-              <S.Total amount={48} />
+              <S.Total amount={96} />
               <S.Label>Observações</S.Label>
               <Input
                 type="default"
