@@ -1,6 +1,5 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
 
 export default ({ title, onPress }: any): JSX.Element => (
@@ -25,15 +24,12 @@ export default ({ title, onPress }: any): JSX.Element => (
       <S.Title numberOfLines={1}>{title}</S.Title>
       <S.Value>R$ 48/h</S.Value>
       <S.Author>UFERSA</S.Author>
-
-      <S.EditIcon>
-        <TouchableOpacity
-          onPress={() => onPress({ title })}
-          activeOpacity={0.7}
-        >
-          <Feather name="edit" size={24} color="black" />
-        </TouchableOpacity>
-      </S.EditIcon>
+      <TouchableOpacity
+        onPress={() => onPress({ title })}
+        activeOpacity={0.7}
+      >
+        <S.Edit>Editar item</S.Edit>
+      </TouchableOpacity>
     </S.CardDetails>
   </S.CardWrapper>
 );
