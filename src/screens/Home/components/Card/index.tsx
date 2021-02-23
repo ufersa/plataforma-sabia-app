@@ -4,15 +4,15 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Card } from '../../../../components';
+import formatMoney from '../../../../utils/formatMoney';
 import * as S from './styles';
 
 interface DataCardProps {
   id: number
   title: string
   image: string
-  category: {
-    name: string
-  }
+  price: number
+  description: string,
 }
 interface TechnologyCardProps {
   data: DataCardProps
@@ -20,17 +20,9 @@ interface TechnologyCardProps {
   loading: boolean
   navigation: StackNavigationProp<any, any>
 }
-
 interface FavoriteProps {
-  // eslint-disable-next-line react/require-default-props
   favorite?: boolean
 }
-
-const Label = (): JSX.Element => (
-  <S.LabelWrapper>
-    <S.LabelText>Semiárido</S.LabelText>
-  </S.LabelWrapper>
-);
 
 const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
   const [state, setState] = useState(favorite);
@@ -75,17 +67,15 @@ export default ({
           <>
             <S.CardImage>
               <S.Actions>
-                <Label />
                 <Favorite />
               </S.Actions>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Technology', { id: data.id })}
+                onPress={() => navigation.navigate('Technology', { data })}
                 activeOpacity={0.7}
               >
                 <Image
                   source={{
-                    uri: 'https://fakeimg.pl/216x216/',
-                    cache: 'only-if-cached',
+                    uri: data.image,
                   }}
                   style={{
                     width: 216,
@@ -96,17 +86,15 @@ export default ({
               </TouchableOpacity>
             </S.CardImage>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Technology')}
+              onPress={() => navigation.navigate('Technology', { data })}
               activeOpacity={0.7}
             >
               <S.Title numberOfLines={2}>
-                Test Very Long Title Technology
+                {data.title}
               </S.Title>
             </TouchableOpacity>
             <S.AmountWrapper>
-              <S.Amount>R$</S.Amount>
-              <S.Amount bold>489</S.Amount>
-              <S.Amount>,00</S.Amount>
+              <S.Amount bold>{formatMoney(data.price)}</S.Amount>
             </S.AmountWrapper>
           </>
         )}

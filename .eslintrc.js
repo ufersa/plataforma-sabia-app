@@ -24,6 +24,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',
     'max-len': 'off',
+    'react/prop-types': 'off',
   },
   settings: {
     'import/resolver': {

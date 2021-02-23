@@ -2,24 +2,38 @@ import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TechnologyCard from '../Card';
 import * as S from './styles';
+import useFind from '../../../../hooks/useFind';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
 }
 
-interface TechnologiesItemProps {
-  id?: number
-  title?: string
-  status?: string
-  date?: string
-  image?: string
-  category?: {
-    name: string
-  }
-}
+// interface TechnologiesItemProps {
+//   id?: number
+//   title?: string
+//   status?: string
+//   date?: string
+//   image?: string
+//   category?: {
+//     name: string
+//   }
+// }
 
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
-  const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
+  // const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
+
+  const { loading, technologies } = useFind('technologies', {
+    embed: '',
+    perPage: 4,
+    orderBy: 'created_at',
+    order: 'DESC',
+    status: 'published',
+    taxonomy: 'category',
+  });
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <>
@@ -39,9 +53,16 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
         {technologies.map((technology, idx) => (
           <TechnologyCard
             key={`technology_${idx}`}
-            data={technology}
+            data={{
+              id: technology.id,
+              title: technology.title,
+              image: technology.thumbnail.url,
+              description: technology.description,
+              price: technology.costs[0].price,
+              // isSeller: technology.
+            }}
             navigation={navigation}
-            loading={false} // Eg.: technology?.id !== null
+            loading={false}
             style={{
               marginRight: (idx + 1) === technologies.length ? 36 : 20,
             }}
