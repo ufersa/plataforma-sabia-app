@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 export const InputNumberWrapper = styled.View`
   background-color: #ffffff;
   width: 100%;
-  height: 46px;
+  height: 56px;
   border-radius: 8px;
   flex-direction: row;
   align-items: center;

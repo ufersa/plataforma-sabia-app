@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import DefaultText from '../Text';
 
 export const Wrapper = styled.View`
-  background-color: red;
   flex: 1;
 `;
 
