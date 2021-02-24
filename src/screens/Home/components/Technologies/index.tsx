@@ -59,6 +59,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
               image: technology.thumbnail.url,
               description: technology.description,
               price: technology.costs[0].price,
+              createdAt: technology.created_at,
               // isSeller: technology.
             }}
             navigation={navigation}

@@ -4,6 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import formatMoney from '../../utils/formatMoney';
+import formatDistance from '../../utils/formatDistance';
 import { Button } from '../../components';
 import {
   About,
@@ -28,7 +29,6 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
           <S.Image
             source={{
               uri: data.image,
-              cache: 'only-if-cached',
             }}
             style={{
               width: '100%',
@@ -38,15 +38,15 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             }}
           />
           <S.Title>{data.title}</S.Title>
-          <S.Amount>{formatMoney(data.price)}</S.Amount>
           <S.HeaderDetails>
+            <S.Amount>{formatMoney(data.price)}</S.Amount>
             <S.Date>
               <S.DateIcon
                 name="calendar"
                 size={16}
                 color="#a5a5a5"
               />
-              <S.DateText>Há 2 meses atrás</S.DateText>
+              <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
             </S.Date>
           </S.HeaderDetails>
         </S.Header>

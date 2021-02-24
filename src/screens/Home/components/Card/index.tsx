@@ -13,6 +13,7 @@ interface DataCardProps {
   image: string
   price: number
   description: string,
+  createdAt: string
 }
 interface TechnologyCardProps {
   data: DataCardProps
