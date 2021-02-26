@@ -30,3 +30,28 @@ export async function login(email: string, password: string) {
 
   return false;
 }
+
+interface RegisterProps {
+  full_name: string;
+  email: string;
+  password: string;
+  disclaimers: number[]
+}
+
+/**
+ * Calls the register endpoint.
+ *
+ * @param {string} fullname The full name of the user.
+ * @param {string} email User email.
+ * @param {string} password User password.
+ */
+export async function register({
+  full_name, email, password, disclaimers,
+}: RegisterProps): Promise<any> {
+  return api.post('auth/register', {
+    full_name,
+    email,
+    password,
+    disclaimers,
+  });
+}

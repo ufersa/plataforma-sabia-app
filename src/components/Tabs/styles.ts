@@ -26,8 +26,8 @@ export const TabTitle = styled(DefaultText)`
   line-height: 24px;
 `;
 
-export const TabContentWrapper = styled.View`
-  padding-top: 34px;
-  padding-bottom: 24px;
-  padding-horizontal: 16px;
-`;
+// export const TabContentWrapper = styled.View`
+//   padding-horizontal: 16px;
+// `;
+
+export const TabContentWrapper = styled.View``;

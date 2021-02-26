@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
+import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
 
 interface ButtonProps {
@@ -7,16 +8,25 @@ interface ButtonProps {
   children: string
   variant?: string
   disabled?: boolean
+  style?: object
+  icon?: string
 }
 
 interface ButtonContainerProps {
   variant?: string
-  children: string
+  children: string | JSX.Element
   style: object
+  icon?: string
 }
 
-const ButtonContainer = ({ variant, children, style }: ButtonContainerProps) => (
+const ButtonContainer = ({
+  variant,
+  children,
+  style,
+  icon,
+}: ButtonContainerProps) => (
   <S.ButtonWrapper variant={variant} style={style}>
+    {icon && <Feather name="trash" size={24} color="#ffffff" style={{ marginRight: 8 }} />}
     <S.ButtonText variant={variant}>{children}</S.ButtonText>
   </S.ButtonWrapper>
 );
@@ -30,6 +40,8 @@ const Button = ({
   children,
   variant,
   disabled = false,
+  style,
+  icon,
 }: ButtonProps): JSX.Element => (
   <S.ButtonInteraction
     onPress={onPress}
@@ -37,7 +49,8 @@ const Button = ({
   >
     <ButtonContainer
       variant={variant}
-      style={{ opacity: disabled ? 0.7 : 1 }}
+      icon={icon}
+      style={{ opacity: disabled ? 0.7 : 1, ...style }}
     >
       {children}
     </ButtonContainer>
