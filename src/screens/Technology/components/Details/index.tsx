@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from './styles';
 import { Accordion } from '../../../../components';
 import Colors from '../../../../utils/colors';
+import { useTechnology } from '../../../../hooks/useTechnology';
 
 const stages = [
   {
@@ -58,7 +59,7 @@ interface StagesProps {
 const Stages = ({ currentStep }: StagesProps) => (
   <S.StagesContainer>
     <S.Arrow
-      style={{ top: 36 * currentStep }}
+      style={{ bottom: 36 * (currentStep - 1) }}
       xml={`
           <svg width="12" height="36" viewBox="0 0 12 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 18L2.76017e-07 35.3205L1.79022e-06 0.679491L12 18Z" fill="#F99942"/>
@@ -101,64 +102,103 @@ const Stages = ({ currentStep }: StagesProps) => (
   </S.StagesContainer>
 );
 
-const Technology = () => (
-  <S.AccordionItemWrapper>
-    <S.Subtitle>Identificação</S.Subtitle>
-    <S.Description>
-      <S.Highlight>Título: </S.Highlight>
-      Barragem subterrânea
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Categoria: </S.Highlight>
-      Recursos Hídricos, Coleta de água de chuva
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Classificação: </S.Highlight>
-      Tecnologias Sociais
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Dimensão: </S.Highlight>
-      Econômica
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Público-alvo: </S.Highlight>
-      Agricultores
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Bioma: </S.Highlight>
-      Caatinga
-    </S.Description>
-    <S.Subtitle>Estágio de desenvolvimento</S.Subtitle>
-    <Stages currentStep={0} />
-  </S.AccordionItemWrapper>
-);
+export const Technology = () => {
+  const technology = useTechnology();
 
-export const Characteristics = () => (
-  <S.AccordionItemWrapper>
-    <S.Subtitle>Objetivos</S.Subtitle>
-    <S.Description>
-      <S.Highlight>Objetivo Principal: </S.Highlight>
-      barrar o fluxo de água superficial e subterrâneo através de uma parede/septo impermeável (plástico de 200 micra) construída dentro do solo, transversalmente à direção das águas. Esse barramento armazena água com perdas mínimas de umidade, mantendo o solo úmido por um período maior de tempo, a depender das chuvas ocorridas, três a seis meses após o período chuvoso.
-    </S.Description>
-    <S.Subtitle>Aplicação</S.Subtitle>
-    <S.Description>
-      <S.Highlight>Onde é a Aplicação: </S.Highlight>
-      Dentro do solo
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Aplicação: </S.Highlight>
-      Dentro do solo
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Pré-requisitos para a implantação: </S.Highlight>
-      1. atender aos parâmetros técnicos de construção da tecnologia; 2. possuir certo nível de organização; 3. demandar ações de assistência técnica; e 4. praticar sistemas de produção dentro dos princípios da agroecologia. Todas as propriedades, comunidades e/ou assentamentos visitadas foram georeferenciadas e as informações foram armazenadas para compor banco de dados/sistema de informação e confecção de mapas de localização da propriedade. Paralelo à seleção das comunidades, foram ministradas capacitações/sensibilizações dos agricultores e técnicos em serviço, com formação de multiplicadores, objetivando torná-los aptos para construção, manejo e manutenção da tecnologia. Essa sensibilização dos agricultores foi realizada através de oficinas de construção do conhecimento, dias de campo e cursos.
-    </S.Description>
-    <S.Description>
-      <S.Highlight>Duração do processo de instalação da tecnologia: </S.Highlight>
-      5 dias.
-    </S.Description>
-  </S.AccordionItemWrapper>
-);
+  return (
+    <S.AccordionItemWrapper>
+      <S.Subtitle>Identificação</S.Subtitle>
+      <S.Description>
+        <S.Highlight>Título: </S.Highlight>
+        {technology.title}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Categoria: </S.Highlight>
+        {technology.taxonomies?.category}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Classificação: </S.Highlight>
+        {technology.taxonomies?.classification}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Dimensão: </S.Highlight>
+        {technology.taxonomies?.dimension}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Público-alvo: </S.Highlight>
+        {technology.taxonomies?.target_audience}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Bioma: </S.Highlight>
+        {technology.taxonomies?.biome}
+      </S.Description>
+      <S.Subtitle>Estágio de desenvolvimento</S.Subtitle>
+      <Stages currentStep={technology.currentLevel || 1} />
+    </S.AccordionItemWrapper>
+  );
+};
+
+export const Characteristics = () => {
+  const technology = useTechnology();
+
+  return (
+    <S.AccordionItemWrapper>
+      <S.Subtitle>Objetivos</S.Subtitle>
+      <S.Description>
+        <S.Highlight>Objetivo Principal: </S.Highlight>
+        {technology.primary_purpose}
+      </S.Description>
+      <S.Subtitle>Aplicação</S.Subtitle>
+      <S.Description>
+        <S.Highlight>Onde é a Aplicação: </S.Highlight>
+        {technology.application_mode}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Aplicação: </S.Highlight>
+        {technology.application_mode}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Pré-requisitos para a implantação: </S.Highlight>
+        {technology.requirements}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Duração do processo de instalação da tecnologia: </S.Highlight>
+        {`${technology.installation_time} dias.`}
+      </S.Description>
+    </S.AccordionItemWrapper>
+  );
+};
+
+export const Costs = () => {
+  const technology = useTechnology();
+
+  return (
+    <S.AccordionItemWrapper>
+      <S.Subtitle>Custos de Implantação</S.Subtitle>
+      <S.Description>
+        <S.Highlight>Objetivo Principal: </S.Highlight>
+        {technology?.technologyCosts?.costs?.implementation_costs}
+      </S.Description>
+      <S.Subtitle>Aplicação</S.Subtitle>
+      <S.Description>
+        <S.Highlight>Onde é a Aplicação: </S.Highlight>
+        {technology.application_mode}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Custos de Manutenção: </S.Highlight>
+        {technology.application_mode}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Pré-requisitos para a implantação: </S.Highlight>
+        {technology.requirements}
+      </S.Description>
+      <S.Description>
+        <S.Highlight>Duração do processo de instalação da tecnologia: </S.Highlight>
+        {`${technology.installation_time} dias.`}
+      </S.Description>
+    </S.AccordionItemWrapper>
+  );
+};
 
 const Details = () => (
   <S.Wrapper>
@@ -178,7 +218,7 @@ const Details = () => (
         },
         {
           title: 'Custos e financiamentos',
-          content: <></>,
+          content: <Costs />,
         },
         {
           title: 'Documentos',

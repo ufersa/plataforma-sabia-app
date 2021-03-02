@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TechnologyCard from '../Card';
@@ -8,16 +9,25 @@ interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
 }
 
-// interface TechnologiesItemProps {
-//   id?: number
-//   title?: string
-//   status?: string
-//   date?: string
-//   image?: string
-//   category?: {
-//     name: string
-//   }
-// }
+interface TechnologiesItemProps {
+  id?: number
+  title?: string
+  description: string
+  status?: string
+  date?: string
+  thumbnail: {
+    url: string
+  }
+  image?: {
+  }
+  costs: {
+    price: number
+  }[]
+  category?: {
+    name: string
+  }
+  created_at: string
+}
 
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   // const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
@@ -32,7 +42,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   });
 
   if (loading) {
-    return null;
+    return <></>;
   }
 
   return (
@@ -50,7 +60,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           alignItems: 'flex-start',
         }}
       >
-        {technologies.map((technology, idx) => (
+        {technologies && technologies.map((technology: TechnologiesItemProps, idx: number) => (
           <TechnologyCard
             key={`technology_${idx}`}
             data={{

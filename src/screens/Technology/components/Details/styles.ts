@@ -25,7 +25,8 @@ export const Description = styled(DefaultText)`
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  text-align: justify;
 `;
 
 export const Highlight = styled(Description)`
