@@ -67,6 +67,7 @@ export const Col2 = styled.View`
 `;
 
 export const Col3 = styled(Col2)`
+  min-width: 80px;
   justify-content: space-between;
 `;
 
