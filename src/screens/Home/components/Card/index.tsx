@@ -4,8 +4,8 @@ import {
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Card } from '../../../../components';
-import formatMoney from '../../../../utils/formatMoney';
 import * as S from './styles';
+import { formatMoney } from '../../../../utils/helper';
 
 interface DataCardProps {
   id: number

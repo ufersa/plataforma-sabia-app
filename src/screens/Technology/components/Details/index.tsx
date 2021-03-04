@@ -1,8 +1,12 @@
+/* eslint-disable camelcase */
 import React from 'react';
+import { View } from 'react-native';
 import * as S from './styles';
 import { Accordion } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useTechnology } from '../../../../hooks/useTechnology';
+import { unitsOptions } from '../../../../utils/technology';
+import { formatCurrencyToInt, formatMoney } from '../../../../utils/helper';
 
 const stages = [
   {
@@ -108,30 +112,30 @@ export const Technology = () => {
   return (
     <S.AccordionItemWrapper>
       <S.Subtitle>Identificação</S.Subtitle>
-      <S.Description>
+      <S.DetailsText>
         <S.Highlight>Título: </S.Highlight>
         {technology.title}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Categoria: </S.Highlight>
         {technology.taxonomies?.category}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Classificação: </S.Highlight>
         {technology.taxonomies?.classification}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Dimensão: </S.Highlight>
         {technology.taxonomies?.dimension}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Público-alvo: </S.Highlight>
         {technology.taxonomies?.target_audience}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Bioma: </S.Highlight>
         {technology.taxonomies?.biome}
-      </S.Description>
+      </S.DetailsText>
       <S.Subtitle>Estágio de desenvolvimento</S.Subtitle>
       <Stages currentStep={technology.currentLevel || 1} />
     </S.AccordionItemWrapper>
@@ -144,28 +148,131 @@ export const Characteristics = () => {
   return (
     <S.AccordionItemWrapper>
       <S.Subtitle>Objetivos</S.Subtitle>
-      <S.Description>
+      <S.DetailsText>
         <S.Highlight>Objetivo Principal: </S.Highlight>
         {technology.primary_purpose}
-      </S.Description>
+      </S.DetailsText>
       <S.Subtitle>Aplicação</S.Subtitle>
-      <S.Description>
+      <S.DetailsText>
         <S.Highlight>Onde é a Aplicação: </S.Highlight>
         {technology.application_mode}
-      </S.Description>
-      <S.Description>
-        <S.Highlight>Aplicação: </S.Highlight>
-        {technology.application_mode}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Pré-requisitos para a implantação: </S.Highlight>
         {technology.requirements}
-      </S.Description>
-      <S.Description>
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Duração do processo de instalação da tecnologia: </S.Highlight>
         {`${technology.installation_time} dias.`}
-      </S.Description>
+      </S.DetailsText>
     </S.AccordionItemWrapper>
+  );
+};
+
+interface CostsItemsProps {
+  data: {
+    id: number,
+    description: string,
+    type: string,
+    quantity: number,
+    value: number,
+    measure_unit: string
+  }[]
+}
+
+export const CostsItems = ({ data } : CostsItemsProps) => {
+  const emptyMessage = 'Nenhum custo cadastrado.';
+  let isEmpty = false;
+
+  if (!data?.length || !Array.isArray(data)) {
+    isEmpty = true;
+  }
+
+  const typesValues = [
+    {
+      value: 'service',
+      label: 'Serviço',
+    },
+    {
+      value: 'raw_input',
+      label: 'Insumo',
+    },
+    {
+      value: 'equipment',
+      label: 'Equipamento',
+    },
+    {
+      value: 'others',
+      label: 'Outro',
+    },
+  ];
+
+  const getTypeLabelByValue = (value: string) => {
+    const typeLabel = typesValues.find((type) => type.value === value);
+
+    return typeLabel?.label || value;
+  };
+
+  const getUnitLabelByValue = (value: string) => {
+    const unitItem = unitsOptions.find((unit:any) => unit.value === value);
+
+    return unitItem?.label || value;
+  };
+
+  const items = data?.map((item) => ({
+    id: item?.id,
+    description: item?.description,
+    type: getTypeLabelByValue(item?.type),
+    quantity: item?.quantity,
+    value: item?.value,
+    measure_unit: getUnitLabelByValue(item?.measure_unit),
+    total: formatCurrencyToInt(item?.value || 0) * parseInt(item?.quantity.toString() || '0', 10),
+  }));
+
+  const total = items?.reduce((acc, item) => acc + item.total, 0);
+
+  return (
+    <>
+      {!isEmpty ? (
+        <>
+          {items?.map((item) => (
+            <S.Row key={item.id}>
+              <S.Col1>
+                <S.Field>
+                  <S.ColTextBold>
+                    {item.description}
+                  </S.ColTextBold>
+                </S.Field>
+                <S.Field><S.ColTextLight>{item.type}</S.ColTextLight></S.Field>
+              </S.Col1>
+              <S.Col2>
+                <S.Field>
+                  <S.ColText>
+                    {item.quantity}
+                    x
+                  </S.ColText>
+                </S.Field>
+                <S.Field><S.ColTextLight /></S.Field>
+              </S.Col2>
+              <S.Col3>
+                <S.Field>
+                  <S.ColText>
+                    {`R$ ${item.value}`}
+                  </S.ColText>
+                </S.Field>
+                <S.Field><S.ColTextLight>{formatMoney(item.total)}</S.ColTextLight></S.Field>
+              </S.Col3>
+            </S.Row>
+          ))}
+          <View style={{ flexDirection: 'row-reverse' }}>
+            <S.TotalValue>{formatMoney(total)}</S.TotalValue>
+            <S.TotalLabel>Total: </S.TotalLabel>
+          </View>
+        </>
+      ) : (
+        <S.ColText style={{ marginBottom: 20 }}>{emptyMessage}</S.ColText>
+      )}
+    </>
   );
 };
 
@@ -174,28 +281,12 @@ export const Costs = () => {
 
   return (
     <S.AccordionItemWrapper>
-      <S.Subtitle>Custos de Implantação</S.Subtitle>
-      <S.Description>
-        <S.Highlight>Objetivo Principal: </S.Highlight>
-        {technology?.technologyCosts?.costs?.implementation_costs}
-      </S.Description>
-      <S.Subtitle>Aplicação</S.Subtitle>
-      <S.Description>
-        <S.Highlight>Onde é a Aplicação: </S.Highlight>
-        {technology.application_mode}
-      </S.Description>
-      <S.Description>
-        <S.Highlight>Custos de Manutenção: </S.Highlight>
-        {technology.application_mode}
-      </S.Description>
-      <S.Description>
-        <S.Highlight>Pré-requisitos para a implantação: </S.Highlight>
-        {technology.requirements}
-      </S.Description>
-      <S.Description>
-        <S.Highlight>Duração do processo de instalação da tecnologia: </S.Highlight>
-        {`${technology.installation_time} dias.`}
-      </S.Description>
+      <S.CostSection>Custos de Implantação</S.CostSection>
+      <CostsItems data={technology?.costs?.implementation_costs} />
+
+      <S.CostSection>Custos de Manutenção</S.CostSection>
+      <CostsItems data={technology?.costs?.maintenance_costs} />
+
     </S.AccordionItemWrapper>
   );
 };

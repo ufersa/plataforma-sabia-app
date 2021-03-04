@@ -5,10 +5,10 @@ import {
 import api from './api';
 
 interface OptionsProp {
-  normalizeTaxonomies: any
-  normalize: any
-  term: any
-  taxonomies: any
+  normalizeTaxonomies?: boolean
+  normalize?: boolean
+  term?: any
+  taxonomies?: any
 }
 
 /**
@@ -64,7 +64,7 @@ export const getTechnologyTerms = async (id: number) => {
  * @param {boolean} options.normalize Whether to normalize data to match the shape expected by the technology form.
  * @returns {Array} Technology costs.
  */
-export const getTechnologyCosts = async (id: number, options = {}) => {
+export const getTechnologyCosts = async (id: number, options: OptionsProp) => {
   const response = await api.get(`technologies/${id}/costs`);
 
   if (response.status !== 200) {

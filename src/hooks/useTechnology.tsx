@@ -1,7 +1,7 @@
 import React, {
   useState, createContext, useContext, useEffect, useCallback,
 } from 'react';
-import { getTechnology, getTechnologyCosts, getTechnologyTerms } from '../services/technology';
+import { getTechnology, getTechnologyCosts } from '../services/technology';
 
 const TechnologyContext = createContext({});
 
@@ -10,10 +10,14 @@ const TechnologyProvider = ({ children, technologyID }: any): JSX.Element => {
 
   const loadData = useCallback(
     async () => {
-      const tech = await getTechnology(technologyID, {
+      let tech = await getTechnology(technologyID, {
         taxonomies: true,
         normalizeTaxonomies: true,
       } as any);
+
+      const techCosts = await getTechnologyCosts(technologyID, { normalize: true });
+
+      tech = { ...tech, costs: techCosts.costs };
 
       setTechnology(tech);
     },

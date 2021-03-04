@@ -34,7 +34,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
 
   const { loading, technologies } = useFind('technologies', {
     embed: '',
-    perPage: 4,
+    perPage: 10,
     orderBy: 'created_at',
     order: 'DESC',
     status: 'published',

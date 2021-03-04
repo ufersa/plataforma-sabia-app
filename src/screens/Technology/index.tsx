@@ -3,7 +3,6 @@ import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import formatMoney from '../../utils/formatMoney';
 import formatDistance from '../../utils/formatDistance';
 import { Button } from '../../components';
 import {
@@ -14,6 +13,7 @@ import {
 } from './components';
 import * as S from './styles';
 import { TechnologyProvider } from '../../hooks/useTechnology';
+import { formatMoney } from '../../utils/helper';
 
 interface TechnologyProps {
   navigation: StackNavigationProp<any, any>
