@@ -1,18 +1,34 @@
+/* eslint-disable no-restricted-globals */
 import React from 'react';
 import { Image } from 'react-native';
-import { Card } from '../../../../components';
+import { Card, Badge } from '../../../../components';
+import { formatMoney } from '../../../../utils/formats';
 import * as S from './styles';
 
-export default () => (
-  <S.CardWrapper activeOpacity={0.7}>
+interface CardProps {
+  onPress?: () => void
+  title: string
+  thumbnail?: any
+  implementationCost: number
+  category: string
+}
+
+export default ({
+  onPress,
+  title,
+  thumbnail,
+  implementationCost,
+  category,
+}: CardProps) => (
+  <S.CardWrapper
+    onPress={onPress}
+    activeOpacity={0.7}
+  >
     <Card>
       <S.CardContainer>
         <S.CardImage>
           <Image
-            source={{
-              uri: 'https://fakeimg.pl/110x83/',
-              cache: 'only-if-cached',
-            }}
+            source={{ uri: thumbnail?.url }}
             style={{
               width: 110,
               height: 83,
@@ -22,10 +38,17 @@ export default () => (
         </S.CardImage>
         <S.CardDetails>
           <S.Title numberOfLines={1}>
-            Test Very Long Title Technology
+            {title}
           </S.Title>
           <S.CardInfo>
-            <S.Amount>R$ 489,00</S.Amount>
+            <S.Amount>
+              {`${implementationCost === 0 || isNaN(implementationCost) ? 'Gratuita' : formatMoney(implementationCost)}`}
+            </S.Amount>
+            <S.BadgeWrapper>
+              <S.BadgeWrapperContent>
+                <Badge variant="primary" text={category} />
+              </S.BadgeWrapperContent>
+            </S.BadgeWrapper>
           </S.CardInfo>
         </S.CardDetails>
       </S.CardContainer>
