@@ -5,17 +5,17 @@ import { getTechnology, getTechnologyCosts } from '../services/technology';
 
 const TechnologyContext = createContext({});
 
-const TechnologyProvider = ({ children, technologyID }: any): JSX.Element => {
+const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
   const [technology, setTechnology] = useState({});
 
   const loadData = useCallback(
     async () => {
-      let tech = await getTechnology(technologyID, {
+      let tech = await getTechnology(technologyId, {
         taxonomies: true,
         normalizeTaxonomies: true,
       } as any);
 
-      const techCosts = await getTechnologyCosts(technologyID, { normalize: true });
+      const techCosts = await getTechnologyCosts(technologyId, { normalize: true });
 
       tech = { ...tech, costs: techCosts.costs };
 

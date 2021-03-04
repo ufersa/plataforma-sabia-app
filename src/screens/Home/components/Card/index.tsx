@@ -6,6 +6,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Card } from '../../../../components';
 import * as S from './styles';
 import { formatMoney } from '../../../../utils/helper';
+import { useAuth } from '../../../../hooks/useAuth';
+import { handleBookmark } from '../../../../services/bookmark';
+import api from '../../../../services/api';
 
 interface DataCardProps {
   id: number
@@ -23,9 +26,10 @@ interface TechnologyCardProps {
 }
 interface FavoriteProps {
   favorite?: boolean
+  technologyId: string
 }
 
-const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
+const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   const [state, setState] = useState(favorite);
   const animatePulse = new Animated.Value(1);
   const scale = animatePulse.interpolate({
@@ -33,17 +37,32 @@ const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
     outputRange: [1.1, 1],
   });
 
+  const { user } = useAuth();
+
   useEffect(() => {
+    const isLiked = user?.bookmarks?.some((bookmark) => bookmark.id.toString() === technologyId);
+    setState(isLiked);
+
     Animated.timing(animatePulse, {
       toValue: state ? 0 : 1,
       duration: state ? 100 : 50,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
-  }, [state]);
+  }, []);
+
+  const handleFavoriteClick = async () => {
+    setState((previousState) => !previousState);
+
+    await handleBookmark({
+      active: state,
+      technologyId,
+      userId: user.id,
+    });
+  };
 
   return (
-    <S.FavoriteButton onPress={() => setState((previousState) => !previousState)}>
+    <S.FavoriteButton onPress={() => { handleFavoriteClick(); }}>
       <Animated.View
         style={{ transform: [{ scale }] }}
       >
@@ -68,7 +87,7 @@ export default ({
           <>
             <S.CardImage>
               <S.Actions>
-                <Favorite />
+                <Favorite technologyId={data.id?.toString()} favorite={false} />
               </S.Actions>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Technology', { data })}

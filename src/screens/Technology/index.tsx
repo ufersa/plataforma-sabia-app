@@ -24,7 +24,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
   const { data } = route.params;
 
   return (
-    <TechnologyProvider technologyID={data.id}>
+    <TechnologyProvider technologyId={data.id}>
       <S.Wrapper>
         <StatusBar style="dark" />
         <S.Container>

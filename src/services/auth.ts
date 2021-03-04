@@ -23,7 +23,11 @@ export async function login(email: string, password: string) {
     const responseMe = await api.get('user/me', {});
     const { id, full_name } = responseMe.data;
 
-    const user = { id, name: full_name, email };
+    const bookmarks = await api.get(`user/${id}/bookmarks`, { embed: true });
+
+    const user = {
+      id, name: full_name, email, bookmarks: bookmarks.data,
+    };
 
     return { token, user };
   }

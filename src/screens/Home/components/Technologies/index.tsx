@@ -1,9 +1,11 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TechnologyCard from '../Card';
 import * as S from './styles';
 import useFind from '../../../../hooks/useFind';
+import { useAuth } from '../../../../hooks/useAuth';
+import { getBookmarks } from '../../../../services/bookmark';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
@@ -30,7 +32,23 @@ interface TechnologiesItemProps {
 }
 
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
-  // const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
+  const [bookmarks, setBookmarks] = useState();
+
+  const { user } = useAuth();
+
+  const loadBookmarks = useCallback(
+    async () => {
+      const bookmarksResponse = await getBookmarks(parseInt(user.id, 10));
+      setBookmarks(bookmarksResponse.data);
+    },
+    [user],
+  );
+
+  useEffect(() => {
+    loadBookmarks();
+  }, []);
+
+  user.bookmarks = bookmarks;
 
   const { loading, technologies } = useFind('technologies', {
     embed: '',
@@ -66,7 +84,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
             data={{
               id: technology.id,
               title: technology.title,
-              image: technology.thumbnail.url,
+              image: technology.thumbnail?.url,
               description: technology.description,
               price: technology.costs[0].price,
               createdAt: technology.created_at,
