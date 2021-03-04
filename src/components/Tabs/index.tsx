@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import Colors from '../../utils/colors';
 import * as S from './styles';
 
@@ -9,10 +11,15 @@ interface TabOptionsProps {
 
 interface TabProps {
   tabs: TabOptionsProps[]
+  onSelect?: (idx: number) => void
 }
 
-const Tabs = ({ tabs }: TabProps) => {
+const Tabs = ({ tabs, onSelect }: TabProps) => {
   const [tabSelected, setTabSelected] = useState(0);
+
+  useEffect(() => {
+    onSelect && onSelect(tabSelected);
+  }, [tabSelected]);
 
   return (
     <S.TabsWrapper>
