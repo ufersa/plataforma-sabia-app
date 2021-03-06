@@ -52,7 +52,7 @@ export const handleBookmark = async (params: BookmarkRequestProps): Promise<any>
   return response;
 };
 
-export const getBookmarks = async (userId: number) => {
+export const getBookmarks = async (userId: string) => {
   const bookmarks = await api.get(`user/${userId}/bookmarks`, { embed: true });
 
   return bookmarks;

@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TechnologyCard from '../Card';
 import * as S from './styles';
@@ -32,14 +32,12 @@ interface TechnologiesItemProps {
 }
 
 const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
-  const [bookmarks, setBookmarks] = useState();
-
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
 
   const loadBookmarks = useCallback(
     async () => {
-      const bookmarksResponse = await getBookmarks(parseInt(user.id, 10));
-      setBookmarks(bookmarksResponse.data);
+      const { data } = await getBookmarks(user.id);
+      updateUser({ ...user, bookmarks: data });
     },
     [user],
   );
@@ -47,8 +45,6 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   useEffect(() => {
     loadBookmarks();
   }, []);
-
-  user.bookmarks = bookmarks;
 
   const { loading, technologies } = useFind('technologies', {
     embed: '',
@@ -58,10 +54,6 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
     status: 'published',
     taxonomy: 'category',
   });
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <>
@@ -78,25 +70,38 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           alignItems: 'flex-start',
         }}
       >
-        {technologies && technologies.map((technology: TechnologiesItemProps, idx: number) => (
-          <TechnologyCard
-            key={`technology_${idx}`}
-            data={{
-              id: technology.id,
-              title: technology.title,
-              image: technology.thumbnail?.url,
-              description: technology.description,
-              price: technology.costs[0].price,
-              createdAt: technology.created_at,
-              // isSeller: technology.
-            }}
-            navigation={navigation}
-            loading={false}
-            style={{
-              marginRight: (idx + 1) === technologies.length ? 36 : 20,
-            }}
-          />
-        ))}
+        {loading ? (
+          <>
+            {[0, 1, 2].map((technology, idx: number) => (
+              <TechnologyCard
+                key={`technology_${idx}`}
+                loading
+                style={{
+                  marginRight: (idx + 1) === 3 ? 36 : 20,
+                }}
+              />
+            ))}
+          </>
+        ) : (
+          technologies && technologies.map((technology: TechnologiesItemProps, idx: number) => (
+            <TechnologyCard
+              key={`technology_${idx}`}
+              data={{
+                id: technology.id,
+                title: technology.title,
+                image: technology.thumbnail?.url,
+                description: technology.description,
+                price: technology.costs.length ? technology.costs[0].price : 0,
+                createdAt: technology.created_at,
+              }}
+              navigation={navigation}
+              loading={false}
+              style={{
+                marginRight: (idx + 1) === technologies.length ? 36 : 20,
+              }}
+            />
+          ))
+        )}
       </S.TechnologiesWrapper>
     </>
   );

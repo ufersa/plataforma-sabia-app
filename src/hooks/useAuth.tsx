@@ -20,7 +20,7 @@ interface User {
   id: string;
   name: string;
   email: string;
-  bookmarks: []
+  bookmarks: [];
 }
 
 interface AuthState {

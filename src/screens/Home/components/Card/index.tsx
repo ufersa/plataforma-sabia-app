@@ -8,7 +8,6 @@ import * as S from './styles';
 import { formatMoney } from '../../../../utils/helper';
 import { useAuth } from '../../../../hooks/useAuth';
 import { handleBookmark } from '../../../../services/bookmark';
-import api from '../../../../services/api';
 
 interface DataCardProps {
   id: number
@@ -19,10 +18,10 @@ interface DataCardProps {
   createdAt: string
 }
 interface TechnologyCardProps {
-  data: DataCardProps
-  style: StyleProp<any>
+  data?: DataCardProps
+  style?: StyleProp<any>
   loading: boolean
-  navigation: StackNavigationProp<any, any>
+  navigation?: StackNavigationProp<any, any>
 }
 interface FavoriteProps {
   favorite?: boolean
@@ -40,7 +39,7 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const isLiked = user?.bookmarks?.some((bookmark) => bookmark.id.toString() === technologyId);
+    const isLiked: boolean = user.bookmarks.some((bookmark) => bookmark === technologyId);
     setState(isLiked);
 
     Animated.timing(animatePulse, {
@@ -49,15 +48,16 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
-  }, []);
+  }, [user, technologyId]);
 
   const handleFavoriteClick = async () => {
-    setState((previousState) => !previousState);
+    const active = !state;
+    setState(active);
 
     await handleBookmark({
-      active: state,
+      active,
       technologyId,
-      userId: user.id,
+      userId: user?.id,
     });
   };
 
@@ -94,9 +94,7 @@ export default ({
                 activeOpacity={0.7}
               >
                 <Image
-                  source={{
-                    uri: data.image,
-                  }}
+                  source={{ uri: data.image }}
                   style={{
                     width: 216,
                     height: 216,
@@ -114,7 +112,9 @@ export default ({
               </S.Title>
             </TouchableOpacity>
             <S.AmountWrapper>
-              <S.Amount bold>{formatMoney(data.price)}</S.Amount>
+              <S.Amount bold>
+                {Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
+              </S.Amount>
             </S.AmountWrapper>
           </>
         )}

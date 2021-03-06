@@ -4,7 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import Header from './components/Header';
 import Technologies from './components/Technologies';
-// import Banks from './components/Banks';
+import Banks from './components/Banks';
 import Services from './components/Services';
 import * as S from './styles';
 
@@ -22,7 +22,9 @@ const Home = ({ navigation }: HomeProps): JSX.Element => (
         showsVerticalScrollIndicator={false}
       >
         <Technologies navigation={navigation} />
-        {/* <Banks navigation={navigation} /> */}
+        {false && (
+          <Banks navigation={navigation} />
+        )}
         <Services navigation={navigation} />
       </S.Container>
     </S.Wrapper>

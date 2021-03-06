@@ -41,7 +41,7 @@ const useTechnology = (): any => {
   const context = useContext(TechnologyContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useTechnology must be used within an TechnologyProvider');
   }
 
   return context;
