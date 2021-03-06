@@ -5,7 +5,12 @@ import { StatusBar } from 'expo-status-bar';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectSearchBox } from 'react-instantsearch-native';
 import { Feather } from '@expo/vector-icons';
-import { ALGOLIA_APP_ID, ALGOLIA_ADMIN_KEY, ALGOLIA_INDEX_NAME } from '@env';
+import {
+  ALGOLIA_APP_ID,
+  ALGOLIA_ADMIN_KEY,
+  ALGOLIA_INDEX_NAME_TECHNOLOGY,
+  ALGOLIA_INDEX_NAME_SERVICE
+} from '@env';
 import * as S from './styles';
 import { Input, Tabs } from '../../components';
 import SearchList from './components/SearchList';
@@ -34,7 +39,7 @@ const Search = (): JSX.Element => (
     <StatusBar style="dark" />
     <InstantSearch
       searchClient={searchClient}
-      indexName={ALGOLIA_INDEX_NAME}
+      indexName="searchable_service_staging"
     >
       <S.Container>
         <S.SearchWrapper>
