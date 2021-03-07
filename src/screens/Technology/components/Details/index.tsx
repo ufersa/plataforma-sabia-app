@@ -6,55 +6,7 @@ import { Accordion } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useTechnology } from '../../../../hooks/useTechnology';
 import { unitsOptions } from '../../../../utils/technology';
-import { formatCurrencyToInt, formatMoney } from '../../../../utils/helper';
-
-const stages = [
-  {
-    title: 'Incorporação da tecnologia',
-    position: 9,
-    color: '#00A688',
-  },
-  {
-    title: 'Produto testado e qualificado',
-    position: 8,
-    color: '#33B8A0',
-  },
-  {
-    title: 'Teste de escala',
-    position: 7,
-    color: '#66CAB8',
-  },
-  {
-    title: 'Teste em campo',
-    position: 6,
-    color: '#C6DB99',
-  },
-  {
-    title: 'Validação do protótipo',
-    position: 5,
-    color: '#F9D142',
-  },
-  {
-    title: 'Validação laboratorial',
-    position: 4,
-    color: '#F9BB42',
-  },
-  {
-    title: 'Prova de conceito (PoC)',
-    position: 3,
-    color: '#F99942',
-  },
-  {
-    title: 'Conceito técnico-científico',
-    position: 2,
-    color: '#F96E42',
-  },
-  {
-    title: 'Princípios físicos básicos',
-    position: 1,
-    color: '#F04B40',
-  },
-];
+import { formatCurrencyToInt, formatMoney, technologyStages } from '../../../../utils/helper';
 
 interface StagesProps {
   currentStep: number
@@ -71,7 +23,7 @@ const Stages = ({ currentStep }: StagesProps) => (
         `}
     />
     <S.StagesWrapper>
-      {stages.map(({ title, position, color }, idx) => (
+      {technologyStages.map(({ title, position, color }, idx) => (
         <S.StageItem key={`stage_${idx}`} style={{ backgroundColor: color }}>
           <S.StageItemPosition>
             <S.StageItemPositionText>{position}</S.StageItemPositionText>

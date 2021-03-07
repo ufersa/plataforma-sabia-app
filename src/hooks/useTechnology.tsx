@@ -3,7 +3,12 @@ import React, {
 } from 'react';
 import { getTechnology, getTechnologyCosts } from '../services/technology';
 
-const TechnologyContext = createContext({});
+interface Technology {
+  id?: number;
+  costs?: [];
+}
+
+const TechnologyContext = createContext<Technology | null>({});
 
 const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
   const [technology, setTechnology] = useState({});
@@ -37,7 +42,7 @@ const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
   );
 };
 
-const useTechnology = (): any => {
+const useTechnology = (): Technology => {
   const context = useContext(TechnologyContext);
 
   if (!context) {

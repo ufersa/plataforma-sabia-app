@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import api from './api';
+import { getBookmarks } from './bookmark';
 
 /**
  * Attempts to authenticate the provided user within the API.
@@ -23,7 +24,7 @@ export async function login(email: string, password: string) {
     const responseMe = await api.get('user/me', {});
     const { id, full_name } = responseMe.data;
 
-    const bookmarks = await api.get(`user/${id}/bookmarks`, { embed: true });
+    const bookmarks = await getBookmarks(id);
 
     const user = {
       id, name: full_name, email, bookmarks: bookmarks.data,
