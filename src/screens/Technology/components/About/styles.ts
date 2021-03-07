@@ -21,5 +21,6 @@ export const Description = styled(DefaultText)`
   font-family: Montserrat_500Medium;
   font-weight: 500;
   font-size: 16px;
+  text-align: justify;
   line-height: 24px;
 `;

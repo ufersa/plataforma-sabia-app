@@ -5,34 +5,30 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Card } from '../../../../components';
 import * as S from './styles';
+import { formatMoney } from '../../../../utils/helper';
+import { useAuth } from '../../../../hooks/useAuth';
+import { handleBookmark } from '../../../../services/bookmark';
 
 interface DataCardProps {
   id: number
   title: string
   image: string
-  category: {
-    name: string
-  }
+  price: number
+  description: string
+  createdAt: string
 }
 interface TechnologyCardProps {
-  data: DataCardProps
-  style: StyleProp<any>
+  data?: DataCardProps
+  style?: StyleProp<any>
   loading: boolean
-  navigation: StackNavigationProp<any, any>
+  navigation?: StackNavigationProp<any, any>
 }
-
 interface FavoriteProps {
-  // eslint-disable-next-line react/require-default-props
   favorite?: boolean
+  technologyId: string
 }
 
-const Label = (): JSX.Element => (
-  <S.LabelWrapper>
-    <S.LabelText>Semiárido</S.LabelText>
-  </S.LabelWrapper>
-);
-
-const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
+const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   const [state, setState] = useState(favorite);
   const animatePulse = new Animated.Value(1);
   const scale = animatePulse.interpolate({
@@ -40,17 +36,33 @@ const Favorite = ({ favorite }: FavoriteProps): JSX.Element => {
     outputRange: [1.1, 1],
   });
 
+  const { user } = useAuth();
+
   useEffect(() => {
+    const isLiked: boolean = user.bookmarks.some((bookmark) => bookmark === technologyId);
+    setState(isLiked);
+
     Animated.timing(animatePulse, {
       toValue: state ? 0 : 1,
       duration: state ? 100 : 50,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
-  }, [state]);
+  }, [user, technologyId]);
+
+  const handleFavoriteClick = async () => {
+    const active = !state;
+    setState(active);
+
+    await handleBookmark({
+      active,
+      technologyId,
+      userId: user?.id,
+    });
+  };
 
   return (
-    <S.FavoriteButton onPress={() => setState((previousState) => !previousState)}>
+    <S.FavoriteButton onPress={() => { handleFavoriteClick(); }}>
       <Animated.View
         style={{ transform: [{ scale }] }}
       >
@@ -75,18 +87,14 @@ export default ({
           <>
             <S.CardImage>
               <S.Actions>
-                <Label />
-                <Favorite />
+                <Favorite technologyId={data.id?.toString()} favorite={false} />
               </S.Actions>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Technology', { id: data.id })}
+                onPress={() => navigation.navigate('Technology', { data })}
                 activeOpacity={0.7}
               >
                 <Image
-                  source={{
-                    uri: 'https://fakeimg.pl/216x216/',
-                    cache: 'only-if-cached',
-                  }}
+                  source={{ uri: data.image }}
                   style={{
                     width: 216,
                     height: 216,
@@ -96,17 +104,17 @@ export default ({
               </TouchableOpacity>
             </S.CardImage>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Technology')}
+              onPress={() => navigation.navigate('Technology', { data })}
               activeOpacity={0.7}
             >
               <S.Title numberOfLines={2}>
-                Test Very Long Title Technology
+                {data.title}
               </S.Title>
             </TouchableOpacity>
             <S.AmountWrapper>
-              <S.Amount>R$</S.Amount>
-              <S.Amount bold>489</S.Amount>
-              <S.Amount>,00</S.Amount>
+              <S.Amount bold>
+                {Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
+              </S.Amount>
             </S.AmountWrapper>
           </>
         )}
