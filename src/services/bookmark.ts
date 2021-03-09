@@ -3,7 +3,7 @@ import api from './api';
 
 interface BookmarkRequestProps {
   active: boolean
-  technologyId: string
+  technologyId: number
   userId: string
 }
 

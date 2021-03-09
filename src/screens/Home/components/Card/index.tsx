@@ -25,7 +25,7 @@ interface TechnologyCardProps {
 }
 interface FavoriteProps {
   favorite?: boolean
-  technologyId: string
+  technologyId: number
 }
 
 const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
@@ -39,7 +39,7 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const isLiked: boolean = user.bookmarks.some((bookmark) => bookmark === technologyId);
+    const isLiked: boolean = user.bookmarks.some((bookmark) => bookmark.id === technologyId);
     setState(isLiked);
 
     Animated.timing(animatePulse, {
@@ -51,11 +51,9 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   }, [user, technologyId]);
 
   const handleFavoriteClick = async () => {
-    const active = !state;
-    setState(active);
-
+    setState(!state);
     await handleBookmark({
-      active,
+      active: state,
       technologyId,
       userId: user?.id,
     });
@@ -87,7 +85,7 @@ export default ({
           <>
             <S.CardImage>
               <S.Actions>
-                <Favorite technologyId={data.id?.toString()} favorite={false} />
+                <Favorite technologyId={data.id} favorite={false} />
               </S.Actions>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Technology', { data })}
