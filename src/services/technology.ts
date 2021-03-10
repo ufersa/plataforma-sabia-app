@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import {
+  normalizeAttachments,
   normalizeCosts, normalizeTaxonomies, normalizeTerms, normalizeTrl,
 } from '../utils/technology';
 import api from './api';
@@ -81,4 +82,27 @@ export const getTechnologyCosts = async (id: number, options: OptionsProp) => {
     ...response.data,
     costs: normalizeCosts(costs),
   };
+};
+
+export const getAttachments = async (id: number, options: OptionsProp = {}) => {
+  if (!id) {
+    return [];
+  }
+
+  const response = await api.get('uploads', {
+    params: {
+      object: 'technologies',
+      object_id: id,
+    },
+  });
+
+  if (response.status !== 200) {
+    return [];
+  }
+
+  if (options.normalize && response.data) {
+    response.data = normalizeAttachments(response.data);
+  }
+
+  return response.data;
 };

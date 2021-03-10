@@ -1,12 +1,14 @@
 /* eslint-disable camelcase */
-import React from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
+import ImageView from '@hamidfzm/react-native-image-viewing';
 import * as S from './styles';
 import { Accordion } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useTechnology } from '../../../../hooks/useTechnology';
 import { unitsOptions } from '../../../../utils/technology';
 import { formatCurrencyToInt, formatMoney, technologyStages } from '../../../../utils/helper';
+import ImageList from '../../../../components/Gallery/ImageList';
 
 interface StagesProps {
   currentStep: number
@@ -243,6 +245,49 @@ export const Costs = () => {
   );
 };
 
+export const Documents = () => {
+  const [currentImageIndex, setImageIndex] = React.useState(0);
+  const technology = useTechnology();
+  const [isVisible, setIsVisible] = useState(false);
+
+  const images = technology.attachments?.images.map((image) => ({ original: image.url }));
+
+  const onSelect = (images, index) => {
+    setImageIndex(index);
+    setImages(images);
+    setIsVisible(true);
+  };
+
+  const onRequestClose = () => setIsVisible(false);
+  const getItem = (data: any) => ({ uri: data.original });
+
+  console.log(images);
+
+  return (
+    <S.AccordionItemWrapper>
+      <S.CostSection>Fotos</S.CostSection>
+
+      <ImageList
+        images={images.map((image) => image.original)}
+        onPress={(index: number) => onSelect(images, index)}
+        shift={0.25}
+      />
+
+      <ImageView
+        data={images}
+        getImage={getItem}
+        onRequestClose={onRequestClose}
+        imageIndex={currentImageIndex}
+        visible={isVisible}
+        presentationStyle="overFullScreen"
+      />
+
+      <S.CostSection>Vídeos</S.CostSection>
+
+    </S.AccordionItemWrapper>
+  );
+};
+
 const Details = () => (
   <S.Wrapper>
     <Accordion
@@ -265,7 +310,7 @@ const Details = () => (
         },
         {
           title: 'Documentos',
-          content: <></>,
+          content: <Documents />,
         },
       ]}
     />

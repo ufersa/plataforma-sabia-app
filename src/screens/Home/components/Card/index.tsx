@@ -9,6 +9,8 @@ import { formatMoney } from '../../../../utils/helper';
 import { useAuth } from '../../../../hooks/useAuth';
 import { handleBookmark } from '../../../../services/bookmark';
 
+import { Technology } from '../../../../hooks/useTechnology';
+
 interface DataCardProps {
   id: number
   title: string
@@ -39,7 +41,8 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const isLiked: boolean = user.bookmarks.some((bookmark) => bookmark.id === technologyId);
+    console.log(user.bookmarks);
+    const isLiked: boolean = user.bookmarks && user.bookmarks?.some((bookmark: Technology) => bookmark.id === technologyId);
     setState(isLiked);
 
     Animated.timing(animatePulse, {

@@ -82,6 +82,21 @@ export const normalizeCosts = (costs) => {
   return normalizedCosts;
 };
 
+interface AttachmentsProps {
+  url: string;
+}
+
+/**
+ * Normalize attachments coming from the api.
+ *
+ * @param {object} attachments The raw attachments comming from the api.
+ * @returns {{images: [], documents: []}} Normalized attachments.
+ */
+export const normalizeAttachments = (attachments: AttachmentsProps[]) => ({
+  images: attachments.filter((file) => file.url.indexOf('.pdf') === -1),
+  documents: attachments.filter((file) => file.url.indexOf('.pdf') !== -1),
+});
+
 // Measure Units used on technology costs
 export const unitsOptions = [
   {

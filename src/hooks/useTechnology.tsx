@@ -1,14 +1,42 @@
+/* eslint-disable camelcase */
 import React, {
   useState, createContext, useContext, useEffect, useCallback,
 } from 'react';
-import { getTechnology, getTechnologyCosts } from '../services/technology';
+import { getAttachments, getTechnology, getTechnologyCosts } from '../services/technology';
 
-interface Technology {
+export interface Technology {
   id?: number;
-  costs?: [];
+  title: string;
+  taxonomies: {
+    category: string;
+    classification: string;
+    dimension: string;
+    target_audience: string;
+    biome: string;
+  }
+  currentLevel: number;
+  primary_purpose: string;
+  application_mode: string;
+  requirements: string;
+  installation_time: number;
+  costs?: {
+    implementation_costs: [];
+    maintenance_costs: [];
+  };
+  videos?: [];
+  attachments?: {
+    images?: {
+      id: number;
+      url: string;
+    }[],
+    documents?: {
+      id: number;
+      url: string;
+    }[]
+  }
 }
 
-const TechnologyContext = createContext<Technology | null>({});
+const TechnologyContext = createContext<Technology | null>(null);
 
 const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
   const [technology, setTechnology] = useState({});
@@ -22,7 +50,11 @@ const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
 
       const techCosts = await getTechnologyCosts(technologyId, { normalize: true });
 
-      tech = { ...tech, costs: techCosts.costs };
+      const techAttachments = await getAttachments(technologyId, {
+        normalize: true,
+      });
+
+      tech = { ...tech, costs: techCosts.costs, attachments: techAttachments };
 
       setTechnology(tech);
     },
