@@ -18,9 +18,10 @@ import api from '../services/api';
 
 interface User {
   id: string;
-  name: string;
+  full_name: string;
   email: string;
-  bookmarks: [];
+  technologyBookmarks?: [];
+  serviceBookmarks?: [];
 }
 
 interface AuthState {

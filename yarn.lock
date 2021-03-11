@@ -1241,6 +1241,11 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
+"@hamidfzm/react-native-image-viewing@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@hamidfzm/react-native-image-viewing/-/react-native-image-viewing-1.0.0.tgz#108f45b8a9dc27f543655876d828f1c9c7347fcd"
+  integrity sha512-n51knMAXw1SwL7WW8y551IB+u6gnD3ok0yBoOat0VVdZfYbMy0GBIxGom9qQOM2Y1+TB32yKbdQxi6KZ0V7+Uw==
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

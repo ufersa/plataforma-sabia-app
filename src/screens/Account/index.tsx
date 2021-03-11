@@ -24,13 +24,13 @@ const Account = (): JSX.Element => {
             contentContainerStyle={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
           >
-            <S.User name={user?.name} />
+            <S.User name={user?.full_name} />
             <S.Divider />
             <S.Title>Informações Pessoais</S.Title>
             <Controller
               name="name"
               control={control}
-              defaultValue={user?.name}
+              defaultValue={user?.full_name}
               render={({ onChange, value }) => (
                 <Input
                   type="default"

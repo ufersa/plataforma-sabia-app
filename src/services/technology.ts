@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import {
+  normalizeAttachments,
   normalizeCosts, normalizeTaxonomies, normalizeTerms, normalizeTrl,
 } from '../utils/technology';
 import api from './api';
@@ -9,6 +10,10 @@ interface OptionsProp {
   normalize?: boolean
   term?: any
   taxonomies?: any
+  params?: {
+    perPage?: number
+    page?: number
+  }
 }
 
 /**
@@ -81,4 +86,34 @@ export const getTechnologyCosts = async (id: number, options: OptionsProp) => {
     ...response.data,
     costs: normalizeCosts(costs),
   };
+};
+
+export const getAttachments = async (id: number, options: OptionsProp = {}) => {
+  if (!id) {
+    return [];
+  }
+
+  const params = options.params || {};
+  const perPage = params?.perPage || 100;
+  const page = params?.page || 1;
+
+  const response = await api.get('uploads', {
+    params: {
+      object: 'technologies',
+      object_id: id,
+      perPage,
+      page,
+      ...params,
+    },
+  });
+
+  if (response.status !== 200) {
+    return [];
+  }
+
+  if (options.normalize && response.data) {
+    response.data = normalizeAttachments(response.data);
+  }
+
+  return response.data;
 };

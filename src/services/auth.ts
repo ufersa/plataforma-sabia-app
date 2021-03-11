@@ -21,14 +21,8 @@ export async function login(email: string, password: string) {
 
     api.defaults.headers.authorization = `Bearer ${token}`;
 
-    const responseMe = await api.get('user/me', {});
-    const { id, full_name } = responseMe.data;
-
-    const bookmarks = await getBookmarks(id);
-
-    const user = {
-      id, name: full_name, email, bookmarks: bookmarks.data,
-    };
+    const responseMe = await api.get('user/me', { params: { bookmarks: true } });
+    const user = responseMe.data;
 
     return { token, user };
   }

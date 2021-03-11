@@ -37,8 +37,8 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
 
   const loadBookmarks = useCallback(
     async () => {
-      const { data } = await getBookmarks(user.id);
-      updateUser({ ...user, bookmarks: data });
+      const bookmarks = await getBookmarks();
+      updateUser({ ...user, technologyBookmarks: bookmarks });
     },
     [user],
   );
@@ -65,7 +65,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={4}
         decelerationRate={0}
-        snapToInterval={248 - (16 + 10)}
+        snapToInterval={294 - (16 + 10)}
         snapToAlignment="start"
         contentContainerStyle={{
           alignItems: 'flex-start',
@@ -97,6 +97,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
                   description: technology.description,
                   price: technology.costs.length ? technology.costs[0].price : 0,
                   createdAt: technology.created_at,
+                  type: 'technology',
                 }}
                 navigation={navigation}
                 loading={false}
