@@ -66,7 +66,7 @@ export const User = (): JSX.Element => {
       onPress={() => navigation.navigate('Account')}
     >
       <UserWrapper>
-        <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.name}&size=40` }} />
+        <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.full_name}&size=40` }} />
       </UserWrapper>
     </Touch>
   );

@@ -254,14 +254,12 @@ export const Documents = () => {
 
   const onSelect = (images, index) => {
     setImageIndex(index);
-    setImages(images);
+    // setImages(images);
     setIsVisible(true);
   };
 
   const onRequestClose = () => setIsVisible(false);
   const getItem = (data: any) => ({ uri: data.original });
-
-  console.log(images);
 
   return (
     <S.AccordionItemWrapper>

@@ -3,7 +3,8 @@ import api from './api';
 
 interface BookmarkRequestProps {
   active: boolean
-  technologyId: number
+  technologyId?: number
+  serviceId?: number
   userId: string
 }
 
@@ -18,21 +19,34 @@ interface BookmarkRequestProps {
  * @param {HandleBookmarkRequest} params Bookmark params
  * @returns {object} The newly bookmark.
  */
-const parseHandleBookmarkRequest = ({ active, technologyId, userId }: BookmarkRequestProps) => {
+const parseHandleBookmarkRequest = ({
+  active = true, technologyId, serviceId, userId,
+}: BookmarkRequestProps) => {
   let method;
   let endpoint;
+  let data;
 
   if (active) {
     method = api.delete;
     endpoint = `user/${userId}/bookmarks`;
+    data = {
+      params: {
+        technologyIds: [technologyId].filter(Boolean),
+        serviceIds: [serviceId].filter(Boolean),
+      },
+    };
   } else {
     method = api.post;
     endpoint = 'bookmarks';
+    data = {
+      technologyIds: [technologyId].filter(Boolean),
+      serviceIds: [serviceId].filter(Boolean),
+    };
   }
   return {
     method,
     endpoint,
-    technologyIds: [technologyId],
+    data,
   };
 };
 
@@ -43,17 +57,16 @@ const parseHandleBookmarkRequest = ({ active, technologyId, userId }: BookmarkRe
  * @returns {object} The newly bookmark
  */
 export const handleBookmark = async (params: BookmarkRequestProps): Promise<any> => {
-  const { method, endpoint, technologyIds } = parseHandleBookmarkRequest(params);
+  const {
+    method, endpoint, data,
+  } = parseHandleBookmarkRequest(params);
 
-  const response = method(endpoint, {
-    technologyIds,
-  });
-
+  const response = await method(endpoint, data);
   return response;
 };
 
-export const getBookmarks = async (userId: string) => {
-  const bookmarks = await api.get(`user/${userId}/bookmarks`, { embed: true });
-
+export const getBookmarks = async () => {
+  const bookmarksResponse = await api.get('user/me', { params: { bookmarks: true } });
+  const bookmarks = bookmarksResponse.data.technologyBookmarks;
   return bookmarks;
 };

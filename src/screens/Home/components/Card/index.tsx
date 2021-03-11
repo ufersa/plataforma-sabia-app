@@ -18,6 +18,7 @@ interface DataCardProps {
   price: number
   description: string
   createdAt: string
+  type: string
 }
 interface TechnologyCardProps {
   data?: DataCardProps
@@ -26,12 +27,12 @@ interface TechnologyCardProps {
   navigation?: StackNavigationProp<any, any>
 }
 interface FavoriteProps {
-  favorite?: boolean
-  technologyId: number
+  id: number
+  type: string
 }
 
-const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
-  const [state, setState] = useState(favorite);
+const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
+  const [state, setState] = useState(false);
   const animatePulse = new Animated.Value(1);
   const scale = animatePulse.interpolate({
     inputRange: [0, 1],
@@ -39,10 +40,11 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
   });
 
   const { user } = useAuth();
+  const solutionTypeProperty = `${type}Bookmarks`;
 
   useEffect(() => {
-    console.log(user.bookmarks);
-    const isLiked: boolean = user.bookmarks && user.bookmarks?.some((bookmark: Technology) => bookmark.id === technologyId);
+    const solutionBookmarks = user[solutionTypeProperty];
+    const isLiked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === id);
     setState(isLiked);
 
     Animated.timing(animatePulse, {
@@ -51,19 +53,21 @@ const Favorite = ({ favorite, technologyId }: FavoriteProps): JSX.Element => {
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
-  }, [user, technologyId]);
+  }, [user, id, type, solutionTypeProperty]);
 
-  const handleFavoriteClick = async () => {
+  const solutionType = `${type}Id`;
+
+  const handleLike = async () => {
     setState(!state);
     await handleBookmark({
       active: state,
-      technologyId,
+      [solutionType]: id,
       userId: user?.id,
     });
   };
 
   return (
-    <S.FavoriteButton onPress={() => { handleFavoriteClick(); }}>
+    <S.FavoriteButton onPress={handleLike}>
       <Animated.View
         style={{ transform: [{ scale }] }}
       >
@@ -88,7 +92,7 @@ export default ({
           <>
             <S.CardImage>
               <S.Actions>
-                <Favorite technologyId={data.id} favorite={false} />
+                <Favorite id={data.id} type={data.type} />
               </S.Actions>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Technology', { data })}
