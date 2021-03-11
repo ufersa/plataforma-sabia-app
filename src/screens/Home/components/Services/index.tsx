@@ -30,7 +30,7 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={4}
         decelerationRate={0}
-        snapToInterval={248 - (16 + 10)}
+        snapToInterval={294 - (16 + 10)}
         snapToAlignment="start"
         contentContainerStyle={{
           alignItems: 'flex-start',
