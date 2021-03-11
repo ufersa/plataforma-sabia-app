@@ -22,7 +22,6 @@ const Root = (): JSX.Element => (
     {/* <Tab.Screen
       name="Search"
       component={Search}
-
     /> */}
     <Tab.Screen
       options={{ unmountOnBlur: true }}
