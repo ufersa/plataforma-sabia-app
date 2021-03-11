@@ -10,6 +10,10 @@ interface OptionsProp {
   normalize?: boolean
   term?: any
   taxonomies?: any
+  params?: {
+    perPage?: number
+    page?: number
+  }
 }
 
 /**
@@ -89,10 +93,17 @@ export const getAttachments = async (id: number, options: OptionsProp = {}) => {
     return [];
   }
 
+  const params = options.params || {};
+  const perPage = params?.perPage || 100;
+  const page = params?.page || 1;
+
   const response = await api.get('uploads', {
     params: {
       object: 'technologies',
       object_id: id,
+      perPage,
+      page,
+      ...params,
     },
   });
 
