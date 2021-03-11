@@ -50,6 +50,7 @@ export const HeaderDetails = styled.View`
 export const Amount = styled(Title)`
   color: ${Colors.primary};
   margin-top: 8px;
+  font-weight: bold;
 `;
 
 export const Date = styled.View`

@@ -57,6 +57,7 @@ export const Star = styled(FontAwesome5)`
 export const RateCommentsWrapper = styled.View`
   padding-top: 34px;
   padding-bottom: 24px;
+  padding-horizontal: 16px;
 `;
 
 export const RateCommentAuthor = styled(DefaultText)`

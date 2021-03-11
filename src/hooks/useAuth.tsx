@@ -14,11 +14,13 @@ import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import { login } from '../services/auth';
 import { createToken, deleteToken } from '../services/deviceToken';
+import api from '../services/api';
 
 interface User {
   id: string;
   name: string;
   email: string;
+  bookmarks: [];
 }
 
 interface AuthState {
@@ -33,6 +35,7 @@ interface SignInCredentials {
 
 interface AuthContextData {
   user: User;
+  token: string;
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
@@ -51,6 +54,7 @@ const AuthProvider = ({ children }: any): JSX.Element => {
       const user = await AsyncStorage.getItem('@Sabia:user');
 
       if (token && user) {
+        api.defaults.headers.authorization = `Bearer ${token}`;
         setData({ token, user: JSON.parse(user) });
       }
 
@@ -130,6 +134,7 @@ const AuthProvider = ({ children }: any): JSX.Element => {
     <AuthContext.Provider
       value={{
         user: data.user,
+        token: data.token,
         loading,
         signIn,
         signOut,
