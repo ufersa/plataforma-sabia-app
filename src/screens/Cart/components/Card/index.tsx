@@ -11,7 +11,6 @@ export default ({ title, onPress }: any): JSX.Element => (
       <Image
         source={{
           uri: 'https://fakeimg.pl/110x83/',
-          cache: 'only-if-cached',
         }}
         style={{
           width: 110,

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 import React, { useCallback, useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -48,8 +49,8 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
 
   const { loading, technologies } = useFind('technologies', {
     embed: '',
-    perPage: 20,
-    orderBy: 'created_at',
+    perPage: 10,
+    orderBy: 'likes',
     order: 'DESC',
     status: 'published',
     taxonomy: 'category',
@@ -74,6 +75,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           <>
             {[0, 1, 2].map((technology, idx: number) => (
               <TechnologyCard
+                type="tecnology"
                 key={`technology_${idx}`}
                 loading
                 style={{
@@ -83,25 +85,28 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
             ))}
           </>
         ) : (
-          technologies && technologies.map((technology: TechnologiesItemProps, idx: number) => (
-            <TechnologyCard
-              key={`technology_${idx}`}
-              data={{
-                id: technology.id,
-                title: technology.title,
-                image: technology.thumbnail?.url,
-                description: technology.description,
-                price: technology.costs.length ? technology.costs[0].price : 0,
-                createdAt: technology.created_at,
-                type: 'technology',
-              }}
-              navigation={navigation}
-              loading={false}
-              style={{
-                marginRight: (idx + 1) === technologies.length ? 36 : 20,
-              }}
-            />
-          ))
+          technologies.length > 0
+            ? technologies.map((technology: TechnologiesItemProps, idx: number) => (
+              <TechnologyCard
+                type="tecnology"
+                key={`technology_${idx}`}
+                data={{
+                  id: technology.id,
+                  title: technology.title,
+                  image: technology.thumbnail?.url,
+                  description: technology.description,
+                  price: technology.costs.length ? technology.costs[0].price : 0,
+                  createdAt: technology.created_at,
+                  type: 'technology',
+                }}
+                navigation={navigation}
+                loading={false}
+                style={{
+                  marginRight: (idx + 1) === technologies.length ? 36 : 20,
+                }}
+              />
+            ))
+            : <S.Empty>Nenhuma tecnologia</S.Empty>
         )}
       </S.TechnologiesWrapper>
     </>

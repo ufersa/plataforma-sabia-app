@@ -22,6 +22,7 @@ interface DataCardProps {
 }
 interface TechnologyCardProps {
   data?: DataCardProps
+  type: string
   style?: StyleProp<any>
   loading: boolean
   navigation?: StackNavigationProp<any, any>
@@ -83,7 +84,11 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
 };
 
 export default ({
-  data, navigation, loading = false, style = {},
+  data,
+  navigation,
+  type,
+  loading = false,
+  style = {},
 }: TechnologyCardProps): JSX.Element => (
   <S.CardWrapper style={style}>
     <Card>

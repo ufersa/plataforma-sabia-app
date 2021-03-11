@@ -7,7 +7,7 @@ import { DefaultText } from '../../../../components';
 import { useAuth } from '../../../../hooks/useAuth';
 
 export const Wrapper = styled.View`
-  height: 100px;
+  height: 55px;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;

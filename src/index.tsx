@@ -1,8 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabBar } from './components';
+// import {
+//   Home, Search, Requests, Notifications, Favorite,
+// } from './screens';
 import {
-  Home, Search, Requests, Notifications, Favorite,
+  Home, Requests, Notifications, Favorite,
 } from './screens';
 
 const Tab = createBottomTabNavigator();
@@ -16,10 +19,10 @@ const Root = (): JSX.Element => (
       name="Home"
       component={Home}
     />
-    <Tab.Screen
+    {/* <Tab.Screen
       name="Search"
       component={Search}
-    />
+    /> */}
     <Tab.Screen
       options={{ unmountOnBlur: true }}
       name="Requests"

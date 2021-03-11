@@ -42,7 +42,9 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             />
             <S.Title>{data.title}</S.Title>
             <S.HeaderDetails>
-              <S.Amount>{formatMoney(data.price)}</S.Amount>
+              <S.Amount>
+                {Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
+              </S.Amount>
               <S.Date>
                 <S.DateIcon
                   name="calendar"

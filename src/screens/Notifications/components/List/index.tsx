@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, ListRenderItemInfo } from 'react-native';
+import { ListRenderItemInfo } from 'react-native';
 import NotificationCard from '../NotificationCard';
+import { DefaultText } from '../../../../components';
 import * as S from './styles';
 
 interface NotificationsProps {
@@ -29,7 +30,9 @@ const List = ({ data }: ListProps): JSX.Element => (
         keyExtractor={(item, idx) => idx.toString()}
       />
     ) : (
-      <View />
+      <S.Empty>
+        <DefaultText>Nenhuma notificação</DefaultText>
+      </S.Empty>
     )}
   </S.ListWrapper>
 );

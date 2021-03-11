@@ -15,3 +15,12 @@ export const Title = styled(DefaultText)`
   margin-bottom: 12px;
   padding-horizontal: 16px;
 `;
+
+export const Empty = styled(DefaultText)`
+  font-size: 16px;
+  line-height: 24px;
+  font-family: Rubik_400Regular;
+  font-weight: 400;
+  color: #4a4a4a;
+  text-align: center;
+`;
