@@ -254,7 +254,6 @@ export const Documents = () => {
 
   const onSelect = (images, index) => {
     setImageIndex(index);
-    // setImages(images);
     setIsVisible(true);
   };
 
