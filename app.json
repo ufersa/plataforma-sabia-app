@@ -19,10 +19,12 @@
     ],
     "ios": {
       "bundleIdentifier": "com.plataformasabia.app",
+      "buildNumber": "1.0.3",
       "supportsTablet": false
     },
     "android": {
       "package": "com.plataformasabia.app",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#00a688"
