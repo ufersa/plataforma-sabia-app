@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -29,6 +29,7 @@ interface SignUpProps {
 const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
   const { control, handleSubmit } = useForm();
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleSignUp = useCallback(
     async (data: SignUpFormData) => {
@@ -38,17 +39,19 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           'As senhas não coincidem',
         );
       } else {
+        setLoading(true);
         await register({
           full_name: data.name,
           email: data.email,
           password: data.password,
-          disclaimers: [1, 2, 3, 4, 5, 6, 7], // #TODO coletar da interface
+          disclaimers: [1, 2, 3, 4, 5, 6, 7],
         }).then(() => {
+          setLoading(false);
           Alert.alert('Plataforma Sabia', '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.');
           navigation.goBack();
         }).catch((error) => {
           const message = error.response.data.error.message.reduce((append: any, err: any) => `${append}.\n\n ${err.message}`, '');
-
+          setLoading(false);
           Alert.alert(
             'Erro no cadastro!',
             `${message}`,
@@ -157,8 +160,12 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           </ScrollView>
         </KeyboardAvoidingView>
         <S.ButtonWrapper>
-          <Button variant="secondary" onPress={handleSubmit(handleSignUp)}>
-            Cadastrar
+          <Button
+            disabled={loading}
+            variant="secondary"
+            onPress={handleSubmit(handleSignUp)}
+          >
+            {loading ? 'Aguarde...' : 'Cadastrar'}
           </Button>
         </S.ButtonWrapper>
       </SafeAreaView>
