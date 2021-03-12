@@ -4,9 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../../../../utils/colors';
 import { DefaultText } from '../../../../components';
+import { useAuth } from '../../../../hooks/useAuth';
 
 export const Wrapper = styled.View`
-  height: 100px;
+  height: 55px;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
@@ -49,15 +50,24 @@ export const UserWrapper = styled.View`
   border-radius: 8px;
 `;
 
+const ImageAvatar = styled.Image`
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+`;
+
 export const User = (): JSX.Element => {
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   return (
     <Touch
       activeOpacity={0.7}
       onPress={() => navigation.navigate('Account')}
     >
-      <UserWrapper />
+      <UserWrapper>
+        <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.full_name}&size=40` }} />
+      </UserWrapper>
     </Touch>
   );
 };

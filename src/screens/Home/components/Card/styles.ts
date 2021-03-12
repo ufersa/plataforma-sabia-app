@@ -54,7 +54,7 @@ export const Actions = styled.View`
   height: 26px;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   position: absolute;
   bottom: 16px;
   z-index: 1;

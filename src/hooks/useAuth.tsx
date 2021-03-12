@@ -8,12 +8,20 @@ import React, {
   useEffect,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import { login } from '../services/auth';
+import { createToken, deleteToken } from '../services/deviceToken';
+import api from '../services/api';
 
 interface User {
   id: string;
-  name: string;
+  full_name: string;
   email: string;
+  technologyBookmarks?: [];
+  serviceBookmarks?: [];
 }
 
 interface AuthState {
@@ -28,6 +36,7 @@ interface SignInCredentials {
 
 interface AuthContextData {
   user: User;
+  token: string;
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
@@ -46,20 +55,47 @@ const AuthProvider = ({ children }: any): JSX.Element => {
       const user = await AsyncStorage.getItem('@Sabia:user');
 
       if (token && user) {
+        api.defaults.headers.authorization = `Bearer ${token}`;
         setData({ token, user: JSON.parse(user) });
       }
 
       setLoading(false);
     }
 
+    const registerForPushNotifications = async () => {
+      try {
+        const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        if (!permission.granted) return;
+
+        const deviceToken = await Notifications.getExpoPushTokenAsync();
+        const deviceUID = Constants.deviceId || '';
+
+        await AsyncStorage.setItem('@Sabia:deviceUID', deviceUID);
+        await AsyncStorage.setItem('@Sabia:deviceToken', deviceToken.data);
+        await AsyncStorage.setItem('@Sabia:deviceTokenType', deviceToken.type);
+      } catch (error) {
+        console.log('Error getting the device token', error);
+      }
+    };
+
     loadStoragedData();
+    registerForPushNotifications();
   }, []);
 
   const signIn = useCallback(async ({ email, password }) => {
     const response = await login(email, password);
 
+    const deviceUID = await AsyncStorage.getItem('@Sabia:deviceUID');
+    const deviceToken = await AsyncStorage.getItem('@Sabia:deviceToken');
+
     if (response && response.token) {
       const { token, user } = response;
+
+      try {
+        if (deviceUID && deviceToken) createToken(deviceUID, deviceToken);
+      } catch (error) {
+        console.log('Error saving device token', error);
+      }
 
       await AsyncStorage.multiSet([
         ['@Sabia:token', token],
@@ -71,7 +107,14 @@ const AuthProvider = ({ children }: any): JSX.Element => {
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@Sabia:token', '@Sabia:user']);
+    const deviceUID = await AsyncStorage.getItem('@Sabia:deviceUID');
+
+    if (deviceUID) deleteToken(deviceUID);
+
+    await AsyncStorage.multiRemove([
+      '@Sabia:token',
+      '@Sabia:user',
+    ]);
 
     setData({} as AuthState);
   }, []);
@@ -92,6 +135,7 @@ const AuthProvider = ({ children }: any): JSX.Element => {
     <AuthContext.Provider
       value={{
         user: data.user,
+        token: data.token,
         loading,
         signIn,
         signOut,

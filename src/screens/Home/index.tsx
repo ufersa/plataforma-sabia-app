@@ -1,5 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React from 'react';
+import { SafeAreaView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import Header from './components/Header';
@@ -14,6 +15,7 @@ interface HomeProps {
 
 const Home = ({ navigation }: HomeProps): JSX.Element => (
   <>
+    <SafeAreaView style={{ flex: 0 }} />
     <Header />
     <S.Wrapper>
       <StatusBar style="dark" />
@@ -22,7 +24,9 @@ const Home = ({ navigation }: HomeProps): JSX.Element => (
         showsVerticalScrollIndicator={false}
       >
         <Technologies navigation={navigation} />
-        <Banks navigation={navigation} />
+        {false && (
+          <Banks navigation={navigation} />
+        )}
         <Services navigation={navigation} />
       </S.Container>
     </S.Wrapper>

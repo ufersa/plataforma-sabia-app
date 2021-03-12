@@ -1,0 +1,87 @@
+/* eslint-disable camelcase */
+import React, {
+  useState, createContext, useContext, useEffect, useCallback,
+} from 'react';
+import { getAttachments, getTechnology, getTechnologyCosts } from '../services/technology';
+
+export interface Technology {
+  id?: number;
+  title: string;
+  taxonomies: {
+    category: string;
+    classification: string;
+    dimension: string;
+    target_audience: string;
+    biome: string;
+  }
+  currentLevel: number;
+  primary_purpose: string;
+  application_mode: string;
+  requirements: string;
+  installation_time: number;
+  costs?: {
+    implementation_costs: [];
+    maintenance_costs: [];
+  };
+  videos?: [];
+  attachments?: {
+    images?: {
+      id: number;
+      url: string;
+    }[],
+    documents?: {
+      id: number;
+      url: string;
+    }[]
+  }
+}
+
+const TechnologyContext = createContext<Technology | null>(null);
+
+const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
+  const [technology, setTechnology] = useState({});
+
+  const loadData = useCallback(
+    async () => {
+      let tech = await getTechnology(technologyId, {
+        taxonomies: true,
+        normalizeTaxonomies: true,
+      } as any);
+
+      const techCosts = await getTechnologyCosts(technologyId, { normalize: true });
+
+      const techAttachments = await getAttachments(technologyId, {
+        normalize: true,
+      });
+
+      tech = { ...tech, costs: techCosts.costs, attachments: techAttachments };
+
+      setTechnology(tech);
+    },
+    [],
+  );
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  return (
+    <TechnologyContext.Provider
+      value={technology}
+    >
+      {children}
+    </TechnologyContext.Provider>
+  );
+};
+
+const useTechnology = (): Technology => {
+  const context = useContext(TechnologyContext);
+
+  if (!context) {
+    throw new Error('useTechnology must be used within an TechnologyProvider');
+  }
+
+  return context;
+};
+
+export { TechnologyProvider, useTechnology };

@@ -5,6 +5,7 @@ import {
   Technology,
   RequestsFeedback,
   RequestsFinish,
+  Cart,
   Account,
 } from '../screens';
 import Colors from '../utils/colors';
@@ -17,6 +18,18 @@ const AppRoutes: React.FC = () => (
       options={{ headerShown: false }}
       name="Root"
       component={Root}
+    />
+    <App.Screen
+      options={{
+        title: 'Meu carrinho',
+        headerBackTitleVisible: false,
+        headerTintColor: '#ffffff',
+        headerStyle: {
+          backgroundColor: Colors.primary,
+        },
+      }}
+      name="Cart"
+      component={Cart}
     />
     <App.Screen
       options={{
