@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
 import { DefaultText, Modal, Button } from '../../../../components';
@@ -5,15 +7,28 @@ import FavoriteCard from '../FavoriteCard';
 import * as S from './styles';
 
 interface ListItemProps {
+  id: string
+  idx: number
   title: string
-  amount: number
+  pivot: {
+    technology_id: number
+    user_id: number
+  }
 }
 
 interface ListProps {
   data: ListItemProps[]
+  loading: boolean
+  onRefresh: () => void
+  onRemove: (technology: ListItemProps) => void
 }
 
-const List = ({ data }: ListProps): JSX.Element => {
+const List = ({
+  data,
+  loading,
+  onRefresh,
+  onRemove,
+}: ListProps): JSX.Element => {
   const [items, setItems] = useState<ListItemProps[]>(data);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -22,9 +37,10 @@ const List = ({ data }: ListProps): JSX.Element => {
     if (selectedItem !== null) setShowModal(true);
   }, [selectedItem]);
 
-  const onRemove = (idx: number) => {
-    setItems(data.slice(0, idx));
+  const onRemoveModal = (technology: ListItemProps) => {
+    setItems(data.slice(0, technology.idx));
     setShowModal(false);
+    onRemove(technology);
   };
 
   return (
@@ -40,6 +56,8 @@ const List = ({ data }: ListProps): JSX.Element => {
               />
             )}
             keyExtractor={(_, idx) => idx.toString()}
+            refreshing={loading}
+            onRefresh={onRefresh}
           />
         ) : (
           <S.Empty>
@@ -60,7 +78,7 @@ const List = ({ data }: ListProps): JSX.Element => {
           <S.ModalBody>
             Se você confirmar, esse item sairá da sua lista de favoritos.
           </S.ModalBody>
-          <Button variant="danger" onPress={() => onRemove(selectedItem.index)}>
+          <Button variant="danger" onPress={() => onRemoveModal(selectedItem)}>
             Remover dos favoritos
           </Button>
         </S.ModalContent>

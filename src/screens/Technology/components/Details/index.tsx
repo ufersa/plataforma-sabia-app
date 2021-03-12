@@ -279,7 +279,7 @@ export const Documents = () => {
         presentationStyle="overFullScreen"
       />
 
-      <S.CostSection>Vídeos</S.CostSection>
+      {false && <S.CostSection>Vídeos</S.CostSection>}
 
     </S.AccordionItemWrapper>
   );

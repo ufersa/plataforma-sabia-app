@@ -28,7 +28,7 @@ const RequestCard = ({ title, onPress }: RequestCardProps): JSX.Element => (
         </S.CardImage>
         <S.CardDetails>
           <S.Title numberOfLines={1}>{title}</S.Title>
-          <S.Amount>R$ 489,00</S.Amount>
+          {false && (<S.Amount>R$ 489,00</S.Amount>)}
         </S.CardDetails>
       </S.CardContainer>
       <S.CardAction>

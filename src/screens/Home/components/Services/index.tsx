@@ -20,9 +20,7 @@ interface ServicesItemProps {
   }
   image?: {
   }
-  costs: {
-    price: number
-  }[]
+  price: number
   category?: {
     name: string
   }
@@ -73,10 +71,9 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
                 key={`service_${idx}`}
                 data={{
                   id: service.id,
-                  title: service.title,
+                  title: service.description,
                   image: service.thumbnail?.url,
-                  description: service.description,
-                  price: service.costs.length ? service.costs[0].price : 0,
+                  price: service.price,
                   createdAt: service.created_at,
                 }}
                 navigation={navigation}

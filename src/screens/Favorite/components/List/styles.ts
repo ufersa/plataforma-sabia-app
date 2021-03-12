@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { DefaultText } from '../../../../components';
 
 export const ListWrapper = styled.View`
-  flex: 1;
+  height: 100%;
   margin-top: 18px;
 `;
 

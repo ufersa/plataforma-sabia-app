@@ -75,7 +75,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           <>
             {[0, 1, 2].map((technology, idx: number) => (
               <TechnologyCard
-                type="tecnology"
+                type="technology"
                 key={`technology_${idx}`}
                 loading
                 style={{
@@ -88,7 +88,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
           technologies.length > 0
             ? technologies.map((technology: TechnologiesItemProps, idx: number) => (
               <TechnologyCard
-                type="tecnology"
+                type="technology"
                 key={`technology_${idx}`}
                 data={{
                   id: technology.id,

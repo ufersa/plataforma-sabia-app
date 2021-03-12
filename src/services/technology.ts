@@ -14,6 +14,7 @@ interface OptionsProp {
     perPage?: number
     page?: number
   }
+  embed?: boolean
 }
 
 /**
@@ -42,6 +43,22 @@ export const getTechnology = async (id: number, options: OptionsProp) => {
 
   const { slug } = normalizeTrl(response.data.terms);
   response.data.currentLevel = Number(slug.split('-', 2)[1]) || 1;
+
+  return response.data;
+};
+
+/**
+ * Fetches favorite technologies of a given user.
+ *
+ * @param {number} userId The user id.
+ * @param {object} options Optional params
+ */
+export const getUserBookmarks = async (id: string, options: OptionsProp = { embed: true }) => {
+  const response = await api.get(`user/${id}/bookmarks`, { ...options });
+
+  if (response.status !== 200) {
+    return false;
+  }
 
   return response.data;
 };

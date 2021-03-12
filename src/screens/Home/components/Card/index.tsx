@@ -16,9 +16,9 @@ interface DataCardProps {
   title: string
   image: string
   price: number
-  description: string
+  description?: string
   createdAt: string
-  type: string
+  type?: string
 }
 interface TechnologyCardProps {
   data?: DataCardProps
@@ -89,46 +89,50 @@ export default ({
   type,
   loading = false,
   style = {},
-}: TechnologyCardProps): JSX.Element => (
-  <S.CardWrapper style={style}>
-    <Card>
-      <S.CardContainer>
-        {!loading && (
-          <>
-            <S.CardImage>
-              <S.Actions>
-                <Favorite id={data.id} type={data.type} />
-              </S.Actions>
+}: TechnologyCardProps): JSX.Element => {
+  const navigate = () => (type === 'technology' ? navigation.navigate('Technology', { data }) : null);
+
+  return (
+    <S.CardWrapper style={style}>
+      <Card>
+        <S.CardContainer>
+          {!loading && (
+            <>
+              <S.CardImage>
+                <S.Actions>
+                  <Favorite id={data.id} type={data.type} />
+                </S.Actions>
+                <TouchableOpacity
+                  onPress={navigate}
+                  activeOpacity={0.7}
+                >
+                  <Image
+                    source={{ uri: data.image }}
+                    style={{
+                      width: 216,
+                      height: 216,
+                      borderRadius: 8,
+                    }}
+                  />
+                </TouchableOpacity>
+              </S.CardImage>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Technology', { data })}
+                onPress={navigate}
                 activeOpacity={0.7}
               >
-                <Image
-                  source={{ uri: data.image }}
-                  style={{
-                    width: 216,
-                    height: 216,
-                    borderRadius: 8,
-                  }}
-                />
+                <S.Title numberOfLines={2}>
+                  {data.title}
+                </S.Title>
               </TouchableOpacity>
-            </S.CardImage>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Technology', { data })}
-              activeOpacity={0.7}
-            >
-              <S.Title numberOfLines={2}>
-                {data.title}
-              </S.Title>
-            </TouchableOpacity>
-            <S.AmountWrapper>
-              <S.Amount bold>
-                {Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
-              </S.Amount>
-            </S.AmountWrapper>
-          </>
-        )}
-      </S.CardContainer>
-    </Card>
-  </S.CardWrapper>
-);
+              <S.AmountWrapper>
+                <S.Amount bold>
+                  {!Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
+                </S.Amount>
+              </S.AmountWrapper>
+            </>
+          )}
+        </S.CardContainer>
+      </Card>
+    </S.CardWrapper>
+  );
+};
