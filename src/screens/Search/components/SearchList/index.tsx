@@ -1,6 +1,14 @@
 import React from 'react';
+import { Index, Configure } from 'react-instantsearch-native';
 import { List } from './styles';
 
-export default (): JSX.Element => (
-  <List />
+interface SearchListProps {
+  index: string
+}
+
+export default ({ index }: SearchListProps): JSX.Element => (
+  <Index indexName={index}>
+    <Configure hitsPerPage={5} />
+    <List />
+  </Index>
 );

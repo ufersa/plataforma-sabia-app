@@ -45,14 +45,16 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
               <S.Amount>
                 {Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
               </S.Amount>
-              <S.Date>
-                <S.DateIcon
-                  name="calendar"
-                  size={16}
-                  color="#a5a5a5"
-                />
-                <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
-              </S.Date>
+              {data.createdAt && (
+                <S.Date>
+                  <S.DateIcon
+                    name="calendar"
+                    size={16}
+                    color="#a5a5a5"
+                  />
+                  <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
+                </S.Date>
+              )}
             </S.HeaderDetails>
           </S.Header>
           <About description={data.description} />

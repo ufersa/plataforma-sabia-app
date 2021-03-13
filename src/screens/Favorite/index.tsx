@@ -1,6 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState, useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect, useState, useCallback } from 'react';
 import { SafeAreaView, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import List from './components/List';
@@ -36,11 +35,9 @@ const Favorite = (): JSX.Element => {
     [],
   );
 
-  useFocusEffect(
-    useCallback(() => {
-      getTechnologies();
-    }, [user]),
-  );
+  useEffect(() => {
+    getTechnologies();
+  }, []);
 
   return (
     <>

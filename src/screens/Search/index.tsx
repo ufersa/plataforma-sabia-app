@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable import/no-unresolved */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectSearchBox } from 'react-instantsearch-native';
@@ -9,7 +9,7 @@ import {
   ALGOLIA_APP_ID,
   ALGOLIA_ADMIN_KEY,
   ALGOLIA_INDEX_NAME_TECHNOLOGY,
-  ALGOLIA_INDEX_NAME_SERVICE
+  ALGOLIA_INDEX_NAME_SERVICE,
 } from '@env';
 import * as S from './styles';
 import { Input, Tabs } from '../../components';
@@ -34,32 +34,42 @@ const SearchBox = connectSearchBox((props: any): JSX.Element => {
   );
 });
 
-const Search = (): JSX.Element => (
-  <S.Wrapper>
-    <StatusBar style="dark" />
-    <InstantSearch
-      searchClient={searchClient}
-      indexName="searchable_service_staging"
-    >
-      <S.Container>
-        <S.SearchWrapper>
-          <SearchBox />
-        </S.SearchWrapper>
-        <Tabs
-          tabs={[
-            {
-              title: 'Tecnologias',
-              content: <SearchList />,
-            },
-            {
-              title: 'Serviços',
-              content: <SearchList />,
-            },
-          ]}
-        />
-      </S.Container>
-    </InstantSearch>
-  </S.Wrapper>
-);
+const Search = (): JSX.Element => {
+  const [tab, setTab] = useState<number>(1);
+  const indexSearch = [ALGOLIA_INDEX_NAME_TECHNOLOGY, ALGOLIA_INDEX_NAME_SERVICE];
+
+  const onChange = (idx: number) => setTab(idx);
+
+  // useEffect(() => {}, [tab]);
+
+  return (
+    <S.Wrapper>
+      <StatusBar style="dark" />
+      <InstantSearch
+        searchClient={searchClient}
+        indexName={indexSearch[tab]}
+      >
+        <S.Container>
+          <S.SearchWrapper>
+            <SearchBox />
+          </S.SearchWrapper>
+          <Tabs
+            onSelect={onChange}
+            tabs={[
+              {
+                title: 'Tecnologias',
+                content: <SearchList index={ALGOLIA_INDEX_NAME_TECHNOLOGY} />,
+              },
+              {
+                title: 'Serviços',
+                content: <SearchList index={ALGOLIA_INDEX_NAME_SERVICE} />,
+              },
+            ]}
+          />
+        </S.Container>
+      </InstantSearch>
+    </S.Wrapper>
+  );
+};
 
 export default Search;
