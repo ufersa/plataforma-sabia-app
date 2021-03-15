@@ -1,7 +1,11 @@
 /* eslint-disable react/style-prop-object */
-import React, { useState, useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
-import { SafeAreaView, ActivityIndicator } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  Platform,
+  StatusBar as StatusBarHelper,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import List from './components/List';
 import * as S from './styles';
@@ -36,15 +40,17 @@ const Favorite = (): JSX.Element => {
     [],
   );
 
-  useFocusEffect(
-    useCallback(() => {
-      getTechnologies();
-    }, [user]),
-  );
+  useEffect(() => {
+    getTechnologies();
+  }, []);
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 0 }} />
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === 'android' ? StatusBarHelper.currentHeight : 0,
+      }}
+    >
       <S.Wrapper>
         <StatusBar style="auto" />
         <S.Container>
@@ -61,7 +67,7 @@ const Favorite = (): JSX.Element => {
           )}
         </S.Container>
       </S.Wrapper>
-    </>
+    </SafeAreaView>
   );
 };
 

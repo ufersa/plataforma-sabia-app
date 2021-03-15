@@ -1,5 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { SvgXml } from 'react-native-svg';
@@ -8,11 +9,20 @@ import { IllustrationError, IllustrationSuccess } from '../../utils/svgs';
 import * as S from './styles';
 
 interface RequestsFeedbackProps {
+  navigation: StackNavigationProp<any, any>
   route: NavigatorScreenParams<any, any>
 }
 
-const RequestsFeedback = ({ route: { params } }: RequestsFeedbackProps): JSX.Element => {
+const RequestsFeedback = ({ route: { params }, navigation }: RequestsFeedbackProps): JSX.Element => {
   const variant = params.feedback === 'success' ? 'primary' : 'danger';
+  const navigate = () => {
+    if (params.feedback === 'success') {
+      navigation.navigate('Root', { screen: 'Requests' });
+    } else {
+      navigation.goBack();
+    }
+  };
+
   return (
     <S.Wrapper>
       <StatusBar style="dark" />
@@ -34,7 +44,10 @@ const RequestsFeedback = ({ route: { params } }: RequestsFeedbackProps): JSX.Ele
             }
           </S.Description>
         </S.Page>
-        <Button variant={variant} onPress={() => {}}>
+        <Button
+          variant={variant}
+          onPress={navigate}
+        >
           {
             params.feedback === 'success'
               ? 'Ir para meus pedidos'

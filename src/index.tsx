@@ -33,6 +33,7 @@ const Root = (): JSX.Element => (
       component={Notifications}
     />
     <Tab.Screen
+      options={{ unmountOnBlur: true }}
       name="Favorite"
       component={Favorite}
     />

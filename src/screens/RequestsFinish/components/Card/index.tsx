@@ -2,17 +2,24 @@ import React from 'react';
 import { Image } from 'react-native';
 import { Card, InputNumber } from '../../../../components';
 import * as S from './styles';
+import { formatMoney } from '../../../../utils/helper';
 
-export default () => (
+interface CardProps {
+  data: {
+    title: string
+    image: string
+    price: number
+    isSeller: boolean
+  }
+}
+
+export default ({ data }: CardProps) => (
   <S.CardWrapper>
     <Card>
       <S.CardContainer>
         <S.CardImage>
           <Image
-            source={{
-              uri: 'https://fakeimg.pl/110x83/',
-              cache: 'only-if-cached',
-            }}
+            source={{ uri: data.image }}
             style={{
               width: 110,
               height: 83,
@@ -22,13 +29,17 @@ export default () => (
         </S.CardImage>
         <S.CardDetails>
           <S.Title numberOfLines={1}>
-            Test Very Long Title Technology
+            {data.title}
           </S.Title>
           <S.CardInfo>
-            <S.CardInput>
-              <InputNumber onChange={() => {}} />
-            </S.CardInput>
-            <S.Amount>R$ 489,00</S.Amount>
+            {data.isSeller && (
+              <S.CardInput>
+                <InputNumber onChange={() => {}} />
+              </S.CardInput>
+            )}
+            <S.Amount>
+              {data.isSeller && formatMoney(data.price)}
+            </S.Amount>
           </S.CardInfo>
         </S.CardDetails>
       </S.CardContainer>

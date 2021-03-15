@@ -24,7 +24,8 @@ interface TechnologiesItemProps {
   image?: {
   }
   costs: {
-    price: number
+    price: number,
+    is_seller: number
   }[]
   category?: {
     name: string
@@ -97,6 +98,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
                   description: technology.description,
                   price: technology.costs.length ? technology.costs[0].price : 0,
                   createdAt: technology.created_at,
+                  isSeller: !!(technology.costs.length && technology.costs[0].is_seller === 1),
                   type: 'technology',
                 }}
                 navigation={navigation}
