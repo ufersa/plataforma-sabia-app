@@ -179,3 +179,11 @@ export const StageStep = styled(DefaultText)`
   margin-horizontal: 18px;
   text-align: center;
 `;
+
+export const ModalContent = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  height: 800px;
+  background-color: #ddd;
+`;
