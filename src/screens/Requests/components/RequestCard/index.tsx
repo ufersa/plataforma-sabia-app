@@ -2,13 +2,18 @@ import React from 'react';
 import { Image } from 'react-native';
 import { Card, Badge } from '../../../../components';
 import * as S from './styles';
+import { formatMoney } from '../../../../utils/helper';
 
 interface RequestCardProps {
-  title: string
+  service: {
+    name: string
+    price: number
+  }
+  quantity: number
   status: string
 }
 
-const RequestCard = ({ title, status }: RequestCardProps): JSX.Element => (
+const RequestCard = ({ service, quantity, status }: RequestCardProps): JSX.Element => (
   <S.CardWrapper>
     <Card>
       <S.CardContainer>
@@ -26,8 +31,10 @@ const RequestCard = ({ title, status }: RequestCardProps): JSX.Element => (
           />
         </S.CardImage>
         <S.CardDetails>
-          <S.Title numberOfLines={1}>{title}</S.Title>
-          <S.Amount>R$ 489,00</S.Amount>
+          <S.Title numberOfLines={1}>{service.name}</S.Title>
+          <S.Amount>
+            {formatMoney(service.price * quantity)}
+          </S.Amount>
           <S.Status>
             <Badge status={status} />
           </S.Status>

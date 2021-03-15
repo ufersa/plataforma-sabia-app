@@ -1,3 +1,4 @@
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { DefaultText } from '../../../../components';
 import Colors from '../../../../utils/colors';
@@ -42,6 +43,7 @@ export const CardBadgeText = styled(DefaultText)`
 export const CardDetails = styled.View``;
 
 export const Title = styled(DefaultText)`
+  width: ${Dimensions.get('window').width - 190}px;
   font-family: Rubik_500Medium;
   font-weight: 500;
   font-size: 18px;

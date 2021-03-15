@@ -12,17 +12,23 @@ interface ListItemProps {
 
 interface ListProps {
   data: ListItemProps[]
+  loading: boolean
+  onRefresh: () => void
 }
 
-const List = ({ data }: ListProps): JSX.Element => (
+const List = ({ data, loading, onRefresh }: ListProps): JSX.Element => (
   <S.ListWrapper>
     {data && data.length > 0 ? (
       <S.ListContainer
+        contentContainerStyle={{ paddingBottom: 40 }}
         data={data}
         renderItem={({ item }: ListRenderItemInfo<any>) => (
           <RequestCard {...item} />
         )}
         keyExtractor={(_, idx) => idx.toString()}
+        showsVerticalScrollIndicator={false}
+        onRefresh={onRefresh}
+        refreshing={loading}
       />
     ) : (
       <S.Empty>

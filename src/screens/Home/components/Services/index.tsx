@@ -25,6 +25,12 @@ interface ServicesItemProps {
     name: string
   }
   created_at: string
+  measure_unit: string
+  user: {
+    institution: {
+      name: string
+    }
+  }
 }
 
 const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
@@ -75,6 +81,8 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
                   image: service.thumbnail?.url,
                   price: service.price,
                   createdAt: service.created_at,
+                  measureUnit: service.measure_unit,
+                  institution: service.user.institution.name,
                   isSeller: true,
                 }}
                 navigation={navigation}
