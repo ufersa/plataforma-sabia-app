@@ -19,6 +19,7 @@ interface DataCardProps {
   description?: string
   createdAt: string
   type?: string
+  isSeller?: boolean
 }
 interface TechnologyCardProps {
   data?: DataCardProps
@@ -124,11 +125,13 @@ export default ({
                   {data.title}
                 </S.Title>
               </TouchableOpacity>
-              <S.AmountWrapper>
-                <S.Amount bold>
-                  {!Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
-                </S.Amount>
-              </S.AmountWrapper>
+              {data.isSeller && (
+                <S.AmountWrapper>
+                  <S.Amount bold>
+                    {formatMoney(data.price)}
+                  </S.Amount>
+                </S.AmountWrapper>
+              )}
             </>
           )}
         </S.CardContainer>

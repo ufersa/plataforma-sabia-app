@@ -10,10 +10,17 @@ interface ListItemProps {
   id: string
   idx: number
   title: string
+  thumbnail: {
+    url: string
+  }
   pivot: {
     technology_id: number
     user_id: number
-  }
+  },
+  technologyCosts: {
+    price: number
+    is_seller: number
+  }[]
 }
 
 interface ListProps {

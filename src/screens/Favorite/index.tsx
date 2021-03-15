@@ -1,6 +1,11 @@
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState, useCallback } from 'react';
-import { SafeAreaView, ActivityIndicator } from 'react-native';
+import {
+  Platform,
+  StatusBar as StatusBarHelper,
+  SafeAreaView,
+  ActivityIndicator,
+} from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import List from './components/List';
 import * as S from './styles';
@@ -40,8 +45,12 @@ const Favorite = (): JSX.Element => {
   }, []);
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 0 }} />
+    <SafeAreaView
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === 'android' ? StatusBarHelper.currentHeight : 0,
+      }}
+    >
       <S.Wrapper>
         <StatusBar style="auto" />
         <S.Container>
@@ -58,7 +67,7 @@ const Favorite = (): JSX.Element => {
           )}
         </S.Container>
       </S.Wrapper>
-    </>
+    </SafeAreaView>
   );
 };
 

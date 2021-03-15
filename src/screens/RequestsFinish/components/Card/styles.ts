@@ -44,7 +44,6 @@ export const Title = styled(DefaultText)`
   font-size: 18px;
   line-height: 27px;
   color: #777777;
-  text-align: center;
   margin-top: 16px;
 `;
 

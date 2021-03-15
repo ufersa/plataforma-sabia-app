@@ -43,7 +43,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             <S.Title>{data.title}</S.Title>
             <S.HeaderDetails>
               <S.Amount>
-                {Number.isNaN(data.price) ? formatMoney(data.price) : 'Gratuita'}
+                {data.isSeller && formatMoney(data.price)}
               </S.Amount>
               {data.createdAt && (
                 <S.Date>
@@ -59,11 +59,15 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
           </S.Header>
           <About description={data.description} />
           <Details />
-          <FAQ />
-          <Rating />
+          {false && (
+            <>
+              <FAQ />
+              <Rating />
+            </>
+          )}
         </S.Container>
         <S.ButtonWrapper>
-          <Button onPress={() => navigation.navigate('RequestsFinish')}>
+          <Button onPress={() => navigation.navigate('RequestsFinish', { data })}>
             Adquirir tecnologia
           </Button>
         </S.ButtonWrapper>

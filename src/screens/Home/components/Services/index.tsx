@@ -75,6 +75,7 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
                   image: service.thumbnail?.url,
                   price: service.price,
                   createdAt: service.created_at,
+                  isSeller: true,
                 }}
                 navigation={navigation}
                 loading={false}
