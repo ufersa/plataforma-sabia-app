@@ -5,7 +5,7 @@ import ImageView from '@hamidfzm/react-native-image-viewing';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as S from './styles';
-import { Accordion, Modal } from '../../../../components';
+import { Accordion } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useTechnology } from '../../../../hooks/useTechnology';
 import { unitsOptions } from '../../../../utils/technology';
