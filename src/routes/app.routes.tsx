@@ -5,6 +5,7 @@ import {
   Technology,
   RequestsFeedback,
   RequestsFinish,
+  RequestsDetails,
   Cart,
   Account,
 } from '../screens';
@@ -73,6 +74,18 @@ const AppRoutes: React.FC = () => (
         }}
         name="RequestsFinish"
         component={RequestsFinish}
+      />
+      <App.Screen
+        options={{
+          title: 'Detalhes do pedido',
+          headerBackTitleVisible: false,
+          headerTintColor: '#ffffff',
+          headerStyle: {
+            backgroundColor: Colors.primary,
+          },
+        }}
+        name="RequestsDetails"
+        component={RequestsDetails}
       />
     </App.Navigator>
   </CartProvider>

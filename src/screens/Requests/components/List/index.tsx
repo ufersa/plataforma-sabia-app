@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { ListRenderItemInfo } from 'react-native';
 import { DefaultText } from '../../../../components';
@@ -5,9 +6,14 @@ import RequestCard from '../RequestCard';
 import * as S from './styles';
 
 interface ListItemProps {
-  title: string
-  amount: number
+  comment: string
+  service: {
+    name: string
+    price: number
+  }
+  quantity: number
   status: string
+  created_at: string
 }
 
 interface ListProps {
