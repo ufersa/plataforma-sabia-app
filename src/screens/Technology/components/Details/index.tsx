@@ -255,7 +255,7 @@ export const Documents = () => {
   const images = technology.attachments?.images.map((image) => ({ original: image.url }));
   const videos = technology.videos.map((video: any) => ({ original: video.thumbnail, videoId: video.videoId }));
 
-  const onSelect = (index) => {
+  const onSelect = (index: number) => {
     setImageIndex(index);
     setIsVisible(true);
   };
@@ -282,12 +282,12 @@ export const Documents = () => {
         presentationStyle="overFullScreen"
       />
 
-      {technology.attachments.documents.length ? (
+      {technology.videos?.length ? (
         <>
           <S.CostSection style={{ marginTop: 30 }}>Vídeos</S.CostSection>
 
-          {videos.map((video, idx) => (
-            <View key={idx} style={{ marginBottom: 0, backgroundColor: '#ddd' }}>
+          {videos.map((video) => (
+            <View key={`video_${video.videoId}`} style={{ marginBottom: 0 }}>
               <YoutubePlayer
                 height={240}
                 videoId={video.videoId}
@@ -297,12 +297,12 @@ export const Documents = () => {
         </>
       ) : null}
 
-      {technology.attachments.documents.length ? (
+      {technology.attachments.documents?.length ? (
         <>
           <S.CostSection style={{ marginTop: 30 }}>Documentos</S.CostSection>
-          {technology.attachments.documents.map((document, idx) => (
+          {technology.attachments.documents.map((document) => (
             <TouchableOpacity
-              key={idx}
+              key={`document_${document.id}`}
               onPress={() => {
                 Linking.openURL(document.url);
               }}

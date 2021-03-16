@@ -32,6 +32,7 @@ export interface Technology {
     documents?: {
       id: number;
       url: string;
+      filename: string;
     }[]
   }
 }
