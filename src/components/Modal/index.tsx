@@ -26,7 +26,7 @@ const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
           <S.CloseWrapper>
             <S.ButtonClose activeOpacity={0.7} onPress={onClose} />
           </S.CloseWrapper>
-          {title && (
+          {!!title && (
             <S.TitleWrapper>
               <S.Title>{title}</S.Title>
             </S.TitleWrapper>
