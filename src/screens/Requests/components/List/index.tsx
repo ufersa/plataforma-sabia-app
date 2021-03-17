@@ -10,6 +10,9 @@ interface ListItemProps {
   service: {
     name: string
     price: number
+    thumbnail: {
+      url: string
+    }
   }
   quantity: number
   status: string

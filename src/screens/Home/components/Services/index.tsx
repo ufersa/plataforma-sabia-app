@@ -12,6 +12,7 @@ interface TechnologiesProps {
 interface ServicesItemProps {
   id?: number
   title?: string
+  name?: string
   description: string
   status?: string
   date?: string
@@ -77,7 +78,8 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
                 key={`service_${idx}`}
                 data={{
                   id: service.id,
-                  title: service.description,
+                  title: service.name,
+                  description: service.description,
                   image: service.thumbnail?.url,
                   price: service.price,
                   createdAt: service.created_at,

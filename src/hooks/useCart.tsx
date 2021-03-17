@@ -1,8 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import React, {
-  useState, createContext, useContext, useMemo,
+  useState,
+  createContext,
+  useContext,
+  useMemo,
+  useEffect,
+  useCallback,
 } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface CartItems {
   id: number
@@ -32,6 +38,23 @@ const CartProvider = ({ children }: any): JSX.Element => {
     [items],
   );
 
+  useEffect(() => {
+    const getStoragedItems = async (): Promise<void> => {
+      const storageItems = await AsyncStorage.getItem('@Sabia:shoppingCart');
+      if (storageItems) setItems(JSON.parse(storageItems));
+    };
+
+    getStoragedItems();
+  }, []);
+
+  useEffect(() => {
+    const storagedItems = async (): Promise<void> => {
+      await AsyncStorage.setItem('@Sabia:shoppingCart', JSON.stringify(items));
+    };
+
+    storagedItems();
+  }, [items]);
+
   const addCart = (item: CartItems) => setItems((oldItems: CartItems[]) => [...oldItems, item]);
 
   const updateCart = (id: number, values: CartItems) => {
@@ -40,7 +63,13 @@ const CartProvider = ({ children }: any): JSX.Element => {
 
   const removeCart = (id: number) => setItems((oldItems: CartItems[]) => oldItems.filter((item) => item.id !== id));
 
-  const resetCart = () => setItems([]);
+  const resetCart = useCallback(
+    async () => {
+      await AsyncStorage.removeItem('@Sabia:shoppingCart');
+      setItems([]);
+    },
+    [],
+  );
 
   return (
     <CartContext.Provider

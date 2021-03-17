@@ -25,7 +25,7 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
             <S.CardContainer>
               <S.CardImage>
                 <Image
-                  source={{ uri: data.thumbnail?.url }}
+                  source={{ uri: data.service.thumbnail?.url }}
                   style={{
                     width: 110,
                     height: 83,

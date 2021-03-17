@@ -10,10 +10,10 @@ interface RequestCardProps {
   service: {
     name: string
     price: number
+    thumbnail: {
+      url: string
+    },
   }
-  thumbnail: {
-    url: string
-  },
   quantity: number
   status: string
   type: string
@@ -26,7 +26,6 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
     quantity,
     status,
     type,
-    thumbnail,
   } = props;
 
   return (
@@ -44,7 +43,7 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
               />
             </S.CardBadge>
             <Image
-              source={{ uri: thumbnail?.url }}
+              source={{ uri: service.thumbnail?.url }}
               style={{
                 width: 110,
                 height: 83,

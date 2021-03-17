@@ -31,6 +31,7 @@ const Cart = (): JSX.Element => {
     total,
     updateCart,
     removeCart,
+    resetCart,
   } = useCart();
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -51,6 +52,7 @@ const Cart = (): JSX.Element => {
           services: items.map((item) => ({ service_id: item.id, quantity: item.quantity })),
         });
         setLoading(false);
+        resetCart();
         navigation.navigate('RequestsFeedback', { feedback: 'success' });
       } catch (err) {
         setLoading(false);
