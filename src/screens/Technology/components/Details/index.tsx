@@ -1,7 +1,9 @@
 /* eslint-disable camelcase */
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { Linking, TouchableOpacity, View } from 'react-native';
 import ImageView from '@hamidfzm/react-native-image-viewing';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as S from './styles';
 import { Accordion } from '../../../../components';
 import Colors from '../../../../utils/colors';
@@ -246,13 +248,14 @@ export const Costs = () => {
 };
 
 export const Documents = () => {
-  const [currentImageIndex, setImageIndex] = React.useState(0);
+  const [currentImageIndex, setImageIndex] = useState(0);
   const technology = useTechnology();
   const [isVisible, setIsVisible] = useState(false);
 
   const images = technology.attachments?.images.map((image) => ({ original: image.url }));
+  const videos = technology.videos.map((video: any) => ({ original: video.thumbnail, videoId: video.videoId }));
 
-  const onSelect = (images, index) => {
+  const onSelect = (index: number) => {
     setImageIndex(index);
     setIsVisible(true);
   };
@@ -266,7 +269,7 @@ export const Documents = () => {
 
       <ImageList
         images={images.map((image) => image.original)}
-        onPress={(index: number) => onSelect(images, index)}
+        onPress={(index: number) => onSelect(index)}
         shift={0.25}
       />
 
@@ -279,7 +282,39 @@ export const Documents = () => {
         presentationStyle="overFullScreen"
       />
 
-      {false && <S.CostSection>Vídeos</S.CostSection>}
+      {technology.videos?.length ? (
+        <>
+          <S.CostSection style={{ marginTop: 30 }}>Vídeos</S.CostSection>
+
+          {videos.map((video) => (
+            <View key={`video_${video.videoId}`} style={{ marginBottom: 0 }}>
+              <YoutubePlayer
+                height={240}
+                videoId={video.videoId}
+              />
+            </View>
+          ))}
+        </>
+      ) : null}
+
+      {technology.attachments.documents?.length ? (
+        <>
+          <S.CostSection style={{ marginTop: 30 }}>Documentos</S.CostSection>
+          {technology.attachments.documents.map((document) => (
+            <TouchableOpacity
+              key={`document_${document.id}`}
+              onPress={() => {
+                Linking.openURL(document.url);
+              }}
+            >
+              <S.ColText>
+                <MaterialCommunityIcons name="file-document-outline" size={24} color="black" style={{ paddingRight: 5 }} />
+                {document.filename}
+              </S.ColText>
+            </TouchableOpacity>
+          ))}
+        </>
+      ) : null}
 
     </S.AccordionItemWrapper>
   );
