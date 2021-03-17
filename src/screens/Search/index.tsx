@@ -1,6 +1,6 @@
 /* eslint-disable react/style-prop-object */
 /* eslint-disable import/no-unresolved */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, connectSearchBox } from 'react-instantsearch-native';
@@ -39,8 +39,6 @@ const Search = (): JSX.Element => {
   const indexSearch = [ALGOLIA_INDEX_NAME_TECHNOLOGY, ALGOLIA_INDEX_NAME_SERVICE];
 
   const onChange = (idx: number) => setTab(idx);
-
-  // useEffect(() => {}, [tab]);
 
   return (
     <S.Wrapper>
