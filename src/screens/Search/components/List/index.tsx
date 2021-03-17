@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text, View, FlatList } from 'react-native';
-// import { View, Text, TouchableOpacity } from 'react-native';
 import { connectHighlight, connectInfiniteHits } from 'react-instantsearch-native';
 
 const Highlight = connectHighlight((props: any) => {
@@ -29,33 +28,12 @@ const Highlight = connectHighlight((props: any) => {
 });
 
 const List = (props: any) => {
-  // console.log(items);
-  // const { items, refine } = props;
-  // console.log(props);
-  // return (
-  //   <View>
-  //     <View>
-  //       {items.map((item: any) => (
-  //         <TouchableOpacity
-  //           key={item.value}
-  //           onPress={() => refine(item.value)}
-  //         >
-  //           <Text>{item.label}</Text>
-  //           <View>
-  //             <Text>{item.count}</Text>
-  //           </View>
-  //         </TouchableOpacity>
-  //       ))}
-  //     </View>
-  //   </View>
-  // );
   const { hits, hasMore, refine } = props;
 
   return (
     <FlatList
       data={hits}
       keyExtractor={(item) => item.objectID}
-      // ItemSeparatorComponent={() => <View />}
       onEndReached={() => hasMore && refine()}
       renderItem={({ item }) => (
         <View>

@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-restricted-globals */
 import React from 'react';
 import { Image } from 'react-native';
@@ -9,11 +10,15 @@ interface CardProps {
   onPress?: () => void
   title: string
   name: string
-  thumbnail?: any
+  image: string
+  thumbnail?: {
+    url: string
+  }
   price?: number
   implementationCost: number
   category: string
   institution?: string
+  forSale?: number
 }
 
 export default ({
@@ -21,7 +26,9 @@ export default ({
   title,
   name,
   thumbnail,
+  image,
   implementationCost,
+  forSale,
   price,
   category,
   institution,
@@ -34,7 +41,7 @@ export default ({
       <S.CardContainer>
         <S.CardImage>
           <Image
-            source={{ uri: thumbnail?.url }}
+            source={{ uri: image ?? thumbnail?.url }}
             style={{
               width: 110,
               height: 83,
@@ -47,14 +54,18 @@ export default ({
             {name ?? title}
           </S.Title>
           <S.CardInfo>
-            <S.Amount>
-              {`${implementationCost === 0 || price === 0 || isNaN(implementationCost ?? price) ? 'Gratuita' : formatMoney(implementationCost ?? price)}`}
-            </S.Amount>
-            <S.BadgeWrapper>
-              <S.BadgeWrapperContent>
-                <Badge variant="primary" text={category ?? institution} />
-              </S.BadgeWrapperContent>
-            </S.BadgeWrapper>
+            {forSale === 1 && (
+              <S.Amount>
+                {formatMoney(implementationCost ?? price)}
+              </S.Amount>
+            )}
+            {(category || institution) && (
+              <S.BadgeWrapper>
+                <S.BadgeWrapperContent>
+                  <Badge variant="primary" text={category ?? institution} />
+                </S.BadgeWrapperContent>
+              </S.BadgeWrapper>
+            )}
           </S.CardInfo>
         </S.CardDetails>
       </S.CardContainer>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Index, Configure } from 'react-instantsearch-native';
+import { Index } from 'react-instantsearch-native';
 import { List } from './styles';
 
 interface SearchListProps {
@@ -8,7 +8,6 @@ interface SearchListProps {
 
 export default ({ index }: SearchListProps): JSX.Element => (
   <Index indexName={index}>
-    <Configure hitsPerPage={5} />
     <List />
   </Index>
 );
