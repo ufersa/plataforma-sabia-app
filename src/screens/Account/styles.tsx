@@ -5,9 +5,6 @@ import Colors from '../../utils/colors';
 
 export const Wrapper = styled.SafeAreaView`
   flex: 1;
-  width: 100%;
-  height: 100%;
-  padding: 20px 0 20px;
 `;
 
 export const Touch = styled.TouchableOpacity`
@@ -29,11 +26,12 @@ export const TouchText = styled(DefaultText)<TextProps>`
   font-weight: 500;
 `;
 
-export const Page = styled.ScrollView`
-  height: 100%;
-  padding-top: 16px;
-  margin-bottom: 16px;
-  padding: 0 16px;
+export const Page = styled.ScrollView``;
+
+export const Container = styled.View`
+  flex: 1;
+  padding-horizontal: 16px;
+  padding-bottom: 50px;
 `;
 
 export const Title = styled(DefaultText)`

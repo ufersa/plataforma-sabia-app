@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import api from './api';
-import { getBookmarks } from './bookmark';
 
 /**
  * Attempts to authenticate the provided user within the API.

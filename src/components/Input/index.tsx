@@ -26,6 +26,7 @@ interface InputProps extends TextInputProps {
     [property: string]: string | number
   },
   focus?: boolean
+  mask?: string
 }
 interface SizesProps {
   [name: string]: number

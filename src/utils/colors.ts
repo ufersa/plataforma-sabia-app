@@ -1,5 +1,9 @@
+interface ThemeProps {
+  [key: string]: any
+}
+
 const defaultTheme = 'light';
-const theme = {
+const theme: ThemeProps = {
   light: {
     dark: false,
     colors: {

@@ -63,6 +63,7 @@ const SignIn = (): JSX.Element => {
           <ScrollView
             contentContainerStyle={{ flex: 1 }}
             keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
           >
             <S.Container>
               <Image source={Logo} />
