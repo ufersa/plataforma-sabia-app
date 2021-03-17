@@ -10,15 +10,23 @@ export const Wrapper = styled.SafeAreaView`
   padding: 20px 0 20px;
 `;
 
-export const Touch = styled.TouchableOpacity``;
+export const Touch = styled.TouchableOpacity`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+`;
 
-export const TouchText = styled(DefaultText)`
+interface TextProps {
+  color?: string
+}
+
+export const TouchText = styled(DefaultText)<TextProps>`
   font-size: 16px;
   line-height: 24px;
-  color: ${Colors.primary};
+  color: ${({ color }) => (color ? Colors[color] : Colors.primary)};
   font-family: Rubik_500Medium;
   font-weight: 500;
-  margin: 0 auto;
 `;
 
 export const Page = styled.ScrollView`
@@ -76,5 +84,6 @@ export const User = ({ name }: AvatarProps): JSX.Element => (
 );
 
 export const ButtonWrapper = styled.TouchableOpacity`
-  padding: 0px 16px;
+  padding-horizontal: 16px;
+  margin-top: 48px;
 `;

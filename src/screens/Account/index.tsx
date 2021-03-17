@@ -3,9 +3,11 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Platform, KeyboardAvoidingView } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
+import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
 import { Input, Button } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
+import Colors from '../../utils/colors';
 
 const Account = (): JSX.Element => {
   const { user, signOut } = useAuth();
@@ -71,14 +73,18 @@ const Account = (): JSX.Element => {
             )}
           </S.Page>
         </KeyboardAvoidingView>
+        <S.Touch activeOpacity={0.7} onPress={signOut}>
+          <Feather
+            name="log-out"
+            size={24}
+            color={Colors.danger}
+            style={{ marginRight: 16 }}
+          />
+          <S.TouchText color="danger">Sair do aplicativo</S.TouchText>
+        </S.Touch>
         <S.ButtonWrapper style={{ paddingBottom: 10 }}>
           <Button onPress={() => {}}>
             Salvar alterações
-          </Button>
-        </S.ButtonWrapper>
-        <S.ButtonWrapper>
-          <Button disabled={false} variant="primary-light" onPress={signOut}>
-            Sair
           </Button>
         </S.ButtonWrapper>
       </S.Wrapper>
