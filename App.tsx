@@ -9,6 +9,7 @@ import 'moment/locale/pt-br';
 import useFonts from './src/hooks/useFonts';
 import AppProvider from './src/hooks';
 import Routes from './src/routes';
+import { setNavigator } from './src/utils/navigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   // do nothing
@@ -38,8 +39,9 @@ const App = () => {
   if (loadingFonts) {
     return null;
   }
+
   return (
-    <NavigationContainer theme={theme}>
+    <NavigationContainer ref={setNavigator} theme={theme}>
       <AppProvider>
         <Routes />
       </AppProvider>

@@ -7,6 +7,7 @@ import {
   RequestsFinish,
   Cart,
   Account,
+  Logout,
 } from '../screens';
 import Colors from '../utils/colors';
 
@@ -71,6 +72,11 @@ const AppRoutes: React.FC = () => (
       }}
       name="RequestsFinish"
       component={RequestsFinish}
+    />
+    <App.Screen
+      options={{ headerShown: false }}
+      name="Logout"
+      component={Logout}
     />
   </App.Navigator>
 
