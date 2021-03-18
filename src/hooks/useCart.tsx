@@ -38,30 +38,42 @@ const CartProvider = ({ children }: any): JSX.Element => {
     [items],
   );
 
-  useEffect(() => {
-    const getStoragedItems = async (): Promise<void> => {
+  const getStoragedItems = useCallback(
+    async (): Promise<void> => {
       const storageItems = await AsyncStorage.getItem('@Sabia:shoppingCart');
       if (storageItems) setItems(JSON.parse(storageItems));
-    };
+    }, [items],
+  );
 
+  const storagedItems = useCallback(
+    async (): Promise<void> => {
+      await AsyncStorage.setItem('@Sabia:shoppingCart', JSON.stringify(items));
+    }, [items],
+  );
+
+  useEffect(() => {
     getStoragedItems();
   }, []);
 
-  useEffect(() => {
-    const storagedItems = async (): Promise<void> => {
-      await AsyncStorage.setItem('@Sabia:shoppingCart', JSON.stringify(items));
-    };
-
-    storagedItems();
-  }, [items]);
-
-  const addCart = (item: CartItems) => setItems((oldItems: CartItems[]) => [...oldItems, item]);
+  const addCart = (item: CartItems) => {
+    const existsItem = items.find((cartItem) => cartItem.id === item.id);
+    if (existsItem) {
+      updateCart(item.id, { ...item, quantity: existsItem.quantity + 1 });
+    } else {
+      setItems((oldItems: CartItems[]) => [...oldItems, item]);
+      storagedItems();
+    }
+  };
 
   const updateCart = (id: number, values: CartItems) => {
     setItems(items.map((item) => (item.id === id ? { ...item, ...values } : item)));
+    storagedItems();
   };
 
-  const removeCart = (id: number) => setItems((oldItems: CartItems[]) => oldItems.filter((item) => item.id !== id));
+  const removeCart = (id: number) => {
+    setItems((oldItems: CartItems[]) => oldItems.filter((item) => item.id !== id));
+    storagedItems();
+  };
 
   const resetCart = useCallback(
     async () => {

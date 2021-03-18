@@ -49,7 +49,7 @@ const Cart = (): JSX.Element => {
         setLoading(true);
         await createOrder({
           comment,
-          services: items.map((item) => ({ service_id: item.id, quantity: item.quantity })),
+          services: items.map((cartItem) => ({ service_id: cartItem.id, quantity: cartItem.quantity })),
         });
         setLoading(false);
         resetCart();
@@ -58,7 +58,7 @@ const Cart = (): JSX.Element => {
         setLoading(false);
         navigation.navigate('RequestsFeedback', { feedback: 'error' });
       }
-    }, [],
+    }, [items],
   );
 
   return (
