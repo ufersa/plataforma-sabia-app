@@ -65,7 +65,7 @@ const FAQ = (): JSX.Element => {
 
   useEffect(() => {
     loadQuestions();
-  }, []);
+  }, [totalItens]);
 
   return (
     <S.Wrapper>
