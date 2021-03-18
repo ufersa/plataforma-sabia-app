@@ -2,13 +2,21 @@ import React from 'react';
 import { RequestsStatus } from '../../utils/status';
 import * as S from './styles';
 
-interface BadgeProps {
-  status: string
+export interface BadgeProps {
+  status?: string
+  text?: string
+  style?: object
+  variant?: string
 }
 
-const Badge = ({ status }: BadgeProps): JSX.Element => (
-  <S.BadgeWrapper>
-    <S.Text>{RequestsStatus[status]}</S.Text>
+const Badge = ({
+  status,
+  text,
+  style,
+  variant,
+}: BadgeProps): JSX.Element => (
+  <S.BadgeWrapper variant={variant} style={style}>
+    <S.Text variant={variant}>{status ? RequestsStatus[status] : text}</S.Text>
   </S.BadgeWrapper>
 );
 

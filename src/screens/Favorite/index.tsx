@@ -22,7 +22,7 @@ const Favorite = (): JSX.Element => {
     async () => {
       setLoading(true);
       const data = await getUserBookmarks(user.id);
-      setTechnologies(data.technologies);
+      setTechnologies([...data.technologies, ...data.services]);
       setLoading(false);
     },
     [user],

@@ -1,3 +1,5 @@
+import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Colors from '../../../../utils/colors';
@@ -83,3 +85,33 @@ export const FavoriteButton = styled.TouchableOpacity`
 `;
 
 export const FavoriteIcon = styled(FontAwesome5)``;
+
+export const ModalContent = styled.View`
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const DetailsText = styled(DefaultText)`
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: ${Colors.primary};
+`;
+
+interface DetailsProps {
+  onPress: () => void
+}
+
+export const Details = ({ onPress }: DetailsProps): JSX.Element => (
+  <TouchableOpacity activeOpacity={0.7} onPress={onPress}>
+    <DetailsText>Ver detalhes do serviço</DetailsText>
+  </TouchableOpacity>
+);
+
+export const ModalActions = styled.View`
+  width: 100%;
+  padding-horizontal: 16px;
+  margin-top: 32px;
+`;

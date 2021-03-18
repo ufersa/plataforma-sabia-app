@@ -1,40 +1,69 @@
+/* eslint-disable camelcase */
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import { Card, Badge } from '../../../../components';
 import * as S from './styles';
+import { formatMoney } from '../../../../utils/helper';
 
 interface RequestCardProps {
-  title: string
+  service: {
+    name: string
+    price: number
+    thumbnail: {
+      url: string
+    },
+  }
+  quantity: number
   status: string
+  type: string
 }
 
-const RequestCard = ({ title, status }: RequestCardProps): JSX.Element => (
-  <S.CardWrapper>
-    <Card>
-      <S.CardContainer>
-        <S.CardImage>
-          <Image
-            source={{
-              uri: 'https://fakeimg.pl/110x83/',
-              cache: 'only-if-cached',
-            }}
-            style={{
-              width: 110,
-              height: 83,
-              borderRadius: 8,
-            }}
-          />
-        </S.CardImage>
-        <S.CardDetails>
-          <S.Title numberOfLines={1}>{title}</S.Title>
-          <S.Amount>R$ 489,00</S.Amount>
-          <S.Status>
-            <Badge status={status} />
-          </S.Status>
-        </S.CardDetails>
-      </S.CardContainer>
-    </Card>
-  </S.CardWrapper>
-);
+const RequestCard = (props: RequestCardProps): JSX.Element => {
+  const navigation = useNavigation();
+  const {
+    service,
+    quantity,
+    status,
+    type,
+  } = props;
+
+  return (
+    <S.CardWrapper
+      activeOpacity={0.7}
+      onPress={() => navigation.navigate('RequestsDetails', { data: props })}
+    >
+      <Card>
+        <S.CardContainer>
+          <S.CardImage>
+            <S.CardBadge>
+              <S.Type
+                variant={type === 'technology' ? 'info' : 'primary'}
+                text={type === 'technology' ? 'Tecnologia' : 'Serviço'}
+              />
+            </S.CardBadge>
+            <Image
+              source={{ uri: service.thumbnail?.url }}
+              style={{
+                width: 110,
+                height: 83,
+                borderRadius: 8,
+              }}
+            />
+          </S.CardImage>
+          <S.CardDetails>
+            <S.Title numberOfLines={1}>{service.name}</S.Title>
+            <S.Amount>
+              {formatMoney(service.price * quantity)}
+            </S.Amount>
+            <S.Status>
+              <Badge status={status} />
+            </S.Status>
+          </S.CardDetails>
+        </S.CardContainer>
+      </Card>
+    </S.CardWrapper>
+  );
+};
 
 export default RequestCard;

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Animated, Image, TouchableOpacity, Easing, StyleProp,
+  Animated, Image, TouchableOpacity, Easing, StyleProp, View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Card } from '../../../../components';
+import { Card, Modal, Button } from '../../../../components';
 import * as S from './styles';
 import { formatMoney } from '../../../../utils/helper';
 import { useAuth } from '../../../../hooks/useAuth';
 import { handleBookmark } from '../../../../services/bookmark';
-
 import { Technology } from '../../../../hooks/useTechnology';
+import { useCart } from '../../../../hooks/useCart';
 
 interface DataCardProps {
   id: number
@@ -20,6 +20,8 @@ interface DataCardProps {
   createdAt: string
   type?: string
   isSeller?: boolean
+  measureUnit?: string
+  institution?: string
 }
 interface TechnologyCardProps {
   data?: DataCardProps
@@ -42,7 +44,7 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
   });
 
   const { user } = useAuth();
-  const solutionTypeProperty = `${type}Bookmarks`;
+  const solutionTypeProperty: string = `${type}Bookmarks`;
 
   useEffect(() => {
     const solutionBookmarks = user[solutionTypeProperty];
@@ -91,51 +93,93 @@ export default ({
   loading = false,
   style = {},
 }: TechnologyCardProps): JSX.Element => {
-  const navigate = () => (type === 'technology' ? navigation.navigate('Technology', { data }) : null);
+  const { addCart } = useCart();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const navigate = () => (type === 'technology' ? navigation.navigate('Technology', { data, type }) : setShowModal(true));
 
   return (
-    <S.CardWrapper style={style}>
-      <Card>
-        <S.CardContainer>
-          {!loading && (
-            <>
-              <S.CardImage>
-                <S.Actions>
-                  <Favorite id={data.id} type={data.type} />
-                </S.Actions>
+    <>
+      <S.CardWrapper style={style}>
+        <Card>
+          <S.CardContainer>
+            {!loading && (
+              <>
+                <S.CardImage>
+                  <S.Actions>
+                    <Favorite id={data.id} type={type} />
+                  </S.Actions>
+                  <TouchableOpacity
+                    onPress={navigate}
+                    activeOpacity={0.7}
+                  >
+                    <Image
+                      source={{ uri: data.image }}
+                      style={{
+                        width: 216,
+                        height: 216,
+                        borderRadius: 8,
+                      }}
+                    />
+                  </TouchableOpacity>
+                </S.CardImage>
                 <TouchableOpacity
                   onPress={navigate}
                   activeOpacity={0.7}
                 >
-                  <Image
-                    source={{ uri: data.image }}
-                    style={{
-                      width: 216,
-                      height: 216,
-                      borderRadius: 8,
-                    }}
-                  />
+                  <S.Title numberOfLines={2}>
+                    {data.title}
+                  </S.Title>
                 </TouchableOpacity>
-              </S.CardImage>
-              <TouchableOpacity
-                onPress={navigate}
-                activeOpacity={0.7}
-              >
-                <S.Title numberOfLines={2}>
-                  {data.title}
-                </S.Title>
-              </TouchableOpacity>
-              {data.isSeller && (
-                <S.AmountWrapper>
-                  <S.Amount bold>
-                    {formatMoney(data.price)}
-                  </S.Amount>
-                </S.AmountWrapper>
-              )}
-            </>
-          )}
-        </S.CardContainer>
-      </Card>
-    </S.CardWrapper>
+                {data.isSeller && (
+                  <S.AmountWrapper>
+                    <S.Amount bold>
+                      {formatMoney(data.price)}
+                    </S.Amount>
+                  </S.AmountWrapper>
+                )}
+              </>
+            )}
+          </S.CardContainer>
+        </Card>
+      </S.CardWrapper>
+      {!loading && type === 'service' && (
+        <Modal
+          title={data.title}
+          animationType="slide"
+          visible={showModal}
+          onClose={() => setShowModal(false)}
+        >
+          <S.ModalContent>
+            <S.Details
+              onPress={() => {
+                navigation.navigate('Technology', { data, type });
+                setShowModal(false);
+              }}
+            />
+            <S.ModalActions>
+              <View style={{ flex: 1 }}>
+                <Button
+                  variant="primary"
+                  onPress={() => {
+                    addCart({
+                      id: data.id,
+                      title: data.title,
+                      quantity: 1,
+                      price: data.price,
+                      image: data.image,
+                      measureUnit: data.measureUnit,
+                      institution: data.institution,
+                    });
+                    setShowModal(false);
+                  }}
+                >
+                  Adicionar no carrinho
+                </Button>
+              </View>
+            </S.ModalActions>
+          </S.ModalContent>
+        </Modal>
+      )}
+    </>
   );
 };
