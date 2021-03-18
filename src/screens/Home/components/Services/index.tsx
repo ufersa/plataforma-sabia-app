@@ -71,7 +71,7 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
             ))}
           </>
         ) : (
-          services.length > 0
+          services && services.length > 0
             ? services.map((service: ServicesItemProps, idx: number) => (
               <TechnologyCard
                 type="service"
