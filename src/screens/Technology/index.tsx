@@ -57,9 +57,9 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
           </S.Header>
           <About description={data.description} />
           <Details />
+          <FAQ />
           {false && (
             <>
-              <FAQ />
               <Rating />
             </>
           )}
