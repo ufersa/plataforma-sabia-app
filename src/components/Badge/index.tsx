@@ -3,19 +3,20 @@ import { RequestsStatus } from '../../utils/status';
 import * as S from './styles';
 
 export interface BadgeProps {
-  text?: string
   status?: string
+  text?: string
+  style?: object
   variant?: string
 }
 
-const Badge = ({ text, status, variant }: BadgeProps): JSX.Element => (
-  <S.BadgeWrapper variant={variant}>
-    <S.Text
-      numberOfLines={1}
-      variant={variant}
-    >
-      {status ? RequestsStatus[status] : text}
-    </S.Text>
+const Badge = ({
+  status,
+  text,
+  style,
+  variant,
+}: BadgeProps): JSX.Element => (
+  <S.BadgeWrapper variant={variant} style={style}>
+    <S.Text variant={variant}>{status ? RequestsStatus[status] : text}</S.Text>
   </S.BadgeWrapper>
 );
 

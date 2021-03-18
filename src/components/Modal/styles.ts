@@ -36,6 +36,7 @@ export const TitleWrapper = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
+  padding-horizontal: 16px;
 `;
 
 export const Title = styled(DefaultText)`
@@ -44,4 +45,5 @@ export const Title = styled(DefaultText)`
   line-height: 27px;
   font-size: 18px;
   color: #4a4a4a;
+  text-align: center;
 `;

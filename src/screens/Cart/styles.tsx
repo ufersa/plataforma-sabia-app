@@ -4,14 +4,12 @@ import styled from 'styled-components/native';
 import { DefaultText } from '../../components';
 import Colors from '../../utils/colors';
 import Card from './components/Card';
-
-interface ItemsListProps {
-  title: string
-}
+import { formatMoney } from '../../utils/helper';
+import { CartItems } from '../../hooks/useCart';
 
 interface ItemsProps {
-  data: ItemsListProps[]
-  onEdit: (item: ItemsListProps) => void
+  data: CartItems[]
+  onEdit: (item: CartItems) => void
 }
 
 interface TotalProps {
@@ -53,6 +51,18 @@ const ItemsWrapper = styled.View`
   width: 100%;
 `;
 
+const ItemsEmptyWrapper = styled.View``;
+
+const TextEmpty = styled(DefaultText)`
+  font-size: 18px;
+  font-family: Rubik_400Regular;
+  font-weight: 400;
+  line-height: 27px;
+  margin-top: 24px;
+  margin-bottom: 8px;
+  text-align: center;
+`;
+
 export const Items = ({ data, onEdit }: ItemsProps): JSX.Element => (
   data && data.length > 0
     ? (
@@ -66,7 +76,11 @@ export const Items = ({ data, onEdit }: ItemsProps): JSX.Element => (
         ))}
       </ItemsWrapper>
     )
-    : <></>
+    : (
+      <ItemsEmptyWrapper>
+        <TextEmpty>Seu carrinho está vazio.</TextEmpty>
+      </ItemsEmptyWrapper>
+    )
 );
 
 const TotalWrapper = styled.View`
@@ -89,7 +103,7 @@ export const Total = ({ amount }: TotalProps): JSX.Element => (
   <TotalWrapper>
     <TotalLabel>Total</TotalLabel>
     <TotalAmount>
-      {`R$ ${amount}`}
+      {formatMoney(amount)}
     </TotalAmount>
   </TotalWrapper>
 );

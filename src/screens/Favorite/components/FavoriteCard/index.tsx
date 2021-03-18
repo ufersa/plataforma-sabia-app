@@ -9,9 +9,11 @@ import Colors from '../../../../utils/colors';
 
 interface RequestCardProps {
   title: string
+  name: string
   thumbnail: {
     url: string
   }
+  price: number,
   technologyCosts: {
     price: number
     is_seller: number
@@ -21,12 +23,14 @@ interface RequestCardProps {
 
 const RequestCard = ({
   title,
+  name,
   thumbnail,
+  price,
   technologyCosts,
   onPress,
 }: RequestCardProps): JSX.Element => {
-  const price = technologyCosts.length ? technologyCosts[0].price : 0;
-  const isSeller = !!(technologyCosts.length && technologyCosts[0].is_seller === 1);
+  const amount = technologyCosts && technologyCosts.length ? technologyCosts[0].price : price;
+  const isSeller = !!(technologyCosts && technologyCosts.length && technologyCosts[0].is_seller === 1);
 
   return (
     <S.CardWrapper>
@@ -43,9 +47,9 @@ const RequestCard = ({
             />
           </S.CardImage>
           <S.CardDetails>
-            <S.Title numberOfLines={1}>{title}</S.Title>
+            <S.Title numberOfLines={1}>{title ?? name}</S.Title>
             <S.Amount>
-              {isSeller && formatMoney(price)}
+              {isSeller && formatMoney(amount)}
             </S.Amount>
           </S.CardDetails>
         </S.CardContainer>
