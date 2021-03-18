@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import * as S from './styles';
@@ -60,6 +60,7 @@ const FAQ = (): JSX.Element => {
           'Tente novamente mais tarde.',
         );
       }
+      return true;
     }, [technology, filled],
   );
 
@@ -114,13 +115,15 @@ const FAQ = (): JSX.Element => {
 
             <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalQuestions(totalQuestions + 2); }}>
               <S.AnswersViewMoreText>
+                <Ionicons name="reload-sharp" size={16} />
+                {' '}
                 Ver mais perguntas
               </S.AnswersViewMoreText>
             </S.AnswersViewMore>
           </>
         ) : (
           <S.AnswersContainer>
-            <S.AnswersTitle>Nenhuma pergunta encontrada.</S.AnswersTitle>
+            <S.AnswersTitle style={{ textAlign: 'center' }}>Nenhuma pergunta encontrada.</S.AnswersTitle>
           </S.AnswersContainer>
         )}
 
