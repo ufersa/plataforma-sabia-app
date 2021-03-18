@@ -55,8 +55,6 @@ const FAQ = (): JSX.Element => {
       } catch (err) {
         setLoading(false);
 
-        console.log(err.response.data.error.message);
-
         Alert.alert(
           'Erro ao enviar sua pergunta',
           'Tente novamente mais tarde.',
