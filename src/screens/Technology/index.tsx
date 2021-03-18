@@ -63,14 +63,16 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
               <S.Amount>
                 {data.isSeller && formatMoney(data.price)}
               </S.Amount>
-              <S.Date>
-                <S.DateIcon
-                  name="calendar"
-                  size={16}
-                  color="#a5a5a5"
-                />
-                <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
-              </S.Date>
+              {data.createdAt && (
+                <S.Date>
+                  <S.DateIcon
+                    name="calendar"
+                    size={16}
+                    color="#a5a5a5"
+                  />
+                  <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
+                </S.Date>
+              )}
             </S.HeaderDetails>
           </S.Header>
           <About

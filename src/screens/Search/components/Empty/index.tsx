@@ -15,8 +15,10 @@ export default (): JSX.Element => (
     <S.Description>
       Sugira novas ideias para os pesquisadores desenvolverem baseado na sua necessidade.
     </S.Description>
-    <Button variant="info" onPress={() => {}}>
-      Sugerir novas ideias
-    </Button>
+    {false && (
+      <Button variant="info" onPress={() => {}}>
+        Sugerir novas ideias
+      </Button>
+    )}
   </S.Wrapper>
 );

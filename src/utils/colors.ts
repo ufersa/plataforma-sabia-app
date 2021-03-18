@@ -1,5 +1,5 @@
 const defaultTheme = 'light';
-const theme = {
+const theme: any = {
   light: {
     dark: false,
     colors: {

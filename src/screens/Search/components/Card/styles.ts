@@ -27,9 +27,19 @@ export const CardDetails = styled.View`
 export const CardInfo = styled.View`
   flex: 1;
   margin-bottom: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
+export const BadgeWrapper = styled.View`
+  width: ${Dimensions.get('window').width - 188}px;
+  margin-top: 8px;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: flex-end;
+`;
+
+export const BadgeWrapperContent = styled.View`
+  max-width: 80%;
 `;
 
 export const CardInput = styled.View`
@@ -44,7 +54,6 @@ export const Title = styled(DefaultText)`
   font-size: 18px;
   line-height: 27px;
   color: #777777;
-  text-align: center;
   margin-top: 16px;
 `;
 
