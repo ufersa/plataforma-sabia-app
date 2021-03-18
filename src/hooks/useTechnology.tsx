@@ -37,10 +37,15 @@ export interface Technology {
   }
 }
 
+interface TechnologyProps {
+  children: JSX.Element
+  technologyId: number
+}
+
 const TechnologyContext = createContext<Technology | null>(null);
 
-const TechnologyProvider = ({ children, technologyId }: any): JSX.Element => {
-  const [technology, setTechnology] = useState({});
+const TechnologyProvider = ({ children, technologyId }: TechnologyProps): JSX.Element => {
+  const [technology, setTechnology] = useState<Technology>({});
 
   const loadData = useCallback(
     async () => {

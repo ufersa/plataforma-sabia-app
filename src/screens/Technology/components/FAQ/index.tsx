@@ -4,7 +4,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
 import * as S from './styles';
 import { Input, Button } from '../../../../components';
-import { useAuth } from '../../../../hooks/useAuth';
 import { createTechnologyQuestion, getTechnologyQuestions } from '../../../../services/technology';
 import { useTechnology } from '../../../../hooks/useTechnology';
 
@@ -12,19 +11,19 @@ const FAQ = (): JSX.Element => {
   const technology = useTechnology();
 
   const [questions, setQuestions] = useState([]);
-  const [totalItens, setTotalItens] = useState(2);
+  const [totalQuestions, setTotalQuestions] = useState(2);
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [filled, setFilled] = useState<boolean>(false);
 
   const { control, handleSubmit, reset } = useForm();
 
   const loadQuestions = useCallback(
     async () => {
-      console.log(technology?.id);
       const questionsResult = await getTechnologyQuestions(technology.id);
-      setQuestions(questionsResult.slice(0, totalItens));
+      setQuestions(questionsResult.slice(0, totalQuestions));
     },
-    [totalItens],
+    [totalQuestions, technology],
   );
 
   interface QuestionFormData {
@@ -33,6 +32,8 @@ const FAQ = (): JSX.Element => {
 
   const sendQuestion = useCallback(
     async (data: QuestionFormData) => {
+      if (!filled) return false;
+
       try {
         setLoading(true);
 
@@ -49,6 +50,7 @@ const FAQ = (): JSX.Element => {
 
         reset();
 
+        setFilled(false);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -60,12 +62,12 @@ const FAQ = (): JSX.Element => {
           'Tente novamente mais tarde.',
         );
       }
-    }, [],
+    }, [technology, filled],
   );
 
   useEffect(() => {
     loadQuestions();
-  }, [totalItens]);
+  }, [totalQuestions, technology]);
 
   return (
     <S.Wrapper>
@@ -83,14 +85,17 @@ const FAQ = (): JSX.Element => {
               placeholder="Digite uma pergunta"
               returnKeyType="send"
               value={value}
-              onChangeText={onChange}
+              onChangeText={(text) => {
+                setFilled(text.length > 0);
+                onChange(text);
+              }}
               onSubmitEditing={handleSubmit(sendQuestion)}
             />
           )}
         />
 
         <S.FormButtonWrapper>
-          <Button disabled={loading} variant="primary-light" onPress={handleSubmit(sendQuestion)}>
+          <Button disabled={loading || !filled} variant="primary-light" onPress={handleSubmit(sendQuestion)}>
             {loading ? 'Aguarde...' : 'Enviar pergunta'}
           </Button>
         </S.FormButtonWrapper>
@@ -109,7 +114,7 @@ const FAQ = (): JSX.Element => {
               </S.AnswersContainer>
             ))}
 
-            <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalItens(totalItens + 2); }}>
+            <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalQuestions(totalQuestions + 2); }}>
               <S.AnswersViewMoreText>
                 Ver mais perguntas
               </S.AnswersViewMoreText>
