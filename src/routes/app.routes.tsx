@@ -8,6 +8,7 @@ import {
   RequestsDetails,
   Cart,
   Account,
+  Logout,
 } from '../screens';
 import Colors from '../utils/colors';
 import { CartProvider } from '../hooks/useCart';
@@ -86,6 +87,11 @@ const AppRoutes: React.FC = () => (
         }}
         name="RequestsDetails"
         component={RequestsDetails}
+      />
+      <App.Screen
+        options={{ headerShown: false }}
+        name="Logout"
+        component={Logout}
       />
     </App.Navigator>
   </CartProvider>
