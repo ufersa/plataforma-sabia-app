@@ -108,6 +108,12 @@ const FAQ = (): JSX.Element => {
                 </S.AnswersReplyWrapper>
               </S.AnswersContainer>
             ))}
+
+            <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalItens(totalItens + 2); }}>
+              <S.AnswersViewMoreText>
+                Ver mais perguntas
+              </S.AnswersViewMoreText>
+            </S.AnswersViewMore>
           </>
         ) : (
           <S.AnswersContainer>
@@ -115,11 +121,6 @@ const FAQ = (): JSX.Element => {
           </S.AnswersContainer>
         )}
 
-        <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalItens(totalItens + 2); }}>
-          <S.AnswersViewMoreText>
-            Ver mais perguntas
-          </S.AnswersViewMoreText>
-        </S.AnswersViewMore>
       </S.AnswersWrapper>
     </S.Wrapper>
   );
