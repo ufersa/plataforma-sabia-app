@@ -8,12 +8,11 @@ import { Feather } from '@expo/vector-icons';
 import {
   ALGOLIA_APP_ID,
   ALGOLIA_ADMIN_KEY,
-  ALGOLIA_INDEX_NAME_TECHNOLOGY,
-  ALGOLIA_INDEX_NAME_SERVICE,
 } from '@env';
 import * as S from './styles';
 import { Input, Tabs } from '../../components';
 import SearchList from './components/SearchList';
+import { algoliaIndexes } from '../../utils/algolia';
 
 const searchClient = algoliasearch(
   ALGOLIA_APP_ID,
@@ -36,7 +35,7 @@ const SearchBox = connectSearchBox((props: any): JSX.Element => {
 
 const Search = (): JSX.Element => {
   const [tab, setTab] = useState<number>(1);
-  const indexSearch = [ALGOLIA_INDEX_NAME_TECHNOLOGY, ALGOLIA_INDEX_NAME_SERVICE];
+  const indexSearch = [algoliaIndexes.technology, algoliaIndexes.service];
 
   const onChange = (idx: number) => setTab(idx);
 
@@ -56,11 +55,11 @@ const Search = (): JSX.Element => {
             tabs={[
               {
                 title: 'Tecnologias',
-                content: <SearchList index={ALGOLIA_INDEX_NAME_TECHNOLOGY} />,
+                content: <SearchList index={algoliaIndexes.technology} />,
               },
               {
                 title: 'Serviços',
-                content: <SearchList index={ALGOLIA_INDEX_NAME_SERVICE} />,
+                content: <SearchList index={algoliaIndexes.service} />,
               },
             ]}
           />
