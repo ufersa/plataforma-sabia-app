@@ -80,9 +80,9 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
           {type === 'technology' && (
             <>
               <Details />
+              <FAQ />
               {false && (
                 <>
-                  <FAQ />
                   <Rating />
                 </>
               )}

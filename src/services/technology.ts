@@ -134,3 +134,47 @@ export const getAttachments = async (id: number, options: OptionsProp = {}) => {
 
   return response.data;
 };
+
+/**
+ * Fetch technology questions.
+ *
+ * @param {number} id The technology id
+ * @param {object} options Optional params
+ * @param {boolean} [options.embed] Response with embed.
+ * @param {boolean} [options.page] The page number for offset.
+ *
+ * @returns {Array} The current technology reviews
+ */
+export const getTechnologyQuestions = async (id: number, options: any = {}) => {
+  const response = await api.get(`technologies/${id}/questions`, {
+    params: {
+      ...options,
+      order: 'DESC',
+      embed: true,
+    },
+  });
+
+  if (response.status !== 200 || !id) return [];
+
+  const { data } = response;
+
+  return data;
+};
+
+/**
+ * Creates a new technology question with the provided data.
+ *
+ * @param {object} data Technology data.
+ * @param {number} data.technology Technology id.
+ * @param {string} data.question Question text.
+ * @returns {object} The newly created technology question.
+ */
+export const createTechnologyQuestion = async (data: any) => {
+  const response = await api.post('questions', data);
+
+  if (response.status !== 200) {
+    return false;
+  }
+
+  return response.data;
+};

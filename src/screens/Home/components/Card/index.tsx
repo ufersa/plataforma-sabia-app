@@ -77,8 +77,8 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
       >
         <S.FavoriteIcon
           name="heart"
-          size={20}
-          color="#ffffff"
+          size={24}
+          color="#eee"
           solid={state}
         />
       </Animated.View>
