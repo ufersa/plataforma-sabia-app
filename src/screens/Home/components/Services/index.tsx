@@ -12,6 +12,7 @@ interface TechnologiesProps {
 interface ServicesItemProps {
   id?: number
   title?: string
+  name?: string
   description: string
   status?: string
   date?: string
@@ -25,6 +26,12 @@ interface ServicesItemProps {
     name: string
   }
   created_at: string
+  measure_unit: string
+  user: {
+    institution: {
+      name: string
+    }
+  }
 }
 
 const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
@@ -71,10 +78,13 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
                 key={`service_${idx}`}
                 data={{
                   id: service.id,
-                  title: service.description,
+                  title: service.name,
+                  description: service.description,
                   image: service.thumbnail?.url,
                   price: service.price,
                   createdAt: service.created_at,
+                  measureUnit: service.measure_unit,
+                  institution: service.user.institution.name,
                   isSeller: true,
                 }}
                 navigation={navigation}

@@ -3,5 +3,8 @@ interface RequestsStatusProps {
 }
 
 export const RequestsStatus: RequestsStatusProps = {
-  send: 'Pedido enviado',
+  requested: 'Pedido enviado',
+  closed: 'Pedido fechado',
+  open: 'Pedido aberto',
+  canceled: 'Pedido cancelado',
 };
