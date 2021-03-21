@@ -86,7 +86,7 @@ const RequestsFinish = ({ route: { params }, navigation }: RequestsFinishProps):
           </S.Page>
         </KeyboardAvoidingView>
         <Button
-          onPress={() => navigation.navigate('RequestsFeedback', { feedback: 'error' })}
+          onPress={() => navigation.navigate('RequestsFeedback', { feedback: 'success' })}
         >
           Finalizar pedido
         </Button>

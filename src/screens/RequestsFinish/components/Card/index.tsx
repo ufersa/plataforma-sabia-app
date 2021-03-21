@@ -34,7 +34,7 @@ export default ({ data }: CardProps) => (
           <S.CardInfo>
             {data.isSeller && (
               <S.CardInput>
-                <InputNumber onChange={() => {}} />
+                <InputNumber value={1} onChange={() => {}} />
               </S.CardInput>
             )}
             <S.Amount>

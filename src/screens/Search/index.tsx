@@ -55,11 +55,11 @@ const Search = (): JSX.Element => {
             tabs={[
               {
                 title: 'Tecnologias',
-                content: <SearchList index={algoliaIndexes.technology} />,
+                content: <SearchList index={algoliaIndexes.technology} type="technology" />,
               },
               {
                 title: 'Serviços',
-                content: <SearchList index={algoliaIndexes.service} />,
+                content: <SearchList index={algoliaIndexes.service} type="service" />,
               },
             ]}
           />

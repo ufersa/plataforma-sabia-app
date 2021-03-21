@@ -45,7 +45,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
     <TechnologyProvider technologyId={data.id}>
       <S.Wrapper>
         <StatusBar style="dark" />
-        <S.Container>
+        <S.Container showsVerticalScrollIndicator={false}>
           <S.Header>
             <S.Image
               source={{
