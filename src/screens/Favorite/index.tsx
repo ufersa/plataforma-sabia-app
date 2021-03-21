@@ -13,6 +13,11 @@ import { useAuth } from '../../hooks/useAuth';
 import { getUserBookmarks } from '../../services/technology';
 import { handleBookmark } from '../../services/bookmark';
 
+export interface RemoveBookmarkProps {
+  id: string,
+  type: string
+}
+
 const Favorite = (): JSX.Element => {
   const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,10 +34,10 @@ const Favorite = (): JSX.Element => {
   );
 
   const removeTechnologies = useCallback(
-    async (technology) => {
+    async ({ id, type }: RemoveBookmarkProps) => {
       await handleBookmark({
         active: true,
-        technologyId: technology.pivot.technology_id,
+        [type]: id,
         userId: user.id,
       });
       getTechnologies();
