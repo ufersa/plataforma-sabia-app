@@ -2,10 +2,11 @@ import styled, { css } from 'styled-components/native';
 
 interface InputWrapperProps {
   variant?: string
-  isFocused: boolean;
+  isFocused: boolean
 }
 interface InputContainerProps {
   variant?: string
+  isFocused: boolean
 }
 
 export const InputWrapper = styled.View<InputWrapperProps>`
@@ -16,13 +17,13 @@ export const InputWrapper = styled.View<InputWrapperProps>`
   align-items: center;
   padding-left: 6px;
   padding-right: 6px;
+  border: 1px solid #e8e8e8;
 
   ${({ isFocused, variant }) => isFocused
     && css`
-      border: 1px solid ${(variant === 'dark' ? '#ddd' : '#aaa')};
-      background-color: ${(variant === 'dark' ? '#28a07f' : '#ddd')};
+      border-color: ${(variant === 'dark' ? '#dddddd' : '#e8e8e8')};
+      background-color: ${(variant === 'dark' ? '#28a07f' : '#ffffff')};
     `}
-
 `;
 
 export const InputContainer = styled.TextInput<InputContainerProps>`
@@ -32,8 +33,13 @@ export const InputContainer = styled.TextInput<InputContainerProps>`
   font-weight: 500;
   line-height: 20px;
   font-size: 16px;
-  color: ${({ variant }) => (variant === 'dark' ? '#eee' : '#a5a5a5')};
+  color: ${({ variant }) => (variant === 'dark' ? '#ffffff' : '#a5a5a5')};
   padding: 0px 20px 0px 14px;
+
+  ${({ isFocused, variant }) => isFocused
+    && css`
+      color: ${(variant === 'dark' ? '#ffffff' : '#4A4A4A')};
+    `}
 `;
 
 export const IconWrapper = styled.View`
