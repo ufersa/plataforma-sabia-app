@@ -1,10 +1,10 @@
 /* eslint-disable react/style-prop-object */
-import React from 'react';
+import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import formatDistance from '../../utils/formatDistance';
-import { Button } from '../../components';
+import { Button, Modal } from '../../components';
 import {
   About,
   Details,
@@ -13,6 +13,7 @@ import {
 } from './components';
 import * as S from './styles';
 import { TechnologyProvider } from '../../hooks/useTechnology';
+import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import { formatMoney } from '../../utils/helper';
 
@@ -22,12 +23,19 @@ interface TechnologyProps {
 }
 
 const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
+  const { user } = useAuth();
   const { data, type } = route.params;
   const { addCart } = useCart();
 
+  const [showModalData, setShowModalData] = useState<boolean>(false);
+
   const navigate = () => {
     if (type === 'technology') {
-      navigation.navigate('RequestsFinish', { data });
+      if (!user.operations.can_buy_technology) {
+        setShowModalData(true);
+      } else {
+        navigation.navigate('RequestsFinish', { data });
+      }
     } else {
       addCart({
         id: data.id,
@@ -84,9 +92,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
               <Details />
               <FAQ />
               {false && (
-                <>
-                  <Rating />
-                </>
+                <Rating />
               )}
             </>
           )}
@@ -98,6 +104,24 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             </Button>
           </S.ButtonWrapper>
         )}
+        <Modal
+          title="Você possui dados pendentes"
+          animationType="slide"
+          visible={showModalData}
+          onClose={() => setShowModalData(false)}
+        >
+          <S.ModalContent>
+            <S.ModalBody>Complete o seu cadastro para adquirir esta tecnologia.</S.ModalBody>
+            <Button
+              onPress={() => {
+                setShowModalData(false);
+                navigation.navigate('Account');
+              }}
+            >
+              Ir para meu perfil
+            </Button>
+          </S.ModalContent>
+        </Modal>
       </S.Wrapper>
     </TechnologyProvider>
   );

@@ -22,6 +22,7 @@ interface User {
   email: string;
   technologyBookmarks?: [];
   serviceBookmarks?: [];
+  operations: any;
 }
 
 interface AuthState {
