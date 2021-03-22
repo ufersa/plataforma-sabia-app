@@ -16,6 +16,9 @@ interface RequestCardProps {
   }
   technology?: {
     title: string
+    costs: {
+      price: number
+    }[]
     thumbnail: {
       url: string
     }
@@ -34,6 +37,7 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
     status,
     type,
   } = props;
+  const technologyPrice = type === 'technology' && technology.costs ? technology.costs[0].price : 0;
 
   return (
     <S.CardWrapper
@@ -65,7 +69,7 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
               {type === 'technology' ? technology.title : service.name}
             </S.Title>
             <S.Amount>
-              {formatMoney(type === 'technology' ? 0 : service.price * quantity)}
+              {formatMoney(type === 'technology' ? technologyPrice : service.price * quantity)}
             </S.Amount>
             <S.Status>
               <Badge status={status} />
