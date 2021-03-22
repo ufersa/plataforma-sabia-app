@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { Image } from 'react-native';
 import { Card, InputNumber } from '../../../../components';
@@ -11,9 +12,10 @@ interface CardProps {
     price: number
     isSeller: boolean
   }
+  onChange: (value: number) => void
 }
 
-export default ({ data }: CardProps) => (
+export default ({ data, onChange }: CardProps) => (
   <S.CardWrapper>
     <Card>
       <S.CardContainer>
@@ -34,7 +36,10 @@ export default ({ data }: CardProps) => (
           <S.CardInfo>
             {data.isSeller && (
               <S.CardInput>
-                <InputNumber value={1} onChange={() => {}} />
+                <InputNumber
+                  value={1}
+                  onChange={(value: number) => onChange(value)}
+                />
               </S.CardInput>
             )}
             <S.Amount>

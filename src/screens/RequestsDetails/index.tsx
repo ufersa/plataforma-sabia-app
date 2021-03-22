@@ -8,6 +8,7 @@ import moment from 'moment';
 import * as S from './styles';
 import { Card, Badge } from '../../components';
 import { formatMoney } from '../../utils/helper';
+import { UseStatus, FundingStatus } from '../../utils/requests';
 
 interface RequestsDetailsProps {
   route: NavigatorScreenParams<any, any>
@@ -25,7 +26,9 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
             <S.CardContainer>
               <S.CardImage>
                 <Image
-                  source={{ uri: data.service.thumbnail?.url }}
+                  source={{
+                    uri: data.type === 'technology' ? data.technology.thumbnail?.url : data.service.thumbnail?.url,
+                  }}
                   style={{
                     width: 110,
                     height: 83,
@@ -34,14 +37,20 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 />
               </S.CardImage>
               <S.CardInfo>
-                <S.Title numberOfLines={1}>{data.service.name}</S.Title>
+                <S.Title numberOfLines={1}>
+                  {data.type === 'technology' ? data.technology.title : data.service.name}
+                </S.Title>
                 <S.CardPrice>
                   <S.DetailTitle>Subtotal</S.DetailTitle>
-                  <S.DetailTitle>{formatMoney(data.service.price)}</S.DetailTitle>
+                  <S.DetailTitle>
+                    {formatMoney(data.type === 'technology' ? 0 : data.service.price)}
+                  </S.DetailTitle>
                 </S.CardPrice>
                 <S.CardPrice style={{ marginTop: 9 }}>
                   <S.Amount>Total</S.Amount>
-                  <S.Amount>{formatMoney(data.service.price * data.quantity)}</S.Amount>
+                  <S.Amount>
+                    {formatMoney(data.type === 'technology' ? 0 : data.service.price * data.quantity)}
+                  </S.Amount>
                 </S.CardPrice>
               </S.CardInfo>
             </S.CardContainer>
@@ -67,11 +76,11 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 <>
                   <S.Detail>
                     <S.DetailTitle>Uso da tecnologia</S.DetailTitle>
-                    <S.DetailDescription>–</S.DetailDescription>
+                    <S.DetailDescription>{UseStatus[data.use]}</S.DetailDescription>
                   </S.Detail>
                   <S.Detail>
                     <S.DetailTitle>Deseja financiamento?</S.DetailTitle>
-                    <S.DetailDescription>–</S.DetailDescription>
+                    <S.DetailDescription>{FundingStatus[data.funding]}</S.DetailDescription>
                   </S.Detail>
                 </>
               )}
