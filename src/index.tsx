@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { TabBar } from './components';
 import {
-  Home, Requests, Notifications, Favorite,
+  Home, Search, Requests, Notifications, Favorite,
 } from './screens';
 
 const Tab = createBottomTabNavigator();
@@ -17,6 +17,10 @@ const Root = (): JSX.Element => (
       component={Home}
     />
     <Tab.Screen
+      name="Search"
+      component={Search}
+    />
+    <Tab.Screen
       options={{ unmountOnBlur: true }}
       name="Requests"
       component={Requests}
@@ -26,6 +30,7 @@ const Root = (): JSX.Element => (
       component={Notifications}
     />
     <Tab.Screen
+      options={{ unmountOnBlur: true }}
       name="Favorite"
       component={Favorite}
     />

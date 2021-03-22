@@ -1,17 +1,19 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
 
 interface InputProps {
   onChange: (value: number) => void
+  value: number
 }
 
 const InputNumber = (props: InputProps): JSX.Element => {
-  const { onChange } = props;
-  const [total, setTotal] = useState(1);
+  const { value, onChange } = props;
+  const [total, setTotal] = useState(value);
 
   useEffect(() => {
-    if (total > 1) onChange(total);
+    if (total >= 1) onChange(total);
   }, [total]);
 
   return (

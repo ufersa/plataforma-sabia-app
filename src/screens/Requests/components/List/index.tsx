@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import { ListRenderItemInfo } from 'react-native';
 import { DefaultText } from '../../../../components';
@@ -5,24 +6,38 @@ import RequestCard from '../RequestCard';
 import * as S from './styles';
 
 interface ListItemProps {
-  title: string
-  amount: number
+  comment: string
+  service: {
+    name: string
+    price: number
+    thumbnail: {
+      url: string
+    }
+  }
+  quantity: number
   status: string
+  created_at: string
 }
 
 interface ListProps {
   data: ListItemProps[]
+  loading: boolean
+  onRefresh: () => void
 }
 
-const List = ({ data }: ListProps): JSX.Element => (
+const List = ({ data, loading, onRefresh }: ListProps): JSX.Element => (
   <S.ListWrapper>
     {data && data.length > 0 ? (
       <S.ListContainer
+        contentContainerStyle={{ paddingBottom: 40 }}
         data={data}
         renderItem={({ item }: ListRenderItemInfo<any>) => (
           <RequestCard {...item} />
         )}
         keyExtractor={(_, idx) => idx.toString()}
+        showsVerticalScrollIndicator={false}
+        onRefresh={onRefresh}
+        refreshing={loading}
       />
     ) : (
       <S.Empty>

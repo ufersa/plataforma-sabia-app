@@ -56,6 +56,8 @@ export const AnswersViewMoreText = styled(DefaultText)`
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  padding-bottom: 25px;
+  text-align: center;
 `;
 
 export const FormWrapper = styled.View``;

@@ -54,6 +54,12 @@ export const Star = styled(FontAwesome5)`
   margin-right: 4px;
 `;
 
+export const RateCommentsWrapper = styled.View`
+  padding-top: 34px;
+  padding-bottom: 24px;
+  padding-horizontal: 16px;
+`;
+
 export const RateCommentAuthor = styled(DefaultText)`
   color: #4a4a4a;
   font-family: Rubik_700Bold;

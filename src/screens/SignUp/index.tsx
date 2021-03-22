@@ -1,19 +1,65 @@
 /* eslint-disable react/style-prop-object */
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { Input, Button } from '../../components';
 import * as S from './styles';
 
-const SignUp = (): JSX.Element => {
-  const { control } = useForm();
+import { register } from '../../services/auth';
+
+interface SignUpFormData {
+  name: string
+  email: string;
+  password: string;
+  repeatPassword: string;
+}
+
+interface SignUpProps {
+  navigation: StackNavigationProp<any, any>
+}
+
+const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
+  const { control, handleSubmit } = useForm();
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const handleSignUp = useCallback(
+    async (data: SignUpFormData) => {
+      if (data.password !== data.repeatPassword) {
+        Alert.alert(
+          'Erro no cadastro',
+          'As senhas não coincidem',
+        );
+      } else {
+        setLoading(true);
+        await register({
+          full_name: data.name,
+          email: data.email,
+          password: data.password,
+          disclaimers: [1, 2, 3, 4, 5, 6, 7],
+        }).then(() => {
+          setLoading(false);
+          Alert.alert('Plataforma Sabia', '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.');
+          navigation.goBack();
+        }).catch((error) => {
+          const message = error.response.data.error.message.reduce((append: any, err: any) => `${append}.\n\n ${err.message}`, '');
+          setLoading(false);
+          Alert.alert(
+            'Erro no cadastro!',
+            `${message}`,
+          );
+        });
+      }
+    }, [],
+  );
 
   return (
     <>
@@ -114,8 +160,12 @@ const SignUp = (): JSX.Element => {
           </ScrollView>
         </KeyboardAvoidingView>
         <S.ButtonWrapper>
-          <Button variant="secondary" onPress={() => { }}>
-            Cadastrar
+          <Button
+            disabled={loading}
+            variant="secondary"
+            onPress={handleSubmit(handleSignUp)}
+          >
+            {loading ? 'Aguarde...' : 'Cadastrar'}
           </Button>
         </S.ButtonWrapper>
       </SafeAreaView>

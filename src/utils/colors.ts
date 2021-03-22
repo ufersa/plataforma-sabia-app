@@ -1,5 +1,5 @@
 const defaultTheme = 'light';
-const theme = {
+const theme: any = {
   light: {
     dark: false,
     colors: {
@@ -7,6 +7,8 @@ const theme = {
       primaryLight: '#ccede7',
       secondary: '#f99942',
       danger: '#f04b40',
+      info: '#3498db',
+      infoLight: '#d6eaf8',
       background: '#f5f5f5',
       card: '#ffffff',
       text: '',
@@ -21,6 +23,8 @@ const theme = {
       primaryLight: '#ccede7',
       secondary: '#f99942',
       danger: '#f04b40',
+      info: '#3498db',
+      infoLight: '#d6eaf8',
       background: '#f5f5f5',
       card: '#ffffff',
       text: '',

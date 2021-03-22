@@ -12,7 +12,7 @@ interface RateCommentProps {
 
 const RateComments = ({ data }: RateCommentProps): JSX.Element => (
   data && data[0] && (
-    <>
+    <S.RateCommentsWrapper>
       <S.Stars>
         <S.Star solid name="star" size={12} color="#f9d142" />
         <S.Star solid name="star" size={12} color="#f9d142" />
@@ -25,7 +25,7 @@ const RateComments = ({ data }: RateCommentProps): JSX.Element => (
       <S.RateViewMore activeOpacity={0.7}>
         <S.RateViewMoreText>Ver todas as opiniões</S.RateViewMoreText>
       </S.RateViewMore>
-    </>
+    </S.RateCommentsWrapper>
   )
 );
 

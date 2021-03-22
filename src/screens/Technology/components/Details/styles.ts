@@ -21,15 +21,91 @@ export const Subtitle = styled(DefaultText)`
 
 export const Description = styled(DefaultText)`
   color: #777777;
-  font-family: Montserrat_400Regular;
+  font-family: Montserrat_500Medium;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 8px;
+  text-align: justify;
+`;
+
+export const DetailsText = styled(Description)`
   font-weight: 400;
   font-size: 12px;
   line-height: 18px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
+  text-align: justify;
 `;
 
-export const Highlight = styled(Description)`
+export const Highlight = styled(DetailsText)`
   font-family: Montserrat_700Bold;
+  font-weight: 700;
+`;
+
+export const CostSection = styled(Subtitle)`
+  color: ${Colors.primary};
+  font-family: Rubik_500Medium;
+  line-height: 21px;
+  margin-vertical: 8px;
+  font-size: 16px;
+  font-weight: 500;
+`;
+
+export const Row = styled.View`
+  flex: 1;
+  flex-direction: row;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+`;
+
+export const Col1 = styled.View`
+  flex: 1;
+`;
+
+export const Col2 = styled.View`
+  padding-left: 5px;
+`;
+
+export const Col3 = styled(Col2)`
+  min-width: 80px;
+  justify-content: space-between;
+`;
+
+export const ColTextBold = styled.Text`
+  flex: 1;
+  font-family: Montserrat_700Bold;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+`;
+
+export const ColText = styled.Text`
+  font-family: Montserrat_400Regular;
+  color: #4a4a4a;
+`;
+
+export const ColTextLight = styled(ColText)`
+  color: #a5a5a5;
+`;
+
+export const CostItem = styled.View`
+`;
+
+export const Field = styled.View`
+`;
+
+export const SubTotal = styled.View`
+`;
+
+export const TotalLabel = styled(CostSection)`
+  color: #4a4a4a;
+  font-size: 16px;
+  line-height: 24px;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+`;
+export const TotalValue = styled(TotalLabel)`
+  font-family: Rubik_700Bold;
   font-weight: 700;
 `;
 
@@ -102,4 +178,12 @@ export const StageStep = styled(DefaultText)`
   line-height: 27px;
   margin-horizontal: 18px;
   text-align: center;
+`;
+
+export const ModalContent = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  height: 800px;
+  background-color: #ddd;
 `;

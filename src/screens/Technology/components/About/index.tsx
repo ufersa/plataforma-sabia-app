@@ -1,14 +1,18 @@
-/* eslint-disable max-len */
 import React from 'react';
 import * as S from './styles';
 
-const About = () => (
+interface AboutProps {
+  type: string
+  description: string
+}
+
+const About = ({ type, description = '' }: AboutProps) => (
   <S.Wrapper>
-    <S.Title>Descrição do produto</S.Title>
+    <S.Title>
+      {`Descrição do ${type === 'service' ? 'serviço' : 'produto'}`}
+    </S.Title>
     <S.Description>
-      Tecnologia de captação e armazenamento da água da chuva que está promovendo o redesenho de
-      agroecossistemas no Médio Sertão do Estado de Alagoas por meio da valoração de metodologias
-      que utilizam o saber popular em diálogo com o conhecimento científico.
+      {description}
     </S.Description>
   </S.Wrapper>
 );

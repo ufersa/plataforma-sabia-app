@@ -26,7 +26,7 @@ export const Page = styled.View`
 export const Title = styled(DefaultText)`
   width: 315px;
   font-size: 24px;
-  font-family: Rubik_500Medium;
+  font-family: Rubik_700Bold;
   font-weight: 700;
   line-height: 36px;
   color: ${({ error }) => (error ? Colors.danger : Colors.primary)};

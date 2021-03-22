@@ -1,25 +1,46 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable camelcase */
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TechnologyCard from '../Card';
 import * as S from './styles';
+import useFind from '../../../../hooks/useFind';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
 }
-
-interface TechnologiesItemProps {
+interface ServicesItemProps {
   id?: number
   title?: string
+  name?: string
+  description: string
   status?: string
   date?: string
-  image?: string
+  thumbnail: {
+    url: string
+  }
+  image?: {
+  }
+  price: number
   category?: {
     name: string
+  }
+  created_at: string
+  measure_unit: string
+  user: {
+    institution: {
+      name: string
+    }
   }
 }
 
 const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
-  const technologies: TechnologiesItemProps[] = [{}, {}, {}, {}];
+  const { loading, services } = useFind('services', {
+    embed: '',
+    perPage: 10,
+    orderBy: 'likes',
+    order: 'DESC',
+  });
 
   return (
     <>
@@ -30,23 +51,51 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={4}
         decelerationRate={0}
-        snapToInterval={248 - (16 + 10)}
+        snapToInterval={294 - (16 + 10)}
         snapToAlignment="start"
         contentContainerStyle={{
           alignItems: 'flex-start',
         }}
       >
-        {technologies.map((technology, idx) => (
-          <TechnologyCard
-            key={`technology_${idx}`}
-            data={technology}
-            navigation={navigation}
-            loading={false} // Eg.: technology?.id !== null
-            style={{
-              marginRight: (idx + 1) === technologies.length ? 36 : 20,
-            }}
-          />
-        ))}
+        {loading ? (
+          <>
+            {[0, 1, 2].map((technology, idx: number) => (
+              <TechnologyCard
+                type="service"
+                key={`technology_${idx}`}
+                loading
+                style={{
+                  marginRight: (idx + 1) === 3 ? 36 : 20,
+                }}
+              />
+            ))}
+          </>
+        ) : (
+          services && services.length > 0
+            ? services.map((service: ServicesItemProps, idx: number) => (
+              <TechnologyCard
+                type="service"
+                key={`service_${idx}`}
+                data={{
+                  id: service.id,
+                  title: service.name,
+                  description: service.description,
+                  image: service.thumbnail?.url,
+                  price: service.price,
+                  createdAt: service.created_at,
+                  measureUnit: service.measure_unit,
+                  institution: service.user.institution.name,
+                  isSeller: true,
+                }}
+                navigation={navigation}
+                loading={false}
+                style={{
+                  marginRight: (idx + 1) === services.length ? 36 : 20,
+                }}
+              />
+            ))
+            : <S.Empty>Nenhum serviço</S.Empty>
+        )}
       </S.TechnologiesWrapper>
     </>
   );

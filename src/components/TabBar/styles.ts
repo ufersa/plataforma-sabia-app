@@ -8,6 +8,7 @@ export const TabContainer = styled.View`
   height: 80px;
   flex-direction: row;
   justify-content: space-around;
+  padding-horizontal: 16px;
 `;
 
 type ItemProps = {
@@ -27,6 +28,8 @@ ${({ isFocused }) => css`
       background-color: ${colors.primary};
       border-radius: 50px;
       box-shadow: 0px 4px 16px #99DBCF;
+      position: relative;
+      z-index: 1;
     `}
   `}
 `;
@@ -45,14 +48,14 @@ type BackgroundProps = {
 }
 
 export const Background = styled.View<BackgroundProps>`
-${({ isFocused }) => css`
-  width: 92px;
-  height: 92px;
-  background-color: #fff;
-  border-radius: 50px;
-  position: absolute;
-  z-index: -1;
-  left: -18px;
-  top: ${isFocused ? '-10px' : '0px'};
+  ${({ isFocused }) => css`
+    width: 92px;
+    height: 92px;
+    background-color: ${isFocused ? '#ffffff' : 'transparent'};
+    border-radius: 50px;
+    position: absolute;
+    z-index: -1;
+    left: -18px;
+    top: ${isFocused ? '-10px' : '0px'};
   `}
 `;

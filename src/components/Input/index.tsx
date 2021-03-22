@@ -21,6 +21,7 @@ interface InputProps extends TextInputProps {
   onSubmitEditing?: () => void
   size?: string
   variant?: string
+  disabled?: boolean
   style?: {
     [property: string]: string | number
   },
@@ -48,6 +49,7 @@ const Input = (props: InputProps): JSX.Element => {
     multiline = false,
     variant,
     style,
+    disabled,
     focus = false,
     onBlur,
     onFocus,
@@ -83,6 +85,7 @@ const Input = (props: InputProps): JSX.Element => {
       style={[{
         paddingVertical: multiline ? 12 : 0,
         height: multiline ? 122 : buildSize(size),
+        opacity: disabled ? 0.5 : 1,
       }, style]}
       variant={variant}
       isFocused={isFocused}
@@ -101,6 +104,7 @@ const Input = (props: InputProps): JSX.Element => {
         onFocus={handleInputFocus}
         onBlur={handleInputBlur}
         style={{ paddingBottom: 0 }}
+        editable={!disabled}
         ref={ref}
       />
     </S.InputWrapper>

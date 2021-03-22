@@ -1,5 +1,5 @@
 /* eslint-disable react/style-prop-object */
-import React, { useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,7 +7,6 @@ import {
   Platform,
   Alert,
   Image,
-  TextInput,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
@@ -27,25 +26,26 @@ const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
   const { signIn, signOut } = useAuth();
   const { control, handleSubmit } = useForm();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
-  const passwordRef = useRef<TextInput | null>(null);
 
   const handleSignIn = useCallback(
     async (data: SignInFormData) => {
       try {
+        setLoading(true);
         await signIn({
           email: data.email,
           password: data.password,
         });
-
+        setLoading(false);
         Alert.alert('Plataforma Sabia', '🎉 Bem vindo ao app');
       } catch (err) {
+        setLoading(false);
         Alert.alert(
           'Erro na autenticação',
           'Ocorreu um erro ao fazer login, cheque as credenciais.',
         );
-
         signOut();
       }
     }, [],
@@ -111,20 +111,25 @@ const SignIn = (): JSX.Element => {
                       value={value}
                       variant="dark"
                       style={{ marginBottom: 24 }}
-                      refs={passwordRef}
                       focus={focusedInput === 'password'}
                       onSubmitEditing={handleSubmit(handleSignIn)}
                       onBlur={() => setFocusedInput(null)}
                     />
                   )}
                 />
-                <Button disabled={false} variant="white" onPress={handleSubmit(handleSignIn)}>
-                  Fazer Login
+                <Button
+                  disabled={loading}
+                  variant="white"
+                  onPress={handleSubmit(handleSignIn)}
+                >
+                  {loading ? 'Aguarde...' : 'Fazer Login'}
                 </Button>
               </>
-              <S.ForgotPassword>
-                <S.ForgotPasswordText>Esqueci minha senha</S.ForgotPasswordText>
-              </S.ForgotPassword>
+              {false && (
+                <S.ForgotPassword>
+                  <S.ForgotPasswordText>Esqueci minha senha</S.ForgotPasswordText>
+                </S.ForgotPassword>
+              )}
             </S.Container>
           </ScrollView>
         </KeyboardAvoidingView>
