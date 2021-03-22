@@ -17,12 +17,12 @@ export const InputWrapper = styled.View<InputWrapperProps>`
   align-items: center;
   padding-left: 6px;
   padding-right: 6px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid ${({ variant }) => (variant === 'dark' ? '#00856d' : '#e8e8e8')};
 
   ${({ isFocused, variant }) => isFocused
     && css`
-      border-color: ${(variant === 'dark' ? '#dddddd' : '#e8e8e8')};
-      background-color: ${(variant === 'dark' ? '#28a07f' : '#ffffff')};
+      border-color: ${(variant === 'dark' ? '#ffffff' : '#e8e8e8')};
+      background-color: ${(variant === 'dark' ? 'transparent' : '#ffffff')};
     `}
 `;
 
