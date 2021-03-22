@@ -3,9 +3,11 @@ import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
 import * as S from './styles';
 import Logo from '../../../../../assets/logo/Logo.png';
+import { useCart } from '../../../../hooks/useCart';
 
 const Header = (): JSX.Element => {
   const navigation = useNavigation();
+  const { items } = useCart();
 
   return (
     <S.Wrapper>
@@ -14,9 +16,13 @@ const Header = (): JSX.Element => {
         activeOpacity={0.7}
       >
         <S.CardWrapper>
-          <S.CardBadge>
-            <S.CardBadgeText>1</S.CardBadgeText>
-          </S.CardBadge>
+          {items.length > 0 && (
+            <S.CardBadge>
+              <S.CardBadgeText>
+                {items.length}
+              </S.CardBadgeText>
+            </S.CardBadge>
+          )}
           <S.CartIcon size={30} color="#4a4a4a" />
         </S.CardWrapper>
       </S.Touch>

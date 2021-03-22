@@ -6,6 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
 import { Input, Button } from '../../components';
+import Address from './components/Address';
 import { useAuth } from '../../hooks/useAuth';
 import Colors from '../../utils/colors';
 
@@ -127,6 +128,7 @@ const Account = (): JSX.Element => {
                   />
                 )}
               />
+              <Address />
               <S.Divider />
               <S.Title>Credenciais</S.Title>
               <S.Touch activeOpacity={0.7}>

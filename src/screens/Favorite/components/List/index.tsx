@@ -10,6 +10,7 @@ interface ListItemProps {
   id: string
   idx: number
   title: string
+  name: string
   thumbnail: {
     url: string
   }
@@ -17,6 +18,7 @@ interface ListItemProps {
     technology_id: number
     user_id: number
   },
+  price: number,
   technologyCosts: {
     price: number
     is_seller: number
@@ -56,6 +58,7 @@ const List = ({
         {items && items.length > 0 ? (
           <S.ListContainer
             data={items}
+            contentContainerStyle={{ paddingBottom: 130 }}
             renderItem={({ item, index }: ListRenderItemInfo<any>) => (
               <FavoriteCard
                 {...item}

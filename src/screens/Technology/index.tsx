@@ -13,6 +13,7 @@ import {
 } from './components';
 import * as S from './styles';
 import { TechnologyProvider } from '../../hooks/useTechnology';
+import { useCart } from '../../hooks/useCart';
 import { formatMoney } from '../../utils/helper';
 
 interface TechnologyProps {
@@ -21,7 +22,24 @@ interface TechnologyProps {
 }
 
 const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
-  const { data } = route.params;
+  const { data, type } = route.params;
+  const { addCart } = useCart();
+
+  const navigate = () => {
+    if (type === 'technology') {
+      navigation.navigate('RequestsFinish', { data });
+    } else {
+      addCart({
+        id: data.id,
+        title: data.title,
+        quantity: 1,
+        price: data.price,
+        image: data.image,
+        measureUnit: data.measureUnit,
+        institution: data.institution,
+      });
+    }
+  };
 
   return (
     <TechnologyProvider technologyId={data.id}>
@@ -45,30 +63,41 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
               <S.Amount>
                 {data.isSeller && formatMoney(data.price)}
               </S.Amount>
-              <S.Date>
-                <S.DateIcon
-                  name="calendar"
-                  size={16}
-                  color="#a5a5a5"
-                />
-                <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
-              </S.Date>
+              {data.createdAt && (
+                <S.Date>
+                  <S.DateIcon
+                    name="calendar"
+                    size={16}
+                    color="#a5a5a5"
+                  />
+                  <S.DateText>{formatDistance(data.createdAt)}</S.DateText>
+                </S.Date>
+              )}
             </S.HeaderDetails>
           </S.Header>
-          <About description={data.description} />
-          <Details />
-          {false && (
+          <About
+            type={type}
+            description={data.description}
+          />
+          {type === 'technology' && (
             <>
+              <Details />
               <FAQ />
-              <Rating />
+              {false && (
+                <>
+                  <Rating />
+                </>
+              )}
             </>
           )}
         </S.Container>
-        <S.ButtonWrapper>
-          <Button onPress={() => navigation.navigate('RequestsFinish', { data })}>
-            Adquirir tecnologia
-          </Button>
-        </S.ButtonWrapper>
+        {data.isSeller && (
+          <S.ButtonWrapper>
+            <Button onPress={navigate}>
+              {type === 'technology' ? 'Adquirir tecnologia' : 'Adicionar ao carrinho'}
+            </Button>
+          </S.ButtonWrapper>
+        )}
       </S.Wrapper>
     </TechnologyProvider>
   );

@@ -106,6 +106,7 @@ const Input = (props: InputProps): JSX.Element => {
         onBlur={handleInputBlur}
         style={{ paddingBottom: 0 }}
         editable={!disabled}
+        isFocused={isFocused}
         ref={ref}
       />
     </S.InputWrapper>

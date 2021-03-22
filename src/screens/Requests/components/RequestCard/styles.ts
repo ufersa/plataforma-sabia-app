@@ -1,9 +1,9 @@
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
-import { DefaultText } from '../../../../components';
+import { DefaultText, Badge } from '../../../../components';
 import Colors from '../../../../utils/colors';
 
-export const CardWrapper = styled.View`
+export const CardWrapper = styled.TouchableOpacity`
   height: 115px;
   margin-bottom: 16px;
 `;
@@ -14,6 +14,19 @@ export const CardImage = styled.View`
   height: 83px;
   border-radius: 8px;
   margin: 16px;
+  position: relative;
+`;
+
+export const CardBadge = styled.View`
+  position: absolute;
+  left: 0;
+  bottom: 12px;
+  z-index: 1;
+`;
+
+export const Type = styled(Badge)`
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 `;
 
 export const CardContainer = styled.View`
