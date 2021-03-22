@@ -5,6 +5,7 @@ import { Platform, KeyboardAvoidingView } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import * as S from './styles';
 import { Input, Button } from '../../components';
+import Address from './components/Address';
 import { useAuth } from '../../hooks/useAuth';
 
 const Account = (): JSX.Element => {
@@ -60,6 +61,7 @@ const Account = (): JSX.Element => {
                 />
               )}
             />
+            <Address />
             {false && (
               <>
                 <S.Divider />
