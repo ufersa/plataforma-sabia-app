@@ -4,10 +4,11 @@ import { List } from './styles';
 
 interface SearchListProps {
   index: string
+  type: string
 }
 
-export default ({ index }: SearchListProps): JSX.Element => (
+export default ({ index, type }: SearchListProps): JSX.Element => (
   <Index indexName={index}>
-    <List />
+    <List type={type} />
   </Index>
 );

@@ -34,6 +34,7 @@ export const InputContainer = styled.TextInput<InputContainerProps>`
   font-size: 16px;
   color: ${({ variant }) => (variant === 'dark' ? '#eee' : '#a5a5a5')};
   padding: 0px 20px 0px 14px;
+  text-align-vertical: top;
 `;
 
 export const IconWrapper = styled.View`

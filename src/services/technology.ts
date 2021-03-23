@@ -178,3 +178,37 @@ export const createTechnologyQuestion = async (data: any) => {
 
   return response.data;
 };
+
+export interface BuyTechnologyProps {
+  quantity: number
+  use: string
+  funding: string
+  comment?: string
+  type: string
+}
+
+/**
+ * Creates a technology order
+ *
+ * @param {string|number} id The technology ID
+ * @returns {object} Order response
+ */
+export const buyTechnology = async (id: number, {
+  quantity,
+  use,
+  funding,
+  comment,
+  type,
+}: BuyTechnologyProps) => {
+  const response = await api.post(`technologies/${id}/orders`, {
+    quantity,
+    use,
+    funding,
+    comment,
+    type,
+  });
+
+  if (response.status !== 200) return false;
+
+  return response.data;
+};

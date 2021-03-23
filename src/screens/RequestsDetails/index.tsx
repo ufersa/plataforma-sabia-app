@@ -8,13 +8,27 @@ import moment from 'moment';
 import * as S from './styles';
 import { Card, Badge } from '../../components';
 import { formatMoney } from '../../utils/helper';
+import { UseStatus, FundingStatus } from '../../utils/requests';
 
 interface RequestsDetailsProps {
   route: NavigatorScreenParams<any, any>
 }
 
 const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Element => {
-  const { data } = params;
+  const {
+    data: {
+      type,
+      quantity,
+      status,
+      service,
+      technology,
+      created_at,
+      comment,
+      funding,
+      use,
+    },
+  } = params;
+  const technologyPrice = type === 'technology' && technology.costs ? technology.costs[0].price : 0;
 
   return (
     <>
@@ -25,7 +39,9 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
             <S.CardContainer>
               <S.CardImage>
                 <Image
-                  source={{ uri: data.service.thumbnail?.url }}
+                  source={{
+                    uri: type === 'technology' ? technology.thumbnail?.url : service.thumbnail?.url,
+                  }}
                   style={{
                     width: 110,
                     height: 83,
@@ -34,50 +50,56 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 />
               </S.CardImage>
               <S.CardInfo>
-                <S.Title numberOfLines={1}>{data.service.name}</S.Title>
+                <S.Title numberOfLines={1}>
+                  {type === 'technology' ? technology.title : service.name}
+                </S.Title>
                 <S.CardPrice>
                   <S.DetailTitle>Subtotal</S.DetailTitle>
-                  <S.DetailTitle>{formatMoney(data.service.price)}</S.DetailTitle>
+                  <S.DetailTitle>
+                    {formatMoney(type === 'technology' ? 0 : service.price)}
+                  </S.DetailTitle>
                 </S.CardPrice>
                 <S.CardPrice style={{ marginTop: 9 }}>
                   <S.Amount>Total</S.Amount>
-                  <S.Amount>{formatMoney(data.service.price * data.quantity)}</S.Amount>
+                  <S.Amount>
+                    {formatMoney(type === 'technology' ? technologyPrice : service.price * quantity)}
+                  </S.Amount>
                 </S.CardPrice>
               </S.CardInfo>
             </S.CardContainer>
 
             <S.CardStatus>
-              <S.CardDate>{moment(data.created_at).format('[Realizado às] HH:mm [-] DD/MM/YYYY')}</S.CardDate>
-              <Badge status={data.status} />
+              <S.CardDate>{moment(created_at).format('[Realizado às] HH:mm [-] DD/MM/YYYY')}</S.CardDate>
+              <Badge status={status} />
             </S.CardStatus>
             <S.CardDetails>
               <S.Detail>
                 <S.DetailTitle>Tipo</S.DetailTitle>
                 <S.DetailDescription>
-                  {data.type === 'technology' ? 'Tecnologia' : 'Serviço'}
+                  {type === 'technology' ? 'Tecnologia' : 'Serviço'}
                 </S.DetailDescription>
               </S.Detail>
               <S.Detail>
                 <S.DetailTitle>Quantidade</S.DetailTitle>
                 <S.DetailDescription>
-                  {data.quantity}
+                  {quantity}
                 </S.DetailDescription>
               </S.Detail>
-              {data.type === 'technology' && (
+              {type === 'technology' && (
                 <>
                   <S.Detail>
                     <S.DetailTitle>Uso da tecnologia</S.DetailTitle>
-                    <S.DetailDescription>–</S.DetailDescription>
+                    <S.DetailDescription>{UseStatus[use]}</S.DetailDescription>
                   </S.Detail>
                   <S.Detail>
                     <S.DetailTitle>Deseja financiamento?</S.DetailTitle>
-                    <S.DetailDescription>–</S.DetailDescription>
+                    <S.DetailDescription>{FundingStatus[funding]}</S.DetailDescription>
                   </S.Detail>
                 </>
               )}
               <S.Detail>
                 <S.DetailTitle>Observações</S.DetailTitle>
-                <S.DetailDescription>{data.comment ?? '–'}</S.DetailDescription>
+                <S.DetailDescription>{comment ?? '–'}</S.DetailDescription>
               </S.Detail>
             </S.CardDetails>
           </Card>

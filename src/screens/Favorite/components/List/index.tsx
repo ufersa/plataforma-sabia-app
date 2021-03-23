@@ -5,6 +5,7 @@ import { ListRenderItemInfo } from 'react-native';
 import { DefaultText, Modal, Button } from '../../../../components';
 import FavoriteCard from '../FavoriteCard';
 import * as S from './styles';
+import { RemoveBookmarkProps } from '../../index';
 
 interface ListItemProps {
   id: string
@@ -15,7 +16,8 @@ interface ListItemProps {
     url: string
   }
   pivot: {
-    technology_id: number
+    technology_id?: number
+    service_id?: number
     user_id: number
   },
   price: number,
@@ -23,13 +25,14 @@ interface ListItemProps {
     price: number
     is_seller: number
   }[]
+  type: string
 }
 
 interface ListProps {
   data: ListItemProps[]
   loading: boolean
   onRefresh: () => void
-  onRemove: (technology: ListItemProps) => void
+  onRemove: (technology: RemoveBookmarkProps) => void
 }
 
 const List = ({
@@ -46,10 +49,10 @@ const List = ({
     if (selectedItem !== null) setShowModal(true);
   }, [selectedItem]);
 
-  const onRemoveModal = (technology: ListItemProps) => {
-    setItems(data.slice(0, technology.idx));
+  const onRemoveModal = (item: ListItemProps) => {
+    setItems(data.slice(0, item.idx));
     setShowModal(false);
-    onRemove(technology);
+    onRemove({ id: item.id, type: item.type === 'technology' ? 'technologyId' : 'serviceId' });
   };
 
   return (

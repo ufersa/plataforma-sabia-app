@@ -3,7 +3,12 @@ import {
   Animated, Image, TouchableOpacity, Easing, StyleProp, View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Card, Modal, Button } from '../../../../components';
+import {
+  Card,
+  Modal,
+  Button,
+  Placeholder,
+} from '../../../../components';
 import * as S from './styles';
 import { formatMoney } from '../../../../utils/helper';
 import { useAuth } from '../../../../hooks/useAuth';
@@ -102,26 +107,33 @@ export default ({
       <S.CardWrapper style={style}>
         <Card>
           <S.CardContainer>
-            {!loading && (
+            <S.CardImage>
+              {!loading && (
+                <S.Actions>
+                  <Favorite id={data.id} type={type} />
+                </S.Actions>
+              )}
+              <TouchableOpacity
+                onPress={navigate}
+                activeOpacity={0.7}
+              >
+                <Image
+                  source={{ uri: data?.image }}
+                  style={{
+                    width: 216,
+                    height: 216,
+                    borderRadius: 8,
+                  }}
+                />
+              </TouchableOpacity>
+            </S.CardImage>
+            {loading ? (
+              <View style={{ alignItems: 'center' }}>
+                <Placeholder />
+                <Placeholder style={{ width: 100 }} light />
+              </View>
+            ) : (
               <>
-                <S.CardImage>
-                  <S.Actions>
-                    <Favorite id={data.id} type={type} />
-                  </S.Actions>
-                  <TouchableOpacity
-                    onPress={navigate}
-                    activeOpacity={0.7}
-                  >
-                    <Image
-                      source={{ uri: data.image }}
-                      style={{
-                        width: 216,
-                        height: 216,
-                        borderRadius: 8,
-                      }}
-                    />
-                  </TouchableOpacity>
-                </S.CardImage>
                 <TouchableOpacity
                   onPress={navigate}
                   activeOpacity={0.7}

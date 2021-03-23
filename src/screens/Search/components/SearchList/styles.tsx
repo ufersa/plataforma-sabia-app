@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import Card from '../Card';
 import Empty from '../Empty';
+
+interface ListProps {
+  hits: any
+  refine: () => void
+  hasMore: boolean
+  type: string
+}
 
 const ListWrapper = styled.FlatList`
   padding-top: 16px;
@@ -11,9 +18,13 @@ const ListWrapper = styled.FlatList`
   height: 100%;
 `;
 
-export const List = connectInfiniteHits((props: any): JSX.Element => {
+export const List = connectInfiniteHits(({
+  hits,
+  hasMore,
+  refine,
+  type,
+}: ListProps): JSX.Element => {
   const navigation = useNavigation();
-  const { hits, hasMore, refine } = props;
 
   return (
     hits.length === 0
@@ -26,7 +37,13 @@ export const List = connectInfiniteHits((props: any): JSX.Element => {
           renderItem={({ item }): JSX.Element => (
             <Card
               {...item}
-              onPress={() => navigation.navigate('Technology', { data: item })}
+              onPress={() => navigation.navigate('Technology', {
+                data: {
+                  ...item,
+                  image: item.thumbnail?.url,
+                },
+                type,
+              })}
             />
           )}
           contentContainerStyle={{
