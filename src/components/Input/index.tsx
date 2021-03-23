@@ -8,7 +8,7 @@ import {
   ReturnKeyTypeOptions,
   TextInput,
 } from 'react-native';
-
+import { TextInputMask } from 'react-native-masked-text';
 import * as S from './styles';
 
 interface InputProps extends TextInputProps {
@@ -54,6 +54,7 @@ const Input = (props: InputProps): JSX.Element => {
     focus = false,
     onBlur,
     onFocus,
+    mask,
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
@@ -96,19 +97,29 @@ const Input = (props: InputProps): JSX.Element => {
           {icon}
         </S.IconWrapper>
       )}
-      <S.InputContainer
-        {...props}
-        keyboardType={type}
-        placeholderTextColor={variant === 'dark' ? '#ffffff' : '#a5a5a5'}
-        returnKeyType={returnKeyType}
-        onSubmitEditing={onSubmitEditing}
-        onFocus={handleInputFocus}
-        onBlur={handleInputBlur}
-        style={{ paddingBottom: 0 }}
-        editable={!disabled}
-        isFocused={isFocused}
-        ref={ref}
-      />
+      {mask ? (
+        <TextInputMask
+          {...props}
+          type="custom"
+          options={{ mask }}
+          customTextInput={S.InputContainer}
+          customTextInputProps={{ style: {} }}
+        />
+      ) : (
+        <S.InputContainer
+          {...props}
+          keyboardType={type}
+          placeholderTextColor={variant === 'dark' ? '#ffffff' : '#a5a5a5'}
+          returnKeyType={returnKeyType}
+          onSubmitEditing={onSubmitEditing}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
+          style={{ paddingBottom: 0 }}
+          editable={!disabled}
+          isFocused={isFocused}
+          ref={ref}
+        />
+      )}
     </S.InputWrapper>
   );
 };

@@ -31,7 +31,7 @@ export const Page = styled.ScrollView``;
 export const Container = styled.View`
   flex: 1;
   padding-horizontal: 16px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 `;
 
 export const Title = styled(DefaultText)`
@@ -82,6 +82,6 @@ export const User = ({ name }: AvatarProps): JSX.Element => (
 );
 
 export const ButtonWrapper = styled.TouchableOpacity`
+  padding-top: 16px;
   padding-horizontal: 16px;
-  margin-top: 48px;
 `;

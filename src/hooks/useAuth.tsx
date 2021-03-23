@@ -23,6 +23,14 @@ interface User {
   phone_number?: string;
   technologyBookmarks?: [];
   serviceBookmarks?: [];
+  birth_date?: string;
+  cpf?: string;
+  address?: string;
+  zipcode?: string;
+  district?: string;
+  city?: string;
+  state?: string;
+  country?: string;
 }
 
 interface AuthState {
