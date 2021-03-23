@@ -20,8 +20,17 @@ interface User {
   id: string;
   full_name: string;
   email: string;
+  phone_number?: string;
   technologyBookmarks?: [];
   serviceBookmarks?: [];
+  birth_date?: string;
+  cpf?: string;
+  address?: string;
+  zipcode?: string;
+  district?: string;
+  city?: string;
+  state?: string;
+  country?: string;
   operations: any;
 }
 

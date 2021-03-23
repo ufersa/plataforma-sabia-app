@@ -6,8 +6,8 @@ import {
   RequestsFeedback,
   RequestsFinish,
   RequestsDetails,
-  Cart,
   Account,
+  Cart,
   Logout,
 } from '../screens';
 import Colors from '../utils/colors';
