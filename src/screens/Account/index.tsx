@@ -13,6 +13,7 @@ import * as S from './styles';
 import { Input, Button } from '../../components';
 import Address from './components/Address';
 import { useAuth } from '../../hooks/useAuth';
+import { unMask } from '../../utils/unMask';
 import { updateUser as updateUserService } from '../../services/user';
 import Colors from '../../utils/colors';
 
@@ -25,7 +26,11 @@ const Account = (): JSX.Element => {
     async (data) => {
       try {
         setLoading(true);
-        const response = await updateUserService(user.id, data);
+        const response = await updateUserService(user.id, {
+          ...data,
+          zipcode: unMask(data.zipcode),
+          cpf: unMask(data.cpf),
+        });
         setLoading(false);
         updateUser(response);
         Alert.alert('🎉', 'Dados alterados com sucesso');

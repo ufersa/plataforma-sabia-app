@@ -31,7 +31,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
 
   const navigate = () => {
     if (type === 'technology') {
-      if (!user.operations.can_buy_technology) {
+      if (!user.operations?.can_buy_technology) {
         setShowModalData(true);
       } else {
         navigation.navigate('RequestsFinish', { data });

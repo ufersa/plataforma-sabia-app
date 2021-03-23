@@ -17,6 +17,9 @@ export const updateUser = async (id: string, params?: UpdateUserParams) => {
     return false;
   }
 
+  const responseMe = await api.get('user/me', { params: { bookmarks: true } });
+  const user = responseMe.data;
+
   const { data } = response;
-  return data;
+  return { ...data, ...user };
 };

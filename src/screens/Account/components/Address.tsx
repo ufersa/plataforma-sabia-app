@@ -111,7 +111,7 @@ const Address = ({ form }: any): JSX.Element => {
                 value={value}
                 onChangeText={onChange}
                 style={{ marginBottom: 16 }}
-                disabled
+                mask="AA"
               />
             )}
           />
