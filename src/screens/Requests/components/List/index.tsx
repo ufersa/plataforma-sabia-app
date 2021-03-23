@@ -14,6 +14,13 @@ interface ListItemProps {
       url: string
     }
   }
+  technology?: {
+    thumbnail: {
+      url: string
+    }
+  }
+  use?: string
+  funding?: string
   quantity: number
   status: string
   created_at: string

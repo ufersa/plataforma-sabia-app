@@ -35,11 +35,7 @@ export const InputContainer = styled.TextInput<InputContainerProps>`
   font-size: 16px;
   color: ${({ variant }) => (variant === 'dark' ? '#ffffff' : '#a5a5a5')};
   padding: 0px 20px 0px 14px;
-
-  ${({ isFocused, variant }) => isFocused
-    && css`
-      color: ${(variant === 'dark' ? '#ffffff' : '#4A4A4A')};
-    `}
+  text-align-vertical: top;
 `;
 
 export const IconWrapper = styled.View`

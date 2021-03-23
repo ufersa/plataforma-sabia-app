@@ -4,6 +4,7 @@ import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TechnologyCard from '../Card';
 import * as S from './styles';
+import { Placeholder } from '../../../../components';
 import useFind from '../../../../hooks/useFind';
 
 interface TechnologiesProps {
@@ -44,7 +45,20 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
 
   return (
     <>
-      <S.Title>Serviços em destaque</S.Title>
+      {
+        loading ? (
+          <Placeholder
+            style={{
+              width: 200,
+              marginLeft: 16,
+              marginTop: 0,
+              marginBottom: 12,
+            }}
+          />
+        ) : (
+          <S.Title>Serviços em destaque</S.Title>
+        )
+      }
       <S.TechnologiesWrapper
         horizontal
         pagingEnabled

@@ -14,6 +14,15 @@ interface RequestCardProps {
       url: string
     },
   }
+  technology?: {
+    title: string
+    costs: {
+      price: number
+    }[]
+    thumbnail: {
+      url: string
+    }
+  }
   quantity: number
   status: string
   type: string
@@ -23,10 +32,12 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
   const navigation = useNavigation();
   const {
     service,
+    technology,
     quantity,
     status,
     type,
   } = props;
+  const technologyPrice = type === 'technology' && technology.costs ? technology.costs[0].price : 0;
 
   return (
     <S.CardWrapper
@@ -43,7 +54,9 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
               />
             </S.CardBadge>
             <Image
-              source={{ uri: service.thumbnail?.url }}
+              source={{
+                uri: type === 'technology' ? technology.thumbnail?.url : service.thumbnail?.url,
+              }}
               style={{
                 width: 110,
                 height: 83,
@@ -52,9 +65,11 @@ const RequestCard = (props: RequestCardProps): JSX.Element => {
             />
           </S.CardImage>
           <S.CardDetails>
-            <S.Title numberOfLines={1}>{service.name}</S.Title>
+            <S.Title numberOfLines={1}>
+              {type === 'technology' ? technology.title : service.name}
+            </S.Title>
             <S.Amount>
-              {formatMoney(service.price * quantity)}
+              {formatMoney(type === 'technology' ? technologyPrice : service.price * quantity)}
             </S.Amount>
             <S.Status>
               <Badge status={status} />

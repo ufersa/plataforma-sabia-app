@@ -71,3 +71,18 @@ export const DateText = styled(DefaultText)`
 export const DateIcon = styled(Feather)`
   margin-right: 6px;
 `;
+
+export const ModalContent = styled.View`
+  flex-direction: column;
+  padding-horizontal: 16px;
+`;
+
+export const ModalBody = styled(DefaultText)`
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #777777;
+  text-align: center;
+  margin-bottom: 32px;
+`;

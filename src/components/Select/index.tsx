@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacityProps } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Modal from '../Modal';
@@ -13,6 +14,7 @@ interface SelectProps extends TouchableOpacityProps {
   placeholder?: string
   value?: string | number
   options: SelectOptionProps[]
+  onSelect?: (value: string | number) => void
 }
 
 const Option = ({ selected, label, ...props }: any): JSX.Element => (
@@ -30,11 +32,20 @@ const Option = ({ selected, label, ...props }: any): JSX.Element => (
 );
 
 const Select = (props: SelectProps): JSX.Element => {
-  const { value = '', options, placeholder = '' } = props;
-  const getSelectedValue = options.find((option) => option.value === value);
+  const {
+    value = '',
+    options,
+    placeholder = '',
+    onSelect,
+  } = props;
+  const getSelectedValue: SelectOptionProps = options.find((option) => option.value === value);
 
-  const [showOptions, setShowOptions] = useState(false);
-  const [currentValue, setCurrentValue] = useState(getSelectedValue?.value);
+  const [showOptions, setShowOptions] = useState<boolean>(false);
+  const [currentValue, setCurrentValue] = useState<string | number>(getSelectedValue?.value);
+
+  useEffect(() => {
+    if (currentValue) onSelect(currentValue);
+  }, [currentValue]);
 
   return (
     <>

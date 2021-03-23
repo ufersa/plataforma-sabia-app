@@ -33,7 +33,7 @@ export const formatMoney = (value: number) => String(
 
 export const technologyStages = [
   {
-    title: 'Incorporação da tecnologia',
+    title: 'Disponibilizado ao mercado',
     position: 9,
     color: '#00A688',
   },

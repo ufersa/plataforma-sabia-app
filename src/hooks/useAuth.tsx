@@ -31,6 +31,7 @@ interface User {
   city?: string;
   state?: string;
   country?: string;
+  operations: any;
 }
 
 interface AuthState {

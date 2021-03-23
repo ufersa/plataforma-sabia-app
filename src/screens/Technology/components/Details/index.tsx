@@ -73,10 +73,6 @@ export const Technology = () => {
         {technology.title}
       </S.DetailsText>
       <S.DetailsText>
-        <S.Highlight>Categoria: </S.Highlight>
-        {technology.taxonomies?.category}
-      </S.DetailsText>
-      <S.DetailsText>
         <S.Highlight>Classificação: </S.Highlight>
         {technology.taxonomies?.classification}
       </S.DetailsText>
