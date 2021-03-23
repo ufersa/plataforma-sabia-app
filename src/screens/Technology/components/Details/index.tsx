@@ -72,12 +72,6 @@ export const Technology = () => {
         <S.Highlight>Título: </S.Highlight>
         {technology.title}
       </S.DetailsText>
-      {false && (
-        <S.DetailsText>
-          <S.Highlight>Categoria: </S.Highlight>
-          {technology.taxonomies?.category}
-        </S.DetailsText>
-      )}
       <S.DetailsText>
         <S.Highlight>Classificação: </S.Highlight>
         {technology.taxonomies?.classification}
