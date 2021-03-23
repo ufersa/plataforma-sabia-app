@@ -27,7 +27,10 @@ const Favorite = (): JSX.Element => {
     async () => {
       setLoading(true);
       const data = await getUserBookmarks(user.id);
-      setTechnologies([...data.technologies, ...data.services]);
+      setTechnologies([
+        ...data.technologies.map((item: any) => ({ ...item, type: 'technology' })),
+        ...data.services.map((item: any) => ({ ...item, type: 'service' })),
+      ]);
       setLoading(false);
     },
     [user],

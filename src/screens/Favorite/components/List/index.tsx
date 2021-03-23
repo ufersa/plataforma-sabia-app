@@ -25,6 +25,7 @@ interface ListItemProps {
     price: number
     is_seller: number
   }[]
+  type: string
 }
 
 interface ListProps {
@@ -51,7 +52,7 @@ const List = ({
   const onRemoveModal = (item: ListItemProps) => {
     setItems(data.slice(0, item.idx));
     setShowModal(false);
-    onRemove({ id: item.id, type: item.pivot.technology_id ? 'technologyId' : 'serviceId' });
+    onRemove({ id: item.id, type: item.type === 'technology' ? 'technologyId' : 'serviceId' });
   };
 
   return (
