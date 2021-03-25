@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import 'react-native-gesture-handler';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import * as SplashScreen from 'expo-splash-screen';
-import moment from 'moment';
 import Colors from './src/utils/colors';
 
-import 'moment/locale/pt-br';
 import useFonts from './src/hooks/useFonts';
 import AppProvider from './src/hooks';
 import Routes from './src/routes';
@@ -14,8 +12,6 @@ import { setNavigator } from './src/utils/navigator';
 SplashScreen.preventAutoHideAsync().catch(() => {
   // do nothing
 });
-
-moment.locale('pt-br');
 
 const theme = {
   ...DefaultTheme,

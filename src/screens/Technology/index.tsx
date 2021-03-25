@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import formatDistance from '../../utils/formatDistance';
+import { formatDistance } from '../../utils/formats';
 import { Button, Modal } from '../../components';
 import {
   About,
