@@ -91,9 +91,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             <>
               <Details />
               <FAQ />
-              {false && (
-                <Rating />
-              )}
+              <Rating />
             </>
           )}
         </S.Container>

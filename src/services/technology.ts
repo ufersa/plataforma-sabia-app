@@ -212,3 +212,27 @@ export const buyTechnology = async (id: number, {
 
   return response.data;
 };
+
+/**
+ * Fetch technology reviews.
+ *
+ * @param {string|number} id Technology id.
+ * @param {object} params Optional params.
+ * @param {('created_at'|'rating')} [params.orderBy='created_at'] Order items by a column.
+ * @param {('ASC'|'DESC')} [params.order='ASC'] Order.
+ *
+ * @returns {Array} The current technology reviews
+ */
+export const getReviews = async (id, params = { orderBy: 'created_at', order: 'DESC' }) => {
+  if (!id) {
+    return [];
+  }
+
+  const response = await api.get(`technologies/${id}/reviews`, { params });
+
+  if (response.status !== 200) {
+    return [];
+  }
+
+  return response.data;
+};
