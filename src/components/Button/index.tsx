@@ -5,18 +5,20 @@ import * as S from './styles';
 
 interface ButtonProps {
   onPress(): void
-  children: string
+  children: string | JSX.Element | Element
   variant?: string
   disabled?: boolean
   style?: object
   icon?: string
+  size?: string
 }
 
 interface ButtonContainerProps {
   variant?: string
-  children: string | JSX.Element
+  children: string | JSX.Element | Element
   style: object
   icon?: string
+  size?: string
 }
 
 const ButtonContainer = ({
@@ -24,8 +26,13 @@ const ButtonContainer = ({
   children,
   style,
   icon,
+  size,
 }: ButtonContainerProps) => (
-  <S.ButtonWrapper variant={variant} style={style}>
+  <S.ButtonWrapper
+    variant={variant}
+    style={style}
+    size={size}
+  >
     {icon && <Feather name="trash" size={24} color="#ffffff" style={{ marginRight: 8 }} />}
     <S.ButtonText variant={variant}>{children}</S.ButtonText>
   </S.ButtonWrapper>
@@ -42,6 +49,7 @@ const Button = ({
   disabled = false,
   style,
   icon,
+  size,
 }: ButtonProps): JSX.Element => (
   <S.ButtonInteraction
     onPress={onPress}
@@ -51,6 +59,7 @@ const Button = ({
       variant={variant}
       icon={icon}
       style={{ opacity: disabled ? 0.7 : 1, ...style }}
+      size={size}
     >
       {children}
     </ButtonContainer>

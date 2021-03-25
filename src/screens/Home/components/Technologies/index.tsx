@@ -19,6 +19,7 @@ interface TechnologiesItemProps {
   description: string
   status?: string
   date?: string
+  slug?: string;
   thumbnail: {
     url: string
   }
@@ -108,6 +109,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
                 data={{
                   id: technology.id,
                   title: technology.title,
+                  slug: technology.slug,
                   image: technology.thumbnail?.url,
                   description: technology.description,
                   price: technology.costs.length ? technology.costs[0].price : 0,

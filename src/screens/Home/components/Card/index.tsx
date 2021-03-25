@@ -19,6 +19,7 @@ import { useCart } from '../../../../hooks/useCart';
 interface DataCardProps {
   id: number
   title: string
+  slug: string
   image: string
   price: number
   description?: string
