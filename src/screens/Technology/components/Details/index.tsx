@@ -149,7 +149,6 @@ export const Geo = (): JSX.Element => {
 
   const formatMarkers = (term: any) => {
     const colors: string[] = ['blue', 'yellow', 'red'];
-
     const marker: MarkerProps = { type: term.term };
 
     term.metas.forEach(({ meta_key, meta_value }: any) => {
