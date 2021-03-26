@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
+import React from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { SvgXml } from 'react-native-svg';
-import { DefaultText } from '../../../../components';
+import { DefaultText, Pins } from '../../../../components';
 import Colors from '../../../../utils/colors';
 
 export const Wrapper = styled.View`
@@ -104,6 +106,7 @@ export const TotalLabel = styled(CostSection)`
   font-family: Rubik_500Medium;
   font-weight: 500;
 `;
+
 export const TotalValue = styled(TotalLabel)`
   font-family: Rubik_700Bold;
   font-weight: 700;
@@ -187,3 +190,79 @@ export const ModalContent = styled.View`
   height: 800px;
   background-color: #ddd;
 `;
+
+export const MapWrapper = styled.View`
+  width: 100%;
+  height: 300px;
+  flex: 1;
+  margin-bottom: 16px;
+`;
+
+export const MapFiltersWrapper = styled.View`
+  flex-direction: column;
+  padding-bottom: 6px;
+`;
+
+interface FilterItemWrapper {
+  selected: boolean
+}
+
+export const FiltersItemWrapper = styled.TouchableOpacity<FilterItemWrapper>`
+  background-color: #ffffff;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  border-radius: 8px;
+  border-width: 1px;
+  border-color: #D2D2D2;
+  padding-horizontal: 12px;
+  margin-vertical: 10px;
+
+  ${({ selected }) => selected && `
+    background-color: #CCEDE7;
+    border-color: #CCEDE7;
+  `}
+`;
+
+export const FilterItemText = styled(DefaultText)<FilterItemWrapper>`
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 6px;
+  color: #4A4A4A;
+
+  ${({ selected }) => selected && `
+    color: #00A688;
+  `}
+`;
+
+interface FilterItemProps {
+  name: string
+  ref: string
+  color: string
+}
+
+interface FilterProps {
+  selected: String[]
+  data: FilterItemProps[]
+  onChange: (value: string) => void
+}
+
+export const Filter = ({ selected, data, onChange }: FilterProps): JSX.Element => (
+  <>
+    {data.map((filter, idx) => (
+      <FiltersItemWrapper
+        key={`filter_${idx}`}
+        activeOpacity={0.7}
+        onPress={() => onChange(filter.ref)}
+        selected={selected.some((s) => s === filter.ref)}
+      >
+        <Pins color={filter.color} />
+        <FilterItemText selected={selected.some((s) => s === filter.ref)}>
+          {filter.name}
+        </FilterItemText>
+      </FiltersItemWrapper>
+    ))}
+  </>
+);

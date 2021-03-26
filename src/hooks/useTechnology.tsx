@@ -23,6 +23,7 @@ export interface Technology {
     implementation_costs: [];
     maintenance_costs: [];
   };
+  terms?: [];
   videos?: [];
   attachments?: {
     images?: {
