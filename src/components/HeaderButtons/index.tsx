@@ -18,12 +18,11 @@ const HeaderButtons = ({
   const [state, setState] = useState(false);
 
   const { user, updateUser } = useAuth();
-  const [type, setType] = useState(data.type);
+  const [type] = useState(data.type);
   const solutionTypeProperty: string = `${type}Bookmarks`;
 
   useEffect(() => {
     const solutionBookmarks = user[solutionTypeProperty];
-
     const liked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === data.id);
     setState(liked);
   }, [user, type, state, solutionTypeProperty]);
@@ -47,32 +46,28 @@ const HeaderButtons = ({
       <Button
         size="md"
         variant="orange-light"
-        onPress={() => {
-          handleLike();
-        }}
-        style={{
-          marginBottom: 20,
-        }}
+        style={{ width: 40 }}
+        onPress={() => handleLike()}
       >
         <FontAwesome5
           name="heart"
           size={16}
           solid={state}
         />
-        {/* <Feather name="heart" size={16} solid /> */}
       </Button>
       <Button
         size="md"
         variant="info-light"
+        style={{ width: 40 }}
         onPress={
-                  async () => {
-                    await Share.share({
-                      message: Platform.OS === 'ios' ? data.title : data.description,
-                      url: `http://plataformasabia.com/t/${data.slug}`,
-                      title: data.title,
-                    });
-                  }
-                }
+          async () => {
+            await Share.share({
+              message: Platform.OS === 'ios' ? data.title : data.description,
+              url: `http://plataformasabia.com/t/${data.slug}`,
+              title: data.title,
+            });
+          }
+        }
       >
         <Feather name="share-2" size={16} />
       </Button>

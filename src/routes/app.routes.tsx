@@ -61,10 +61,10 @@ const AppRoutes: React.FC = ():JSX.Element => (
             },
             headerRight: (props) => (<HeaderButtons data={data} {...props} />),
             headerRightContainerStyle: {
-              height: 50,
-              paddingRight: 18,
-              paddingTop: 18,
-              width: 70,
+              width: 60,
+              paddingRight: 0,
+              paddingLeft: 10,
+              paddingTop: 16,
             },
           });
         }}
