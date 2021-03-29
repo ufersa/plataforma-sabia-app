@@ -199,7 +199,7 @@ export const Geo = (): JSX.Element => {
             height: 300,
           }}
         >
-          {markers.length > 0 && markers.map((marker) => (
+          {markers?.map((marker) => (
             <Marker
               title={marker.description}
               coordinate={{
@@ -232,8 +232,8 @@ export const Geo = (): JSX.Element => {
               color: 'red',
             },
           ]}
-          onChange={(f: string) => {
-            setMarkerFilters((oldItems: string[]) => (oldItems.includes(f) ? oldItems.filter((i) => i !== f) : [...oldItems, f]));
+          onChange={(filter: string) => {
+            setMarkerFilters((oldItems: string[]) => (oldItems.includes(filter) ? oldItems.filter((i) => i !== filter) : [...oldItems, filter]));
           }}
         />
       </S.MapFiltersWrapper>
