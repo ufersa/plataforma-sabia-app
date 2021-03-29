@@ -29,6 +29,8 @@ interface DataCardProps {
   isSeller?: boolean
   measureUnit?: string
   institution?: string
+  terms?: {
+  }[]
 }
 interface TechnologyCardProps {
   data?: DataCardProps

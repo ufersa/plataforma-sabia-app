@@ -78,3 +78,10 @@ export const technologyStages = [
     color: '#F04B40',
   },
 ];
+
+export const zoomToAltitude = (zoom: number) => {
+  if (!zoom) return 0;
+  // Linear regression based on extimated values for zoom = 15,16 and 17
+  const altitude = Math.round(-1050 * zoom + 18952);
+  return altitude;
+};

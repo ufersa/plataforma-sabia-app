@@ -20,7 +20,10 @@
     "ios": {
       "bundleIdentifier": "com.plataformasabia.app",
       "buildNumber": "1.0.7",
-      "supportsTablet": false
+      "supportsTablet": false,
+      "config": {
+        "googleMapsApiKey": "AIzaSyDlQrq14K2OTjUxioB4fW7NJTzZQ2ZFtxA"
+      }
     },
     "android": {
       "package": "com.plataformasabia.app",
@@ -28,6 +31,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#00a688"
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDlQrq14K2OTjUxioB4fW7NJTzZQ2ZFtxA"
+        }
       }
     }
   }
