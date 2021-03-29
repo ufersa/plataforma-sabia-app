@@ -29,9 +29,28 @@ const buildStyle = (variant: string = 'primary') => {
       backgroundColor: colorsDefault[variant],
       color: '#ffffff',
     },
+    'info-light': {
+      backgroundColor: colorsDefault.infoLight,
+      color: colorsDefault.info,
+    },
+    orange: {
+      backgroundColor: colorsDefault[variant],
+      color: '#ffffff',
+    },
+    'orange-light': {
+      backgroundColor: colorsDefault.orangeLight,
+      color: colorsDefault.orange,
+    },
   };
 
   return variants[variant];
+};
+
+const buildSize = (size: string = 'lg') => {
+  const variants: String[] = ['lg', 'md'];
+  const sizes: Number[] = [56, 40];
+
+  return sizes[variants.indexOf(size)];
 };
 
 export const ButtonInteraction = styled.TouchableOpacity`
@@ -41,11 +60,12 @@ export const ButtonInteraction = styled.TouchableOpacity`
 
 interface ButtonWrapperProps{
   variant?: string
+  size?: string
 }
 
 export const ButtonWrapper = styled.View<ButtonWrapperProps>`
   width: 100%;
-  height: 56px;
+  height: ${({ size }) => buildSize(size)}px;
   border-radius: 8px;
   justify-content: center;
   align-items: center;

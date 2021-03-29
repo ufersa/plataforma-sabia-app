@@ -7,7 +7,7 @@ import Empty from '../Empty';
 
 interface ListProps {
   hits: any
-  refine: () => void
+  refine?: () => void
   hasMore: boolean
   type: string
 }

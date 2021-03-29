@@ -29,6 +29,13 @@ export async function login(email: string, password: string) {
   return false;
 }
 
+export async function getMe() {
+  const responseMe = await api.get('user/me', { params: { bookmarks: true } });
+  const user = responseMe.data;
+
+  return user;
+}
+
 interface RegisterProps {
   full_name: string;
   email: string;

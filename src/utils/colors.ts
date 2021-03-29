@@ -9,6 +9,8 @@ const theme: ThemeProps = {
     colors: {
       primary: '#00a688',
       primaryLight: '#ccede7',
+      orange: '#f99942',
+      orangeLight: '#feebd9',
       secondary: '#f99942',
       danger: '#f04b40',
       info: '#3498db',
@@ -25,6 +27,8 @@ const theme: ThemeProps = {
     colors: {
       primary: '#00a688',
       primaryLight: '#ccede7',
+      orange: '#f99942',
+      orangeLight: '#feebd9',
       secondary: '#f99942',
       danger: '#f04b40',
       info: '#3498db',
