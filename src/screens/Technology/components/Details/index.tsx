@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState, useRef } from 'react';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import { Platform, Linking, TouchableOpacity, View } from 'react-native';
 import ImageView from '@hamidfzm/react-native-image-viewing';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import MapView, { Marker } from 'react-native-maps';
@@ -140,7 +140,7 @@ export const Geo = (): JSX.Element => {
     latitude: -6.780127,
     longitude: -36.702823,
   };
-  const zoom = -1500;
+  const zoom = Platform.OS === 'ios' ? -1500 : 6;
   const mapRef = useRef(null);
 
   const [markers, setMarkers] = useState([]);
@@ -199,12 +199,13 @@ export const Geo = (): JSX.Element => {
             height: 300,
           }}
         >
-          {markers?.map((marker) => (
+          {markers?.map((marker, idx) => (
             <Marker
+              key={`marker_${idx}`}
               title={marker.description}
               coordinate={{
-                latitude: marker.latitude,
-                longitude: marker.longitude,
+                latitude: Number(marker.latitude),
+                longitude: Number(marker.longitude),
               }}
             >
               <Pins color={marker.color} />
