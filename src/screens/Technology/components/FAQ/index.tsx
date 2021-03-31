@@ -113,13 +113,16 @@ const FAQ = (): JSX.Element => {
               </S.AnswersContainer>
             ))}
 
-            <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalQuestions(totalQuestions + 2); }}>
-              <S.AnswersViewMoreText>
-                <Ionicons name="reload-sharp" size={16} />
-                {' '}
-                Ver mais perguntas
-              </S.AnswersViewMoreText>
-            </S.AnswersViewMore>
+            {questions.length > totalQuestions ? (
+
+              <S.AnswersViewMore activeOpacity={0.7} onPress={() => { setTotalQuestions(totalQuestions + 2); }}>
+                <S.AnswersViewMoreText>
+                  <Ionicons name="reload-sharp" size={16} />
+                  {' '}
+                  Ver mais perguntas
+                </S.AnswersViewMoreText>
+              </S.AnswersViewMore>
+            ) : null}
           </>
         ) : (
           <S.AnswersContainer>
