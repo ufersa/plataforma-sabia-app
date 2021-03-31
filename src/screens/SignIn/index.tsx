@@ -22,10 +22,12 @@ interface SignInFormData {
   password: string;
 }
 
+const Required = (): JSX.Element => (<S.Error style={{ marginLeft: 'auto' }}>Campo obrigatório.</S.Error>);
+
 const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
   const { signIn, signOut } = useAuth();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, errors } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
@@ -75,47 +77,57 @@ const SignIn = (): JSX.Element => {
                   name="email"
                   control={control}
                   defaultValue=""
+                  rules={{ required: true }}
                   render={({ onChange, value }) => (
-                    <Input
-                      type="default"
-                      icon={<Feather name="user" size={18} color="#ffffff" />}
-                      autoCorrect={false}
-                      autoCapitalize="none"
-                      keyboardType="email-address"
-                      placeholder="E-mail"
-                      returnKeyType="next"
-                      onChangeText={onChange}
-                      value={value}
-                      variant="dark"
-                      style={{ marginBottom: 24 }}
-                      onSubmitEditing={() => setFocusedInput('password')}
-                      onBlur={() => setFocusedInput(null)}
-                    />
+                    <>
+                      <Input
+                        type="default"
+                        icon={<Feather name="user" size={18} color="#ffffff" />}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        placeholder="E-mail"
+                        returnKeyType="next"
+                        onChangeText={onChange}
+                        value={value}
+                        variant="dark"
+                        style={{ marginBottom: 24 }}
+                        onSubmitEditing={() => setFocusedInput('password')}
+                        onBlur={() => setFocusedInput(null)}
+                        error={errors.email}
+                      />
+                      {errors.email ? <Required /> : null}
+                    </>
                   )}
                 />
                 <Controller
                   name="password"
                   control={control}
                   defaultValue=""
+                  rules={{ required: true }}
                   render={({
                     onChange, value,
                   }) => (
-                    <Input
-                      type="default"
-                      icon={<Feather name="lock" size={18} color="#ffffff" />}
-                      autoCorrect={false}
-                      autoCapitalize="none"
-                      secureTextEntry
-                      placeholder="Senha"
-                      returnKeyType="go"
-                      onChangeText={onChange}
-                      value={value}
-                      variant="dark"
-                      style={{ marginBottom: 24 }}
-                      focus={focusedInput === 'password'}
-                      onSubmitEditing={handleSubmit(handleSignIn)}
-                      onBlur={() => setFocusedInput(null)}
-                    />
+                    <>
+                      <Input
+                        type="default"
+                        icon={<Feather name="lock" size={18} color="#ffffff" />}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        secureTextEntry
+                        placeholder="Senha"
+                        returnKeyType="go"
+                        onChangeText={onChange}
+                        value={value}
+                        variant="dark"
+                        style={{ marginBottom: 24 }}
+                        focus={focusedInput === 'password'}
+                        onSubmitEditing={handleSubmit(handleSignIn)}
+                        onBlur={() => setFocusedInput(null)}
+                        error={errors.password}
+                      />
+                      {errors.password ? <Required /> : null}
+                    </>
                   )}
                 />
                 <Button

@@ -40,6 +40,17 @@ export const ForgotPasswordText = styled(DefaultText)`
   line-height: 24px;
 `;
 
+export const Error = styled(DefaultText)`
+  font-size: 14px;
+  line-height: 14px;
+  color: #fff;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  margin-bottom: 8px;
+  margin-top: -18px;
+  margin-left: 10px;
+`;
+
 export const ButtonWrapper = styled.TouchableOpacity`
   padding: 0px 16px;
   margin-bottom: 40px;

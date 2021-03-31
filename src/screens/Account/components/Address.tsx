@@ -5,6 +5,7 @@ import { Controller } from 'react-hook-form';
 import { Input } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
 import * as S from '../styles';
+import { Required } from '..';
 
 const AddressWrapper = styled.View`
   margin-bottom: 24px;
@@ -33,8 +34,9 @@ const Address = ({ form, errors }: any): JSX.Element => {
               value={value}
               onChangeText={onChange}
               style={{ marginBottom: 16 }}
+              error={errors.address}
             />
-            {errors.address ? <S.Error>Obrigatório.</S.Error> : null}
+            {errors.address ? (<Required />) : null}
           </>
         )}
       />
@@ -58,8 +60,9 @@ const Address = ({ form, errors }: any): JSX.Element => {
                   onChangeText={onChange}
                   style={{ marginBottom: 16 }}
                   mask="99999-999"
+                  error={errors.zipcode}
                 />
-                {errors.zipcode ? <S.Error>Obrigatório.</S.Error> : null}
+                {errors.zipcode ? (<Required />) : null}
               </>
             )}
           />
@@ -81,8 +84,9 @@ const Address = ({ form, errors }: any): JSX.Element => {
                   value={value}
                   onChangeText={onChange}
                   style={{ marginBottom: 16 }}
+                  error={errors.district}
                 />
-                {errors.district ? <S.Error>Obrigatório.</S.Error> : null}
+                {errors.district ? (<Required />) : null}
               </>
             )}
           />
@@ -106,8 +110,9 @@ const Address = ({ form, errors }: any): JSX.Element => {
                   value={value}
                   onChangeText={onChange}
                   style={{ marginBottom: 16 }}
+                  error={errors.city}
                 />
-                {errors.city ? <S.Error>Obrigatório.</S.Error> : null}
+                {errors.city ? (<Required />) : null}
               </>
             )}
           />
@@ -130,8 +135,9 @@ const Address = ({ form, errors }: any): JSX.Element => {
                   onChangeText={onChange}
                   style={{ marginBottom: 16 }}
                   mask="AA"
+                  error={errors.state}
                 />
-                {errors.state ? <S.Error>Obrigatório.</S.Error> : null}
+                {errors.state ? (<Required />) : null}
               </>
             )}
           />
@@ -153,8 +159,9 @@ const Address = ({ form, errors }: any): JSX.Element => {
               value={value}
               onChangeText={onChange}
               style={{ marginBottom: 16 }}
+              error={errors.country}
             />
-            {errors.country ? <S.Error>Obrigatório.</S.Error> : null}
+            {errors.country ? (<Required />) : null}
           </>
         )}
       />

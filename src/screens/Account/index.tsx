@@ -19,6 +19,8 @@ import { unMask } from '../../utils/unMask';
 import { updateUser as updateUserService } from '../../services/user';
 import Colors from '../../utils/colors';
 
+export const Required = (): JSX.Element => (<S.Error>Obrigatório.</S.Error>);
+
 const Account = (): JSX.Element => {
   const { user, signOut, updateUser } = useAuth();
   const { control, handleSubmit, errors } = useForm();
@@ -88,8 +90,9 @@ const Account = (): JSX.Element => {
                       value={value}
                       onChangeText={onChange}
                       style={{ marginBottom: 16 }}
+                      error={errors.full_name}
                     />
-                    {errors.full_name ? <S.Error>Obrigatório.</S.Error> : null}
+                    {errors.full_name ? (<Required />) : null}
                   </>
                 )}
               />
@@ -131,8 +134,9 @@ const Account = (): JSX.Element => {
                           onChangeText={onChange}
                           style={{ marginBottom: 16 }}
                           mask="99/99/9999"
+                          error={errors.birth_date}
                         />
-                        {errors.birth_date ? <S.Error>Obrigatório.</S.Error> : null}
+                        {errors.birth_date ? (<Required />) : null}
                       </>
                     )}
                   />
@@ -155,8 +159,9 @@ const Account = (): JSX.Element => {
                           onChangeText={onChange}
                           style={{ marginBottom: 16 }}
                           mask="999.999.999-99"
+                          error={errors.cpf}
                         />
-                        {errors.cpf ? <S.Error>Obrigatório.</S.Error> : null}
+                        {errors.cpf ? (<Required />) : null}
                       </>
                     )}
                   />
@@ -179,8 +184,9 @@ const Account = (): JSX.Element => {
                       onChangeText={onChange}
                       style={{ marginBottom: 16 }}
                       mask="(99) 99999-9999"
+                      error={errors.phone_number}
                     />
-                    {errors.phone_number ? <S.Error>Obrigatório.</S.Error> : null}
+                    {errors.phone_number ? (<Required />) : null}
                   </>
                 )}
               />

@@ -26,7 +26,8 @@ interface InputProps extends TextInputProps {
     [property: string]: string | number
   },
   focus?: boolean
-  mask?: string
+  mask?: string,
+  error?: boolean
 }
 interface SizesProps {
   [name: string]: number
@@ -55,6 +56,7 @@ const Input = (props: InputProps): JSX.Element => {
     onBlur,
     onFocus,
     mask,
+    error = false,
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
@@ -88,6 +90,8 @@ const Input = (props: InputProps): JSX.Element => {
         paddingVertical: multiline ? 12 : 0,
         height: multiline ? 122 : buildSize(size),
         opacity: disabled ? 0.5 : 1,
+        borderLeftColor: error ? '#f88' : '#fff ',
+        borderLeftWidth: error ? 5 : 2,
       }, style]}
       variant={variant}
       isFocused={isFocused}
