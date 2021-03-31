@@ -10,7 +10,7 @@ const AddressWrapper = styled.View`
   margin-bottom: 24px;
 `;
 
-const Address = ({ form }: any): JSX.Element => {
+const Address = ({ form, errors }: any): JSX.Element => {
   const { user } = useAuth();
 
   return (
@@ -21,17 +21,21 @@ const Address = ({ form }: any): JSX.Element => {
         name="address"
         control={form}
         defaultValue={user?.address}
+        rules={{ required: true }}
         render={({ onChange, value }) => (
-          <Input
-            type="default"
-            placeholder="Endereço"
-            returnKeyType="next"
-            autoCorrect={false}
-            autoCapitalize="none"
-            value={value}
-            onChangeText={onChange}
-            style={{ marginBottom: 16 }}
-          />
+          <>
+            <Input
+              type="default"
+              placeholder="Logradouro"
+              returnKeyType="next"
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={value}
+              onChangeText={onChange}
+              style={{ marginBottom: 16 }}
+            />
+            {errors.address ? <S.Error>Obrigatório.</S.Error> : null}
+          </>
         )}
       />
       <View style={{ flexDirection: 'row', marginHorizontal: -8 }}>
@@ -40,19 +44,23 @@ const Address = ({ form }: any): JSX.Element => {
             name="zipcode"
             control={form}
             defaultValue={user?.zipcode}
+            rules={{ required: true }}
             render={({ onChange, value }) => (
-              <Input
-                type="phone-pad"
-                placeholder="CEP"
-                returnKeyLabel="Próximo"
-                returnKeyType="next"
-                autoCorrect={false}
-                autoCapitalize="none"
-                value={value}
-                onChangeText={onChange}
-                style={{ marginBottom: 16 }}
-                mask="99999-999"
-              />
+              <>
+                <Input
+                  type="phone-pad"
+                  placeholder="CEP"
+                  returnKeyLabel="Próximo"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  style={{ marginBottom: 16 }}
+                  mask="99999-999"
+                />
+                {errors.zipcode ? <S.Error>Obrigatório.</S.Error> : null}
+              </>
             )}
           />
         </View>
@@ -61,17 +69,21 @@ const Address = ({ form }: any): JSX.Element => {
             name="district"
             control={form}
             defaultValue={user?.district}
+            rules={{ required: true }}
             render={({ onChange, value }) => (
-              <Input
-                type="default"
-                placeholder="Bairro"
-                returnKeyType="next"
-                autoCorrect={false}
-                autoCapitalize="none"
-                value={value}
-                onChangeText={onChange}
-                style={{ marginBottom: 16 }}
-              />
+              <>
+                <Input
+                  type="default"
+                  placeholder="Bairro"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  style={{ marginBottom: 16 }}
+                />
+                {errors.district ? <S.Error>Obrigatório.</S.Error> : null}
+              </>
             )}
           />
         </View>
@@ -82,17 +94,21 @@ const Address = ({ form }: any): JSX.Element => {
             name="city"
             control={form}
             defaultValue={user?.city}
+            rules={{ required: true }}
             render={({ onChange, value }) => (
-              <Input
-                type="default"
-                placeholder="Cidade"
-                returnKeyType="next"
-                autoCorrect={false}
-                autoCapitalize="none"
-                value={value}
-                onChangeText={onChange}
-                style={{ marginBottom: 16 }}
-              />
+              <>
+                <Input
+                  type="default"
+                  placeholder="Cidade"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  style={{ marginBottom: 16 }}
+                />
+                {errors.city ? <S.Error>Obrigatório.</S.Error> : null}
+              </>
             )}
           />
         </View>
@@ -101,18 +117,22 @@ const Address = ({ form }: any): JSX.Element => {
             name="state"
             control={form}
             defaultValue={user?.state}
+            rules={{ required: true }}
             render={({ onChange, value }) => (
-              <Input
-                type="default"
-                placeholder="Estado"
-                returnKeyType="next"
-                autoCorrect={false}
-                autoCapitalize="none"
-                value={value}
-                onChangeText={onChange}
-                style={{ marginBottom: 16 }}
-                mask="AA"
-              />
+              <>
+                <Input
+                  type="default"
+                  placeholder="Estado"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  style={{ marginBottom: 16 }}
+                  mask="AA"
+                />
+                {errors.state ? <S.Error>Obrigatório.</S.Error> : null}
+              </>
             )}
           />
         </View>
@@ -121,17 +141,21 @@ const Address = ({ form }: any): JSX.Element => {
         name="country"
         control={form}
         defaultValue={user?.country}
+        rules={{ required: true }}
         render={({ onChange, value }) => (
-          <Input
-            type="default"
-            placeholder="País"
-            returnKeyType="next"
-            autoCorrect={false}
-            autoCapitalize="none"
-            value={value}
-            onChangeText={onChange}
-            style={{ marginBottom: 16 }}
-          />
+          <>
+            <Input
+              type="default"
+              placeholder="País"
+              returnKeyType="next"
+              autoCorrect={false}
+              autoCapitalize="none"
+              value={value}
+              onChangeText={onChange}
+              style={{ marginBottom: 16 }}
+            />
+            {errors.country ? <S.Error>Obrigatório.</S.Error> : null}
+          </>
         )}
       />
     </AddressWrapper>

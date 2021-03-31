@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/style-prop-object */
 import React, { useState, useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
@@ -13,30 +14,38 @@ import * as S from './styles';
 import { Input, Button } from '../../components';
 import Address from './components/Address';
 import { useAuth } from '../../hooks/useAuth';
-import { formatDate } from '../../utils/formats';
+import { convertDate, formatDate } from '../../utils/formats';
 import { unMask } from '../../utils/unMask';
 import { updateUser as updateUserService } from '../../services/user';
 import Colors from '../../utils/colors';
 
 const Account = (): JSX.Element => {
   const { user, signOut, updateUser } = useAuth();
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, errors } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleUpdate = useCallback(
     async (data) => {
       try {
         setLoading(true);
+
+        const zipcode = data.zipcode ? unMask(data.zipcode) : null;
+        const cpf = data.cpf ? unMask(data.cpf) : null;
+        const birth_date = data.birth_date ? formatDate(data.birth_date, 'en-US') : '';
+
         const response = await updateUserService(user.id, {
           ...data,
-          birth_date: formatDate(data.birth_date, 'en-US'),
-          zipcode: unMask(data.zipcode),
-          cpf: unMask(data.cpf),
+          birth_date,
+          zipcode,
+          cpf,
         });
+
         setLoading(false);
         updateUser(response);
         Alert.alert('🎉', 'Dados alterados com sucesso');
       } catch (err) {
+        console.log(err);
+
         setLoading(false);
         Alert.alert(
           'Ops!',
@@ -67,17 +76,21 @@ const Account = (): JSX.Element => {
                 name="full_name"
                 control={control}
                 defaultValue={user?.full_name}
+                rules={{ required: true }}
                 render={({ onChange, value }) => (
-                  <Input
-                    type="default"
-                    placeholder="Nome completo"
-                    returnKeyType="next"
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    value={value}
-                    onChangeText={onChange}
-                    style={{ marginBottom: 16 }}
-                  />
+                  <>
+                    <Input
+                      type="default"
+                      placeholder="Nome completo"
+                      returnKeyType="next"
+                      autoCorrect={false}
+                      autoCapitalize="none"
+                      value={value}
+                      onChangeText={onChange}
+                      style={{ marginBottom: 16 }}
+                    />
+                    {errors.full_name ? <S.Error>Obrigatório.</S.Error> : null}
+                  </>
                 )}
               />
               <Controller
@@ -103,20 +116,24 @@ const Account = (): JSX.Element => {
                   <Controller
                     name="birth_date"
                     control={control}
-                    defaultValue={user?.birth_date}
+                    defaultValue={convertDate(user?.birth_date)}
+                    rules={{ required: true }}
                     render={({ onChange, value }) => (
-                      <Input
-                        type="phone-pad"
-                        placeholder="Data de Nascimento"
-                        returnKeyLabel="Próximo"
-                        returnKeyType="next"
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        value={value}
-                        onChangeText={onChange}
-                        style={{ marginBottom: 16 }}
-                        mask="99/99/9999"
-                      />
+                      <>
+                        <Input
+                          type="phone-pad"
+                          placeholder="Data de Nascimento"
+                          returnKeyLabel="Próximo"
+                          returnKeyType="next"
+                          autoCorrect={false}
+                          autoCapitalize="none"
+                          value={value}
+                          onChangeText={onChange}
+                          style={{ marginBottom: 16 }}
+                          mask="99/99/9999"
+                        />
+                        {errors.birth_date ? <S.Error>Obrigatório.</S.Error> : null}
+                      </>
                     )}
                   />
                 </View>
@@ -125,18 +142,22 @@ const Account = (): JSX.Element => {
                     name="cpf"
                     control={control}
                     defaultValue={user?.cpf}
+                    rules={{ required: true }}
                     render={({ onChange, value }) => (
-                      <Input
-                        type="phone-pad"
-                        placeholder="CPF"
-                        returnKeyType="next"
-                        autoCorrect={false}
-                        autoCapitalize="none"
-                        value={value}
-                        onChangeText={onChange}
-                        style={{ marginBottom: 16 }}
-                        mask="999.999.999-99"
-                      />
+                      <>
+                        <Input
+                          type="phone-pad"
+                          placeholder="CPF"
+                          returnKeyType="next"
+                          autoCorrect={false}
+                          autoCapitalize="none"
+                          value={value}
+                          onChangeText={onChange}
+                          style={{ marginBottom: 16 }}
+                          mask="999.999.999-99"
+                        />
+                        {errors.cpf ? <S.Error>Obrigatório.</S.Error> : null}
+                      </>
                     )}
                   />
                 </View>
@@ -145,21 +166,25 @@ const Account = (): JSX.Element => {
                 name="phone_number"
                 control={control}
                 defaultValue={user?.phone_number}
+                rules={{ required: true }}
                 render={({ onChange, value }) => (
-                  <Input
-                    type="phone-pad"
-                    placeholder="Telefone"
-                    returnKeyType="next"
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    value={value}
-                    onChangeText={onChange}
-                    style={{ marginBottom: 16 }}
-                    mask="(99) 99999-9999"
-                  />
+                  <>
+                    <Input
+                      type="phone-pad"
+                      placeholder="Telefone"
+                      returnKeyType="next"
+                      autoCorrect={false}
+                      autoCapitalize="none"
+                      value={value}
+                      onChangeText={onChange}
+                      style={{ marginBottom: 16 }}
+                      mask="(99) 99999-9999"
+                    />
+                    {errors.phone_number ? <S.Error>Obrigatório.</S.Error> : null}
+                  </>
                 )}
               />
-              <Address form={control} />
+              <Address form={control} errors={errors} />
               {false && (
                 <>
                   <S.Divider />

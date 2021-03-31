@@ -43,6 +43,17 @@ export const Title = styled(DefaultText)`
   margin-bottom: 8px;
 `;
 
+export const Error = styled(DefaultText)`
+  font-size: 14px;
+  line-height: 14px;
+  color: #f88;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  margin-bottom: 8px;
+  margin-top: -10px;
+  margin-left: 10px;
+`;
+
 export const Divider = styled.View`
   background-color: #E8E8E8;
   width: 100%;
