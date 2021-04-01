@@ -93,7 +93,7 @@ const Input = (props: InputProps): JSX.Element => {
         height: multiline ? 122 : buildSize(size),
         opacity: disabled ? 0.5 : 1,
         borderLeftColor: error ? '#f88' : borderColor,
-        borderLeftWidth: error ? 5 : 2,
+        borderLeftWidth: error ? 5 : 1,
       }, style]}
       variant={variant}
       isFocused={isFocused}
