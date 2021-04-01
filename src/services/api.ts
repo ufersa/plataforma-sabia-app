@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import axios from 'axios';
 import { API_URL } from '@env';
-import { redirect } from '../utils/navigator';
+import { redirect, getNavigator } from '../utils/navigator';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status === 401) {
+    if (error.response.status === 401 && getNavigator().state.routeName != 'SignIn') {
       redirect('Logout');
     }
     return Promise.reject(error);
