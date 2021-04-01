@@ -96,3 +96,31 @@ export const ButtonWrapper = styled.TouchableOpacity`
   padding-top: 16px;
   padding-horizontal: 16px;
 `;
+
+export const ModalContent = styled.View`
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ModalActions = styled.View`
+  width: 100%;
+  flex-direction: row;
+  padding-horizontal: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+`;
+
+export const InputWrapper = styled.View`
+  width: 130px;
+  margin-right: 16px;
+`;
+
+export const Details = styled(DefaultText)`
+  font-size: 16px;
+  line-height: 24px;
+  color: ${Colors.primary};
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+`;

@@ -62,6 +62,8 @@ const Input = (props: InputProps): JSX.Element => {
   const [isFocused, setIsFocused] = useState(false);
   const ref = useRef<TextInput | null>(null);
 
+  const borderColor = (variant === 'dark' ? '#ffffff' : '#e8e8e8');
+
   useEffect(() => {
     if (ref.current && focus) {
       ref.current.focus();
@@ -90,7 +92,7 @@ const Input = (props: InputProps): JSX.Element => {
         paddingVertical: multiline ? 12 : 0,
         height: multiline ? 122 : buildSize(size),
         opacity: disabled ? 0.5 : 1,
-        borderLeftColor: error ? '#f88' : '#fff ',
+        borderLeftColor: error ? '#f88' : borderColor,
         borderLeftWidth: error ? 5 : 2,
       }, style]}
       variant={variant}

@@ -11,12 +11,12 @@ import {
 import { useForm, Controller } from 'react-hook-form';
 import { Feather } from '@expo/vector-icons';
 import * as S from './styles';
-import { Input, Button } from '../../components';
+import { Input, Button, Modal } from '../../components';
 import Address from './components/Address';
 import { useAuth } from '../../hooks/useAuth';
 import { convertDate, formatDate } from '../../utils/formats';
 import { unMask } from '../../utils/unMask';
-import { updateUser as updateUserService } from '../../services/user';
+import { updateUser as updateUserService, updateUserPassword } from '../../services/user';
 import Colors from '../../utils/colors';
 
 export const Required = (): JSX.Element => (<S.Error>Obrigatório.</S.Error>);
@@ -24,7 +24,10 @@ export const Required = (): JSX.Element => (<S.Error>Obrigatório.</S.Error>);
 const Account = (): JSX.Element => {
   const { user, signOut, updateUser } = useAuth();
   const { control, handleSubmit, errors } = useForm();
+  const { control: controlPass, handleSubmit: handleSubmitPass, errors: errorsPass } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
+
+  const [passModal, setPassModal] = useState<boolean>(false);
 
   const handleUpdate = useCallback(
     async (data) => {
@@ -52,6 +55,31 @@ const Account = (): JSX.Element => {
         Alert.alert(
           'Ops!',
           'Erro ao alterar dados',
+        );
+      }
+    }, [],
+  );
+
+  const handleChangePass = useCallback(
+    async (data) => {
+      try {
+        setLoading(true);
+
+        await updateUserPassword({
+          currentPassword: data.currentPassword,
+          newPassword: data.newPassword,
+        });
+
+        setLoading(false);
+        setPassModal(false);
+        Alert.alert('🎉', 'Senha alterada com sucesso!');
+      } catch (err) {
+        console.log(err);
+
+        setLoading(false);
+        Alert.alert(
+          'Ops!',
+          'Erro ao alterar a senha',
         );
       }
     }, [],
@@ -124,8 +152,9 @@ const Account = (): JSX.Element => {
                     render={({ onChange, value }) => (
                       <>
                         <Input
-                          type="phone-pad"
-                          placeholder="Data de Nascimento"
+                          type="number-pad"
+                          icon={<Feather name="calendar" size={18} color="#a5a5a5" />}
+                          placeholder="Data de Nasc."
                           returnKeyLabel="Próximo"
                           returnKeyType="next"
                           autoCorrect={false}
@@ -191,15 +220,93 @@ const Account = (): JSX.Element => {
                 )}
               />
               <Address form={control} errors={errors} />
-              {false && (
-                <>
-                  <S.Divider />
-                  <S.Title>Credenciais</S.Title>
-                  <S.Touch activeOpacity={0.7}>
-                    <S.TouchText>Alterar senha</S.TouchText>
-                  </S.Touch>
-                </>
-              )}
+              <S.Divider />
+              <S.Title>Credenciais</S.Title>
+              <S.Touch activeOpacity={0.7} style={{ marginVertical: 12 }} onPress={() => setPassModal(true)}>
+                <S.TouchText>Alterar senha</S.TouchText>
+              </S.Touch>
+
+              <Modal
+                title="Alterar senha"
+                height={600}
+                animationType="slide"
+                visible={passModal}
+                onClose={() => {
+                  setPassModal(false);
+                }}
+              >
+                <S.ModalContent>
+                  <KeyboardAvoidingView
+                    behavior="position"
+                    enabled
+                  >
+                    <>
+                      <View style={{ marginHorizontal: 16 }}>
+                        <Controller
+                          name="currentPassword"
+                          control={controlPass}
+                          defaultValue={null}
+                          rules={{ required: true }}
+                          render={({ onChange, value }) => (
+                            <>
+                              <Input
+                                type="default"
+                                secureTextEntry
+                                placeholder="Senha atual"
+                                returnKeyType="next"
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                                value={value}
+                                onChangeText={onChange}
+                                style={{ marginBottom: 16 }}
+                                error={errorsPass.currentPassword}
+                              />
+                              {errorsPass.currentPassword ? (<Required />) : null}
+                            </>
+                          )}
+                        />
+                        <Controller
+                          name="newPassword"
+                          control={controlPass}
+                          defaultValue={null}
+                          rules={{ required: true }}
+                          render={({ onChange, value }) => (
+                            <>
+                              <Input
+                                type="default"
+                                secureTextEntry
+                                autoCorrect={false}
+                                autoCapitalize="none"
+                                placeholder="Nova senha"
+                                returnKeyType="next"
+                                onChangeText={onChange}
+                                value={value}
+                                style={{ marginBottom: 16 }}
+                                error={errorsPass.newPassword}
+                              />
+                              {errorsPass.newPassword ? (<Required />) : null}
+                            </>
+                          )}
+                        />
+                      </View>
+
+                      <S.ModalActions>
+                        <View style={{ flex: 1 }}>
+                          <Button
+                            disabled={loading}
+                            onPress={handleSubmitPass(handleChangePass)}
+                            icon="edit"
+                          >
+                            {loading ? 'Salvando...' : 'Alterar senha'}
+                          </Button>
+                        </View>
+                      </S.ModalActions>
+                    </>
+                  </KeyboardAvoidingView>
+                </S.ModalContent>
+              </Modal>
+
+              <S.Divider />
               <S.Touch
                 activeOpacity={0.7}
                 onPress={signOut}

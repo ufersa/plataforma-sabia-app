@@ -16,6 +16,8 @@ export const formatDate = (date: string, locale: string) => {
 export const convertDate = (date: string) => {
   let year; let month; let day;
 
+  if (!date) return null;
+
   if (date.includes('-')) {
     [year, month, day] = date.substr(0, 10).split('-');
     return `${day}/${month}/${year}`;
