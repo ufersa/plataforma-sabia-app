@@ -26,7 +26,7 @@ const Required = (): JSX.Element => (<S.Error style={{ marginLeft: 'auto' }}>Cam
 
 const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
-  const { signIn, signOut } = useAuth();
+  const { signIn } = useAuth();
   const { control, handleSubmit, errors } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -40,7 +40,6 @@ const SignIn = (): JSX.Element => {
           email: data.email,
           password: data.password,
         });
-        setLoading(false);
         Alert.alert('Plataforma Sabia', '🎉 Bem vindo ao app');
       } catch (err) {
         setLoading(false);
@@ -48,7 +47,6 @@ const SignIn = (): JSX.Element => {
           'Erro na autenticação',
           'Ocorreu um erro ao fazer login, cheque as credenciais.',
         );
-        signOut();
       }
     }, [],
   );
