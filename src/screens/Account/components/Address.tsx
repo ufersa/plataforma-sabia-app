@@ -5,11 +5,12 @@ import { Controller } from 'react-hook-form';
 import { Input } from '../../../components';
 import { useAuth } from '../../../hooks/useAuth';
 import * as S from '../styles';
-import { Required } from '..';
 
 const AddressWrapper = styled.View`
   margin-bottom: 24px;
 `;
+
+export const Required = (): JSX.Element => (<S.Error>Obrigatório.</S.Error>);
 
 const Address = ({ form, errors }: any): JSX.Element => {
   const { user } = useAuth();
