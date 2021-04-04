@@ -7,7 +7,7 @@ import { formatMoney } from '../../../../utils/formats';
 import * as S from './styles';
 
 interface CardProps {
-  onPress?: () => void
+  onPress: () => void
   title: string
   name: string
   image: string

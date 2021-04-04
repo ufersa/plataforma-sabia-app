@@ -6,10 +6,11 @@ interface ModalProps extends ModalBaseProps {
   title?: string,
   children: JSX.Element
   onClose(): void
+  height?: number | string
 }
 
 const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
-  const { title = '', onClose } = props;
+  const { title = '', onClose, height } = props;
 
   return (
     <S.Wrapper>
@@ -22,7 +23,7 @@ const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
         <TouchableWithoutFeedback onPress={onClose}>
           <S.Background />
         </TouchableWithoutFeedback>
-        <S.Container style={{ height: 289 }}>
+        <S.Container style={{ height: height ?? 289 }}>
           <S.CloseWrapper>
             <S.ButtonClose activeOpacity={0.7} onPress={onClose} />
           </S.CloseWrapper>
