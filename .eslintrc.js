@@ -17,7 +17,7 @@ module.exports = {
   rules: {
     'react/jsx-filename-extension': 'off',
     'react/no-array-index-key': 'off',
-    'import/extensions': 0,
+    'import/extensions': 'off',
     'no-undef': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-use-before-define': 'off',
@@ -25,6 +25,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'max-len': 'off',
     'react/prop-types': 'off',
+    'no-console': 'warn',
   },
   settings: {
     'import/resolver': {
