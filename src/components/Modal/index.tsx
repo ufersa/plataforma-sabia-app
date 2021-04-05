@@ -15,7 +15,12 @@ interface ModalProps extends ModalBaseProps {
 }
 
 const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
-  const { title = '', onClose, titleStyle } = props;
+  const {
+    title = '',
+    onClose,
+    titleStyle,
+    visible,
+  } = props;
   const opacity = new Animated.Value(0);
 
   const closeModal = (): void => {
@@ -38,7 +43,7 @@ const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
         useNativeDriver: false,
       }).start();
     }, 300);
-  }, []);
+  }, [visible]);
 
   return (
     <S.Wrapper>

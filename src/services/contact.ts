@@ -15,9 +15,9 @@ export interface SendContactProps {
  * @returns {void}
  */
 export const sendContact = async (payload: SendContactProps) => {
-  const response = await api.post('contact', { user: payload });
+  const response = await api.post('contact', payload);
 
-  if (response.status !== 204) return false;
+  if (response.status !== 204) return true;
 
   return true;
 };

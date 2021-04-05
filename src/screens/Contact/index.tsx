@@ -18,9 +18,11 @@ import {
 import * as S from './styles';
 import { sendContact, SendContactProps } from '../../services/contact';
 import Colors from '../../utils/colors';
+import { useAuth } from '../../hooks/useAuth';
 
 const Contact = (): JSX.Element => {
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   const {
     control,
@@ -47,7 +49,7 @@ const Contact = (): JSX.Element => {
       try {
         setLoading(true);
         await sendContact(data);
-        setShowModal(true);
+        setShowModal((state: boolean) => !state);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -76,7 +78,7 @@ const Contact = (): JSX.Element => {
             <Controller
               name="name"
               control={control}
-              defaultValue=""
+              defaultValue={user.full_name}
               render={({ onChange, value }) => (
                 <Input
                   type="default"
@@ -93,7 +95,7 @@ const Contact = (): JSX.Element => {
             <Controller
               name="email"
               control={control}
-              defaultValue=""
+              defaultValue={user.email}
               render={({ onChange, value }) => (
                 <Input
                   type="email-address"
@@ -110,7 +112,7 @@ const Contact = (): JSX.Element => {
             <Controller
               name="phone"
               control={control}
-              defaultValue=""
+              defaultValue={user.phone_number}
               render={({ onChange, value }) => (
                 <Input
                   type="phone-pad"
