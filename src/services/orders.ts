@@ -56,3 +56,21 @@ export const getOrders = async (params?: GetOrdersProps) => {
   const { data } = response;
   return data;
 };
+
+/**
+ * Cancels a given order
+ *
+ * @param {string} id The order id
+ * @returns {object} Order response
+ */
+export const cancelOrder = async (id: string) => {
+  if (!id) return false;
+
+  const response = await api.put(`orders/${id}/cancel`, {
+    cancellation_reason: '',
+  });
+
+  if (response.status !== 200) return false;
+
+  return response.data;
+};
