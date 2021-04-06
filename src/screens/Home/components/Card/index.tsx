@@ -15,10 +15,12 @@ import { useAuth } from '../../../../hooks/useAuth';
 import { handleBookmark } from '../../../../services/bookmark';
 import { Technology } from '../../../../hooks/useTechnology';
 import { useCart } from '../../../../hooks/useCart';
+import { getMe } from '../../../../services/auth';
 
 interface DataCardProps {
   id: number
   title: string
+  slug: string
   image: string
   price: number
   description?: string
@@ -27,6 +29,8 @@ interface DataCardProps {
   isSeller?: boolean
   measureUnit?: string
   institution?: string
+  terms?: {
+  }[]
 }
 interface TechnologyCardProps {
   data?: DataCardProps
@@ -48,7 +52,7 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
     outputRange: [1.1, 1],
   });
 
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const solutionTypeProperty: string = `${type}Bookmarks`;
 
   useEffect(() => {
@@ -73,6 +77,7 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
       [solutionType]: id,
       userId: user?.id,
     });
+    updateUser(await getMe());
   };
 
   return (

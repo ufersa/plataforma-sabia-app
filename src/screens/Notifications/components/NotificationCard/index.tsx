@@ -1,6 +1,7 @@
 import React from 'react';
-import moment from 'moment';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { format, parseISO } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 import * as S from './styles';
 
 interface NotificationsProps {
@@ -16,7 +17,7 @@ interface NotificationCardProps {
 
 const NotificationCard = ({ date, notifications }: NotificationCardProps): JSX.Element => (
   <S.CardWrapper>
-    <S.HeaderTitle>{moment(date).format('MMMM')}</S.HeaderTitle>
+    <S.HeaderTitle>{format(parseISO(date), 'MMMM', { locale: ptBR })}</S.HeaderTitle>
     {notifications && notifications.length > 0 && (
       <S.ItemsWrapper>
         {notifications.map((notification: NotificationsProps, idx) => (
@@ -27,7 +28,7 @@ const NotificationCard = ({ date, notifications }: NotificationCardProps): JSX.E
             <S.NotificationWrapper>
               <S.NotificationTitle>
                 <S.Title numberOfLines={1}>{notification.title}</S.Title>
-                <S.Date>{moment(notification.date).format('DD/MM')}</S.Date>
+                <S.Date>{format(parseISO(notification.date), 'dd/MM')}</S.Date>
               </S.NotificationTitle>
               <S.NotificationDescription numberOfLines={2}>
                 {notification.body}

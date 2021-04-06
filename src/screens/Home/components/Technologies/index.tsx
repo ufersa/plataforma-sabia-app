@@ -19,11 +19,14 @@ interface TechnologiesItemProps {
   description: string
   status?: string
   date?: string
+  slug?: string;
   thumbnail: {
     url: string
   }
   image?: {
   }
+  terms?: {
+  }[]
   costs: {
     price: number,
     is_seller: number
@@ -108,12 +111,14 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
                 data={{
                   id: technology.id,
                   title: technology.title,
+                  slug: technology.slug,
                   image: technology.thumbnail?.url,
                   description: technology.description,
                   price: technology.costs.length ? technology.costs[0].price : 0,
                   createdAt: technology.created_at,
                   isSeller: !!(technology.costs.length && technology.costs[0].is_seller === 1),
                   type: 'technology',
+                  terms: technology.terms,
                 }}
                 navigation={navigation}
                 loading={false}

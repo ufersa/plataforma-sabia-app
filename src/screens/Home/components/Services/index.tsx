@@ -100,6 +100,7 @@ const Services = ({ navigation }: TechnologiesProps): JSX.Element => {
                   measureUnit: service.measure_unit,
                   institution: service.user.institution.name,
                   isSeller: true,
+                  type: 'service',
                 }}
                 navigation={navigation}
                 loading={false}

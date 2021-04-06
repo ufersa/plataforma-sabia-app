@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import formatDistance from '../../utils/formatDistance';
+import { formatDistance } from '../../utils/formats';
 import { Button, Modal } from '../../components';
 import {
   About,
@@ -31,7 +31,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
 
   const navigate = () => {
     if (type === 'technology') {
-      if (!user.operations.can_buy_technology) {
+      if (!user.operations?.can_buy_technology) {
         setShowModalData(true);
       } else {
         navigation.navigate('RequestsFinish', { data });

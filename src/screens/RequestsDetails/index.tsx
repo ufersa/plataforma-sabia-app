@@ -4,7 +4,7 @@ import React from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Image } from 'react-native';
-import moment from 'moment';
+import { format, parseISO } from 'date-fns';
 import * as S from './styles';
 import { Card, Badge } from '../../components';
 import { formatMoney } from '../../utils/helper';
@@ -69,7 +69,9 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
             </S.CardContainer>
 
             <S.CardStatus>
-              <S.CardDate>{moment(created_at).format('[Realizado às] HH:mm [-] DD/MM/YYYY')}</S.CardDate>
+              <S.CardDate>
+                {`Realizado às ${format(parseISO(created_at), 'HH:mm - dd/MM/yyyy')}`}
+              </S.CardDate>
               <Badge status={status} />
             </S.CardStatus>
             <S.CardDetails>

@@ -1,16 +1,23 @@
 /* eslint-disable camelcase */
-import React, { useState } from 'react';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { Platform, Linking, TouchableOpacity, View } from 'react-native';
 import ImageView from '@hamidfzm/react-native-image-viewing';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import MapView, { Marker } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as S from './styles';
-import { Accordion } from '../../../../components';
+import { Accordion, Pins } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useTechnology } from '../../../../hooks/useTechnology';
 import { unitsOptions } from '../../../../utils/technology';
-import { formatCurrencyToInt, formatMoney, technologyStages } from '../../../../utils/helper';
+import {
+  formatCurrencyToInt,
+  formatMoney,
+  technologyStages,
+  zoomToAltitude,
+} from '../../../../utils/helper';
 import ImageList from '../../../../components/Gallery/ImageList';
+import { getTechnologyTerms } from '../../../../services/technology';
 
 interface StagesProps {
   currentStep: number
@@ -118,6 +125,120 @@ export const Characteristics = () => {
         {`${technology.installation_time} dias.`}
       </S.DetailsText>
     </S.AccordionItemWrapper>
+  );
+};
+
+interface MarkerProps {
+  type: string
+  [key: string]: any
+}
+
+export const Geo = (): JSX.Element => {
+  const technology = useTechnology();
+  const types: string[] = ['who_develop', 'where_can_be_applied', 'where_is_already_implemented'];
+  const region = {
+    latitude: -6.780127,
+    longitude: -36.702823,
+  };
+  const zoom = Platform.OS === 'ios' ? -1500 : 6;
+  const mapRef = useRef(null);
+
+  const [markers, setMarkers] = useState([]);
+  const [cachedMarkers, setCachedMarkers] = useState([]);
+  const [markerFilters, setMarkerFilters] = useState<string[]>(types);
+
+  const formatMarkers = (term: any) => {
+    const colors: string[] = ['blue', 'yellow', 'red'];
+    const marker: MarkerProps = { type: term.term };
+
+    term.metas.forEach(({ meta_key, meta_value }: any) => {
+      marker[meta_key] = meta_value;
+    });
+
+    return {
+      ...marker,
+      color: colors[types.indexOf(marker.type)],
+    };
+  };
+
+  useEffect(() => {
+    const getTerms = async () => {
+      const terms = await getTechnologyTerms(technology.id);
+      const formattedMarkers = terms.filter(({ term }: any) => markerFilters.includes(term)).map(formatMarkers);
+      setMarkers(formattedMarkers);
+      setCachedMarkers(formattedMarkers);
+    };
+
+    getTerms();
+
+    // Animate zoom MAP
+    mapRef.current.animateCamera({
+      center: region,
+      zoom,
+      altitude: zoomToAltitude(zoom),
+    }, 400);
+  }, []);
+
+  useEffect(() => {
+    setMarkers(cachedMarkers.filter(({ type }: any) => markerFilters.includes(type)));
+  }, [markerFilters]);
+
+  return (
+    <>
+      <S.MapWrapper>
+        <MapView
+          ref={mapRef}
+          loadingEnabled
+          zoomControlEnabled
+          initialRegion={{
+            ...region,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          style={{
+            height: 300,
+          }}
+        >
+          {markers?.map((marker, idx) => (
+            <Marker
+              key={`marker_${idx}`}
+              title={marker.description}
+              coordinate={{
+                latitude: Number(marker.latitude),
+                longitude: Number(marker.longitude),
+              }}
+            >
+              <Pins color={marker.color} />
+            </Marker>
+          ))}
+        </MapView>
+      </S.MapWrapper>
+      <S.MapFiltersWrapper>
+        <S.Filter
+          selected={markerFilters}
+          data={[
+            {
+              name: 'Onde é desenvolvida',
+              ref: 'who_develop',
+              color: 'blue',
+            },
+            {
+              name: 'Onde pode ser aplicada',
+              ref: 'where_can_be_applied',
+              color: 'yellow',
+            },
+            {
+              name: 'Onde já está implementada',
+              ref: 'where_is_already_implemented',
+              color: 'red',
+            },
+          ]}
+          onChange={(filter: string) => {
+            setMarkerFilters((oldItems: string[]) => (oldItems.includes(filter) ? oldItems.filter((i) => i !== filter) : [...oldItems, filter]));
+          }}
+        />
+      </S.MapFiltersWrapper>
+    </>
   );
 };
 
@@ -330,7 +451,7 @@ const Details = () => (
         },
         {
           title: 'Georreferenciamento',
-          content: <></>,
+          content: <Geo />,
         },
         {
           title: 'Custos e financiamentos',

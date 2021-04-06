@@ -27,9 +27,16 @@ interface SignUpProps {
 }
 
 const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
-  const { control, handleSubmit } = useForm();
+  const {
+    control,
+    handleSubmit,
+    errors,
+    watch,
+  } = useForm();
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const field = watch();
 
   const handleSignUp = useCallback(
     async (data: SignUpFormData) => {
@@ -47,15 +54,11 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           disclaimers: [1, 2, 3, 4, 5, 6, 7],
         }).then(() => {
           setLoading(false);
-          Alert.alert('Plataforma Sabia', '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.');
-          navigation.goBack();
-        }).catch((error) => {
-          const message = error.response.data.error.message.reduce((append: any, err: any) => `${append}.\n\n ${err.message}`, '');
-          setLoading(false);
           Alert.alert(
-            'Erro no cadastro!',
-            `${message}`,
+            'Plataforma Sabia',
+            '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.',
           );
+          navigation.goBack();
         });
       }
     }, [],
@@ -80,6 +83,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                 name="name"
                 control={control}
                 defaultValue=""
+                rules={{ required: true }}
                 render={({ onChange, value }) => (
                   <Input
                     type="default"
@@ -90,6 +94,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     style={{ marginBottom: 16 }}
                     onBlur={() => setFocusedInput(null)}
                     onSubmitEditing={() => setFocusedInput('email')}
+                    error={errors.name}
                   />
                 )}
               />
@@ -97,6 +102,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                 name="email"
                 control={control}
                 defaultValue=""
+                rules={{ required: true }}
                 render={({ onChange, value }) => (
                   <Input
                     type="email-address"
@@ -110,6 +116,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     focus={focusedInput === 'email'}
                     onSubmitEditing={() => setFocusedInput('password')}
                     onBlur={() => setFocusedInput(null)}
+                    error={errors.email}
                   />
                 )}
               />
@@ -119,6 +126,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                 name="password"
                 control={control}
                 defaultValue=""
+                rules={{ required: true }}
                 render={({ onChange, value }) => (
                   <Input
                     type="default"
@@ -133,6 +141,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     focus={focusedInput === 'password'}
                     onBlur={() => setFocusedInput(null)}
                     onSubmitEditing={() => setFocusedInput('repeatPassword')}
+                    error={errors.password}
                   />
                 )}
               />
@@ -140,6 +149,10 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                 name="repeatPassword"
                 control={control}
                 defaultValue=""
+                rules={{
+                  required: true,
+                  validate: (value: string) => value === field.password,
+                }}
                 render={({ onChange, value }) => (
                   <Input
                     type="default"
@@ -153,6 +166,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                     style={{ marginBottom: 24 }}
                     onBlur={() => setFocusedInput(null)}
                     focus={focusedInput === 'repeatPassword'}
+                    error={errors.repeatPassword}
                   />
                 )}
               />

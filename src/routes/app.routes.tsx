@@ -12,10 +12,11 @@ import {
 } from '../screens';
 import Colors from '../utils/colors';
 import { CartProvider } from '../hooks/useCart';
+import HeaderButtons from '../components/HeaderButtons';
 
 const App = createStackNavigator();
 
-const AppRoutes: React.FC = () => (
+const AppRoutes: React.FC = ():JSX.Element => (
   <CartProvider>
     <App.Navigator initialRouteName="Root">
       <App.Screen
@@ -48,13 +49,24 @@ const AppRoutes: React.FC = () => (
         component={Account}
       />
       <App.Screen
-        options={{
-          title: '',
-          headerBackTitleVisible: false,
-          headerTintColor: '#4a4a4a',
-          headerStyle: {
-            backgroundColor: Colors.background,
-          },
+        options={({ route: { params } }: any) => {
+          const { data } = params;
+
+          return ({
+            title: '',
+            headerBackTitleVisible: false,
+            headerTintColor: '#4a4a4a',
+            headerStyle: {
+              backgroundColor: Colors.background,
+            },
+            headerRight: (props) => (<HeaderButtons data={data} {...props} />),
+            headerRightContainerStyle: {
+              width: 60,
+              paddingRight: 0,
+              paddingLeft: 10,
+              paddingTop: 16,
+            },
+          });
         }}
         name="Technology"
         component={Technology}
