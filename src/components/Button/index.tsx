@@ -33,7 +33,7 @@ const ButtonContainer = ({
     style={style}
     size={size}
   >
-    {icon && <Feather name="trash" size={24} color="#ffffff" style={{ marginRight: 8 }} />}
+    {icon ? <Feather name={icon} size={24} color="#ffffff" style={{ marginRight: 8 }} /> : <></>}
     <S.ButtonText variant={variant}>{children}</S.ButtonText>
   </S.ButtonWrapper>
 );

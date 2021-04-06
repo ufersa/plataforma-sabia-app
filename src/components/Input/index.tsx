@@ -9,6 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
+import Colors from '../../utils/colors';
 import * as S from './styles';
 
 interface InputProps extends TextInputProps {
@@ -26,7 +27,8 @@ interface InputProps extends TextInputProps {
     [property: string]: string | number
   },
   focus?: boolean
-  mask?: string
+  mask?: string,
+  error?: boolean
 }
 interface SizesProps {
   [name: string]: number
@@ -55,10 +57,14 @@ const Input = (props: InputProps): JSX.Element => {
     onBlur,
     onFocus,
     mask,
+    error = false,
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
   const ref = useRef<TextInput | null>(null);
+
+  const borderColor = (variant === 'dark' ? '#00856d' : '#e8e8e8');
+  const placeholderColor = (variant === 'dark' ? '#ffffff' : '#a5a5a5');
 
   useEffect(() => {
     if (ref.current && focus) {
@@ -88,6 +94,8 @@ const Input = (props: InputProps): JSX.Element => {
         paddingVertical: multiline ? 12 : 0,
         height: multiline ? 122 : buildSize(size),
         opacity: disabled ? 0.5 : 1,
+        borderColor: error ? Colors.danger : borderColor,
+        borderWidth: 1,
       }, style]}
       variant={variant}
       isFocused={isFocused}
@@ -103,14 +111,18 @@ const Input = (props: InputProps): JSX.Element => {
           type="custom"
           options={{ mask }}
           customTextInput={S.InputContainer}
-          customTextInputProps={{ style: {} }}
+          customTextInputProps={{
+            style: {
+              height: buildSize(size),
+            },
+          }}
           keyboardType={type}
         />
       ) : (
         <S.InputContainer
           {...props}
           keyboardType={type}
-          placeholderTextColor={variant === 'dark' ? '#ffffff' : '#a5a5a5'}
+          placeholderTextColor={error ? Colors.danger : placeholderColor}
           returnKeyType={returnKeyType}
           onSubmitEditing={onSubmitEditing}
           onFocus={handleInputFocus}
@@ -118,6 +130,7 @@ const Input = (props: InputProps): JSX.Element => {
           style={{ paddingBottom: 0 }}
           editable={!disabled}
           isFocused={isFocused}
+          multiline={multiline}
           ref={ref}
         />
       )}
