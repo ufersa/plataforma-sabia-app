@@ -136,7 +136,7 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                   onPress={() => {
                     Alert.alert(
                       'Deseja realmente cancelar este pedido?',
-                      '',
+                      null,
                       [
                         {
                           text: 'Cancelar',
