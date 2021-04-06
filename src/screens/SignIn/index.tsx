@@ -16,6 +16,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { Input, Button } from '../../components';
 import * as S from './styles';
 import Logo from '../../../assets/logo/Logo-color.png';
+import Colors from '../../utils/colors';
 
 interface SignInFormData {
   email: string;
@@ -24,8 +25,8 @@ interface SignInFormData {
 
 const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
-  const { signIn, signOut } = useAuth();
-  const { control, handleSubmit } = useForm();
+  const { signIn } = useAuth();
+  const { control, handleSubmit, errors } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
@@ -38,7 +39,6 @@ const SignIn = (): JSX.Element => {
           email: data.email,
           password: data.password,
         });
-        setLoading(false);
         Alert.alert('Plataforma Sabia', '🎉 Bem vindo ao app');
       } catch (err) {
         setLoading(false);
@@ -46,7 +46,6 @@ const SignIn = (): JSX.Element => {
           'Erro na autenticação',
           'Ocorreu um erro ao fazer login, cheque as credenciais.',
         );
-        signOut();
       }
     }, [],
   );
@@ -75,47 +74,55 @@ const SignIn = (): JSX.Element => {
                   name="email"
                   control={control}
                   defaultValue=""
+                  rules={{ required: true }}
                   render={({ onChange, value }) => (
-                    <Input
-                      type="default"
-                      icon={<Feather name="user" size={18} color="#ffffff" />}
-                      autoCorrect={false}
-                      autoCapitalize="none"
-                      keyboardType="email-address"
-                      placeholder="E-mail"
-                      returnKeyType="next"
-                      onChangeText={onChange}
-                      value={value}
-                      variant="dark"
-                      style={{ marginBottom: 24 }}
-                      onSubmitEditing={() => setFocusedInput('password')}
-                      onBlur={() => setFocusedInput(null)}
-                    />
+                    <>
+                      <Input
+                        type="default"
+                        icon={<Feather name="user" size={18} color={errors.email ? Colors.danger : '#ffffff'} />}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        keyboardType="email-address"
+                        placeholder="E-mail"
+                        returnKeyType="next"
+                        onChangeText={onChange}
+                        value={value}
+                        variant="dark"
+                        style={{ marginBottom: 24 }}
+                        onSubmitEditing={() => setFocusedInput('password')}
+                        onBlur={() => setFocusedInput(null)}
+                        error={errors.email}
+                      />
+                    </>
                   )}
                 />
                 <Controller
                   name="password"
                   control={control}
                   defaultValue=""
+                  rules={{ required: true }}
                   render={({
                     onChange, value,
                   }) => (
-                    <Input
-                      type="default"
-                      icon={<Feather name="lock" size={18} color="#ffffff" />}
-                      autoCorrect={false}
-                      autoCapitalize="none"
-                      secureTextEntry
-                      placeholder="Senha"
-                      returnKeyType="go"
-                      onChangeText={onChange}
-                      value={value}
-                      variant="dark"
-                      style={{ marginBottom: 24 }}
-                      focus={focusedInput === 'password'}
-                      onSubmitEditing={handleSubmit(handleSignIn)}
-                      onBlur={() => setFocusedInput(null)}
-                    />
+                    <>
+                      <Input
+                        type="default"
+                        icon={<Feather name="lock" size={18} color={errors.password ? Colors.danger : '#ffffff'} />}
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        secureTextEntry
+                        placeholder="Senha"
+                        returnKeyType="go"
+                        onChangeText={onChange}
+                        value={value}
+                        variant="dark"
+                        style={{ marginBottom: 24 }}
+                        focus={focusedInput === 'password'}
+                        onSubmitEditing={handleSubmit(handleSignIn)}
+                        onBlur={() => setFocusedInput(null)}
+                        error={errors.password}
+                      />
+                    </>
                   )}
                 />
                 <Button
