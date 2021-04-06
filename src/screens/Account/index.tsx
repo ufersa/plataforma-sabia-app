@@ -155,7 +155,7 @@ const Account = (): JSX.Element => {
                     value={value}
                     onChangeText={onChange}
                     style={{ marginBottom: 16 }}
-                    mask="(99) 99999-9999"
+                    mask="(99) 9999-*9999"
                   />
                 )}
               />

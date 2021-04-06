@@ -104,6 +104,7 @@ const Input = (props: InputProps): JSX.Element => {
           options={{ mask }}
           customTextInput={S.InputContainer}
           customTextInputProps={{ style: {} }}
+          keyboardType={type}
         />
       ) : (
         <S.InputContainer

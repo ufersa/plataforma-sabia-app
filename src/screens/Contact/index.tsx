@@ -122,7 +122,7 @@ const Contact = (): JSX.Element => {
                   keyboardType="default"
                   onChangeText={onChange}
                   value={value}
-                  mask="(99) 99999-9999"
+                  mask="(99) 9999-*9999"
                 />
               )}
             />
