@@ -49,7 +49,6 @@ const Account = (): JSX.Element => {
         updateUser(response);
         Alert.alert('🎉', 'Dados alterados com sucesso');
       } catch (err) {
-        console.log(err);
 
         setLoading(false);
         Alert.alert(
