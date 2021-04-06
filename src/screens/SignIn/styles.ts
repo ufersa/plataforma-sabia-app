@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { DefaultText } from '../../components';
+import Colors from '../../utils/colors';
 
 export const Container = styled.View`
   flex: 1;
@@ -43,12 +44,14 @@ export const ForgotPasswordText = styled(DefaultText)`
 export const Error = styled(DefaultText)`
   font-size: 14px;
   line-height: 14px;
-  color: #fff;
+  color: ${Colors.danger};
   font-family: Rubik_500Medium;
   font-weight: 500;
   margin-bottom: 8px;
   margin-top: -18px;
   margin-left: 10px;
+  text-align: left;
+  width: 100%;
 `;
 
 export const ButtonWrapper = styled.TouchableOpacity`

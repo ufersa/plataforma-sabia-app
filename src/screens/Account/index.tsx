@@ -14,12 +14,11 @@ import * as S from './styles';
 import { Input, Button, Modal } from '../../components';
 import Address from './components/Address';
 import { useAuth } from '../../hooks/useAuth';
-import { convertDate, formatDate } from '../../utils/formats';
+import { formatDate } from '../../utils/formats';
 import { unMask } from '../../utils/unMask';
 import { updateUser as updateUserService, updateUserPassword } from '../../services/user';
 import Colors from '../../utils/colors';
 
-export const Required = (): JSX.Element => (<S.Error>Obrigatório.</S.Error>);
 
 const Account = (): JSX.Element => {
   const { user, signOut, updateUser } = useAuth();
@@ -49,8 +48,6 @@ const Account = (): JSX.Element => {
         updateUser(response);
         Alert.alert('🎉', 'Dados alterados com sucesso');
       } catch (err) {
-        console.log(err);
-
         setLoading(false);
         Alert.alert(
           'Ops!',
@@ -74,8 +71,6 @@ const Account = (): JSX.Element => {
         setPassModal(false);
         Alert.alert('🎉', 'Senha alterada com sucesso!');
       } catch (err) {
-        console.log(err);
-
         setLoading(false);
         Alert.alert(
           'Ops!',
@@ -120,7 +115,6 @@ const Account = (): JSX.Element => {
                       style={{ marginBottom: 16 }}
                       error={errors.full_name}
                     />
-                    {errors.full_name ? (<Required />) : null}
                   </>
                 )}
               />
@@ -147,7 +141,7 @@ const Account = (): JSX.Element => {
                   <Controller
                     name="birth_date"
                     control={control}
-                    defaultValue={convertDate(user?.birth_date)}
+                    defaultValue={user?.birth_date}
                     rules={{ required: true }}
                     render={({ onChange, value }) => (
                       <>
@@ -165,7 +159,6 @@ const Account = (): JSX.Element => {
                           mask="99/99/9999"
                           error={errors.birth_date}
                         />
-                        {errors.birth_date ? (<Required />) : null}
                       </>
                     )}
                   />
@@ -190,7 +183,6 @@ const Account = (): JSX.Element => {
                           mask="999.999.999-99"
                           error={errors.cpf}
                         />
-                        {errors.cpf ? (<Required />) : null}
                       </>
                     )}
                   />
@@ -215,7 +207,6 @@ const Account = (): JSX.Element => {
                       mask="(99) 99999-9999"
                       error={errors.phone_number}
                     />
-                    {errors.phone_number ? (<Required />) : null}
                   </>
                 )}
               />
@@ -228,7 +219,7 @@ const Account = (): JSX.Element => {
 
               <Modal
                 title="Alterar senha"
-                height={600}
+                height={390}
                 animationType="slide"
                 visible={passModal}
                 onClose={() => {
@@ -261,7 +252,6 @@ const Account = (): JSX.Element => {
                                 style={{ marginBottom: 16 }}
                                 error={errorsPass.currentPassword}
                               />
-                              {errorsPass.currentPassword ? (<Required />) : null}
                             </>
                           )}
                         />
@@ -284,12 +274,10 @@ const Account = (): JSX.Element => {
                                 style={{ marginBottom: 16 }}
                                 error={errorsPass.newPassword}
                               />
-                              {errorsPass.newPassword ? (<Required />) : null}
                             </>
                           )}
                         />
                       </View>
-
                       <S.ModalActions>
                         <View style={{ flex: 1 }}>
                           <Button
@@ -305,7 +293,6 @@ const Account = (): JSX.Element => {
                   </KeyboardAvoidingView>
                 </S.ModalContent>
               </Modal>
-
               <S.Divider />
               <S.Touch
                 activeOpacity={0.7}

@@ -10,19 +10,5 @@ export const formatDistance = (date: string) => formatDistanceToNow(parseISO(dat
 export const formatDate = (date: string, locale: string) => {
   const locales: string[] = ['pt-BR', 'en-US'];
   const masks: string[] = ['dd/MM/yyyy', 'yyyy-MM-dd'];
-  return format(new Date(convertDate(date)), masks[locales.indexOf(locale)]);
-};
-
-export const convertDate = (date: string) => {
-  let year; let month; let day;
-
-  if (!date) return null;
-
-  if (date.includes('-')) {
-    [year, month, day] = date.substr(0, 10).split('-');
-    return `${day}/${month}/${year}`;
-  }
-
-  [month, day, year] = date.substr(0, 10).split('/');
-  return `${day}/${month}/${year}`;
+  return format(new Date(date), masks[locales.indexOf(locale)]);
 };

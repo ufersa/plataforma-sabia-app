@@ -16,13 +16,12 @@ import { useAuth } from '../../hooks/useAuth';
 import { Input, Button } from '../../components';
 import * as S from './styles';
 import Logo from '../../../assets/logo/Logo-color.png';
+import Colors from '../../utils/colors';
 
 interface SignInFormData {
   email: string;
   password: string;
 }
-
-const Required = (): JSX.Element => (<S.Error style={{ marginLeft: 'auto' }}>Campo obrigatório.</S.Error>);
 
 const SignIn = (): JSX.Element => {
   const navigation = useNavigation();
@@ -80,7 +79,7 @@ const SignIn = (): JSX.Element => {
                     <>
                       <Input
                         type="default"
-                        icon={<Feather name="user" size={18} color="#ffffff" />}
+                        icon={<Feather name="user" size={18} color={errors.email ? Colors.danger : '#ffffff'} />}
                         autoCorrect={false}
                         autoCapitalize="none"
                         keyboardType="email-address"
@@ -94,7 +93,6 @@ const SignIn = (): JSX.Element => {
                         onBlur={() => setFocusedInput(null)}
                         error={errors.email}
                       />
-                      {errors.email ? <Required /> : null}
                     </>
                   )}
                 />
@@ -109,7 +107,7 @@ const SignIn = (): JSX.Element => {
                     <>
                       <Input
                         type="default"
-                        icon={<Feather name="lock" size={18} color="#ffffff" />}
+                        icon={<Feather name="lock" size={18} color={errors.password ? Colors.danger : '#ffffff'} />}
                         autoCorrect={false}
                         autoCapitalize="none"
                         secureTextEntry
@@ -124,7 +122,6 @@ const SignIn = (): JSX.Element => {
                         onBlur={() => setFocusedInput(null)}
                         error={errors.password}
                       />
-                      {errors.password ? <Required /> : null}
                     </>
                   )}
                 />
