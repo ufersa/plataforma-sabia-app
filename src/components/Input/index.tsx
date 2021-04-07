@@ -116,6 +116,7 @@ const Input = (props: InputProps): JSX.Element => {
               height: buildSize(size),
             },
           }}
+          keyboardType={type}
         />
       ) : (
         <S.InputContainer
