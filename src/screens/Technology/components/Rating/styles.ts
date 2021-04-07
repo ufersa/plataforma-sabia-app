@@ -54,9 +54,8 @@ export const Star = styled(FontAwesome5)`
   margin-right: 4px;
 `;
 
-export const RateCommentsWrapper = styled.View`
+export const ReviewsWrapper = styled.View`
   padding-top: 34px;
-  padding-bottom: 24px;
   padding-horizontal: 16px;
 `;
 
@@ -78,13 +77,38 @@ export const RateCommentText = styled(DefaultText)`
 `;
 
 export const RateViewMore = styled.TouchableOpacity`
-  margin-top: 16px;
 `;
 
 export const RateViewMoreText = styled(DefaultText)`
+  color: #4a4a4a;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  padding-bottom: 24px;
+  padding-horizontal: 16px;
+`;
+
+export const PositiveText = styled(DefaultText)`
   color: ${Colors.primary};
   font-family: Rubik_500Medium;
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
+  margin-top: 10px;
+`;
+
+export const NegativeText = styled(PositiveText)`
+  color: ${Colors.danger};
+`;
+
+export const PositiveNegativeText = styled(RateCommentText)`
+
+`;
+
+export const PositiveNegativeWrapper = styled.View`
+  border-left-width: 2px;
+  border-color: #D2D2D2;
+  padding-left: 5px;
+  margin-top: 6px;
 `;
