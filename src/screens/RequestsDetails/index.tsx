@@ -1,22 +1,27 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/style-prop-object */
-import React from 'react';
-import { NavigatorScreenParams } from '@react-navigation/native';
+import React, { useState, useCallback } from 'react';
+import { useNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { Image } from 'react-native';
+import { Alert, Image } from 'react-native';
 import { format, parseISO } from 'date-fns';
 import * as S from './styles';
-import { Card, Badge } from '../../components';
+import { Card, Badge, Button } from '../../components';
 import { formatMoney } from '../../utils/helper';
 import { UseStatus, FundingStatus } from '../../utils/requests';
+import { cancelOrder } from '../../services/orders';
 
 interface RequestsDetailsProps {
   route: NavigatorScreenParams<any, any>
 }
 
 const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Element => {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const {
     data: {
+      id,
       type,
       quantity,
       status,
@@ -29,6 +34,23 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
     },
   } = params;
   const technologyPrice = type === 'technology' && technology.costs ? technology.costs[0].price : 0;
+
+  const onCancelOrder = useCallback(
+    async () => {
+      try {
+        setLoading(true);
+        await cancelOrder(id);
+        setLoading(false);
+        navigation.goBack();
+      } catch (err) {
+        setLoading(false);
+        Alert.alert(
+          'Erro ao cancelar pedido',
+          'Tente novamente mais tarde.',
+        );
+      }
+    }, [id],
+  );
 
   return (
     <>
@@ -53,12 +75,14 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 <S.Title numberOfLines={1}>
                   {type === 'technology' ? technology.title : service.name}
                 </S.Title>
-                <S.CardPrice>
-                  <S.DetailTitle>Subtotal</S.DetailTitle>
-                  <S.DetailTitle>
-                    {formatMoney(type === 'technology' ? 0 : service.price)}
-                  </S.DetailTitle>
-                </S.CardPrice>
+                {type === 'service' && (
+                  <S.CardPrice>
+                    <S.DetailTitle>Subtotal</S.DetailTitle>
+                    <S.DetailTitle>
+                      {formatMoney(service.price)}
+                    </S.DetailTitle>
+                  </S.CardPrice>
+                )}
                 <S.CardPrice style={{ marginTop: 9 }}>
                   <S.Amount>Total</S.Amount>
                   <S.Amount>
@@ -104,6 +128,33 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 <S.DetailDescription>{comment ?? '–'}</S.DetailDescription>
               </S.Detail>
             </S.CardDetails>
+            {status === 'open' && (
+              <S.ButtonWrapper>
+                <Button
+                  disabled={loading}
+                  variant="danger"
+                  onPress={() => {
+                    Alert.alert(
+                      'Deseja realmente cancelar este pedido?',
+                      null,
+                      [
+                        {
+                          text: 'Cancelar',
+                          onPress: () => {},
+                          style: 'destructive',
+                        },
+                        {
+                          text: 'Confirmar',
+                          onPress: () => onCancelOrder(),
+                        },
+                      ],
+                    );
+                  }}
+                >
+                  {loading ? 'Aguarde...' : 'Cancelar pedido'}
+                </Button>
+              </S.ButtonWrapper>
+            )}
           </Card>
         </S.Page>
       </S.Wrapper>
