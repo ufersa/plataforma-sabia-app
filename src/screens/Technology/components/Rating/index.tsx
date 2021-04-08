@@ -261,7 +261,7 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
                     ) : (<></>)}
 
                     <S.ReviewLabel>
-                      Ponto Positivo
+                      Ponto Negativo
                     </S.ReviewLabel>
                     <Controller
                       name="negativeComment"
