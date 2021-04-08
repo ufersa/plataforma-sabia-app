@@ -171,7 +171,7 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
         <S.ModalWrapper showsVerticalScrollIndicator={false}>
 
           <S.ReviewLabel>
-            Opinial Geral
+            Opinião Geral
           </S.ReviewLabel>
 
           <Controller
