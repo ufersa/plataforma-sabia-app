@@ -5,7 +5,7 @@ import * as S from './styles';
 interface ModalProps extends ModalBaseProps {
   title?: string,
   children: JSX.Element
-  height?: number
+  height?: string | number
   onClose(): void
 }
 

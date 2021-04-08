@@ -26,6 +26,7 @@ const Root = (): JSX.Element => (
       component={Requests}
     />
     <Tab.Screen
+      options={{ unmountOnBlur: true }}
       name="Notifications"
       component={Notifications}
     />

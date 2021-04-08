@@ -33,7 +33,9 @@
     "expo-splash-screen": "~0.8.1",
     "expo-status-bar": "~1.0.3",
     "fs": "0.0.1-security",
+    "html-to-text": "^7.0.0",
     "intl": "^1.2.5",
+    "lodash": "^4.17.21",
     "react": "17",
     "react-dom": "16.13.1",
     "react-hook-form": "^6.15.1",
@@ -55,6 +57,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@types/html-to-text": "^6.0.0",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-instantsearch-native": "^6.3.0",

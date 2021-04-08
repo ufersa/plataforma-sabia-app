@@ -16,7 +16,7 @@ import HeaderButtons from '../components/HeaderButtons';
 
 const App = createStackNavigator();
 
-const AppRoutes: React.FC = ():JSX.Element => (
+const AppRoutes = (): JSX.Element => (
   <CartProvider>
     <App.Navigator initialRouteName="Root">
       <App.Screen

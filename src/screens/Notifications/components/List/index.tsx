@@ -1,14 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { ListRenderItemInfo } from 'react-native';
-import NotificationCard from '../NotificationCard';
+import NotificationCard, { NotificationsProps } from '../NotificationCard';
 import { DefaultText } from '../../../../components';
 import * as S from './styles';
-
-interface NotificationsProps {
-  title: string
-  body: string
-  date: string
-}
 
 interface ListItemProps {
   date: string
@@ -17,17 +12,26 @@ interface ListItemProps {
 
 interface ListProps {
   data: ListItemProps[]
+  loading: boolean
+  onRefresh: () => void
 }
 
-const List = ({ data }: ListProps): JSX.Element => (
+const List = ({
+  data,
+  loading,
+  onRefresh,
+}: ListProps): JSX.Element => (
   <S.ListWrapper>
     {data && data.length > 0 ? (
       <S.ListContainer
         data={data}
+        contentContainerStyle={{ paddingBottom: 32 }}
         renderItem={({ item }: ListRenderItemInfo<any>) => (
           <NotificationCard {...item} />
         )}
         keyExtractor={(item, idx) => idx.toString()}
+        refreshing={loading}
+        onRefresh={onRefresh}
       />
     ) : (
       <S.Empty>

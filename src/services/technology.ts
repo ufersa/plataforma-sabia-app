@@ -54,7 +54,7 @@ export const getTechnology = async (id: number, options: OptionsProp) => {
  * @param {object} options Optional params
  */
 export const getUserBookmarks = async (id: string, options: OptionsProp = { embed: true }) => {
-  const response = await api.get(`user/${id}/bookmarks`, { ...options });
+  const response = await api.get(`user/${id}/bookmarks`, { params: options });
 
   if (response.status !== 200) {
     return false;
