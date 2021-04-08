@@ -109,15 +109,19 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
   const technology = useTechnology();
 
   const addPositive = useCallback((comment: string) => {
-    setPositives([...positives, comment]);
+    if (comment && comment.length) setPositives([...positives, comment]);
+    setValue('positiveComment', '');
   }, [positives]);
 
   const addNegative = useCallback((comment: string) => {
-    setNegatives([...negatives, comment]);
+    if (comment && comment.length) setNegatives([...negatives, comment]);
+    setValue('negativeComment', '');
   }, [negatives]);
 
   const {
     control,
+    errors,
+    setValue,
     watch,
   } = useForm();
 
@@ -125,6 +129,8 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
 
   const handleReview = useCallback(
     async () => {
+      if (!score || !control.getValues().review) return;
+
       const data = {
         technologyId: technology.id,
         rating: score,
@@ -172,6 +178,7 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
             name="review"
             control={control}
             defaultValue=""
+            rules={{ required: true }}
             render={({ onChange, value }) => (
               <Input
                 type="default"
@@ -180,6 +187,7 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
                 onChangeText={onChange}
                 value={value}
                 multiline
+                error={errors.review}
               />
             )}
           />
