@@ -7,6 +7,7 @@ interface InputWrapperProps {
 interface InputContainerProps {
   variant?: string
   isFocused: boolean
+  multiline?: boolean
 }
 
 export const InputWrapper = styled.View<InputWrapperProps>`
@@ -31,11 +32,11 @@ export const InputContainer = styled.TextInput<InputContainerProps>`
   height: 100%;
   font-family: Rubik_500Medium;
   font-weight: 500;
-  line-height: 20px;
   font-size: 16px;
   color: ${({ variant }) => (variant === 'dark' ? '#ffffff' : '#a5a5a5')};
-  padding: 0px 20px 0px 14px;
-  text-align-vertical: top;
+  padding-left: 14px;
+  padding-right: 0;
+  text-align-vertical: ${({ multiline }) => (multiline ? 'top' : 'center')};
 `;
 
 export const IconWrapper = styled.View`

@@ -8,6 +8,7 @@ import {
   RequestsDetails,
   Account,
   Cart,
+  Contact,
   Logout,
 } from '../screens';
 import Colors from '../utils/colors';
@@ -99,6 +100,18 @@ const AppRoutes: React.FC = ():JSX.Element => (
         }}
         name="RequestsDetails"
         component={RequestsDetails}
+      />
+      <App.Screen
+        options={{
+          title: 'Fale conosco',
+          headerBackTitleVisible: false,
+          headerTintColor: '#4A4A4A',
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+        }}
+        name="Contact"
+        component={Contact}
       />
       <App.Screen
         options={{ headerShown: false }}
