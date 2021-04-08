@@ -19,7 +19,6 @@ import { unMask } from '../../utils/unMask';
 import { updateUser as updateUserService, updateUserPassword } from '../../services/user';
 import Colors from '../../utils/colors';
 
-
 const Account = (): JSX.Element => {
   const { user, signOut, updateUser } = useAuth();
   const { control, handleSubmit, errors } = useForm();
@@ -204,7 +203,7 @@ const Account = (): JSX.Element => {
                       value={value}
                       onChangeText={onChange}
                       style={{ marginBottom: 16 }}
-                      mask="(99) 99999-9999"
+                      mask="(99) 9999-*9999"
                       error={errors.phone_number}
                     />
                   </>

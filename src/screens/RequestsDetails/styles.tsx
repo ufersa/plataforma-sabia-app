@@ -96,3 +96,8 @@ export const DetailDescription = styled(DefaultText)`
   margin-bottom: 16px;
   color: #1D1D1D;
 `;
+
+export const ButtonWrapper = styled.View`
+  padding-horizontal: 16px;
+  padding-bottom: 32px;
+`;
