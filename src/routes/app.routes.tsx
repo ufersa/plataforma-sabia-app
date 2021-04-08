@@ -7,6 +7,7 @@ import {
   RequestsFinish,
   RequestsDetails,
   Account,
+  Menu,
   Cart,
   Contact,
   Logout,
@@ -17,7 +18,7 @@ import HeaderButtons from '../components/HeaderButtons';
 
 const App = createStackNavigator();
 
-const AppRoutes: React.FC = ():JSX.Element => (
+const AppRoutes = (): JSX.Element => (
   <CartProvider>
     <App.Navigator initialRouteName="Root">
       <App.Screen
@@ -39,7 +40,14 @@ const AppRoutes: React.FC = ():JSX.Element => (
       />
       <App.Screen
         options={{
-          title: '',
+          headerShown: false,
+        }}
+        name="Menu"
+        component={Menu}
+      />
+      <App.Screen
+        options={{
+          title: 'Meus dados',
           headerBackTitleVisible: false,
           headerTintColor: '#4a4a4a',
           headerStyle: {
