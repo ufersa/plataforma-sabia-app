@@ -39,7 +39,6 @@ const SignIn = (): JSX.Element => {
           email: data.email,
           password: data.password,
         });
-        Alert.alert('Plataforma Sabia', '🎉 Bem vindo ao app');
       } catch (err) {
         setLoading(false);
         Alert.alert(

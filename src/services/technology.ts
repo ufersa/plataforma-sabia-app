@@ -212,3 +212,56 @@ export const buyTechnology = async (id: number, {
 
   return response.data;
 };
+
+/**
+ * Fetch technology reviews.
+ *
+ * @param {string|number} id Technology id.
+ * @param {object} params Optional params.
+ * @param {('created_at'|'rating')} [params.orderBy='created_at'] Order items by a column.
+ * @param {('ASC'|'DESC')} [params.order='ASC'] Order.
+ *
+ * @returns {Array} The current technology reviews
+ */
+export const getReviews = async (id: number, params = { orderBy: 'created_at', order: 'DESC' }) => {
+  if (!id) {
+    return [];
+  }
+
+  const response = await api.get(`technologies/${id}/reviews`, { params });
+
+  if (response.status !== 200) {
+    return [];
+  }
+
+  return response.data;
+};
+
+interface CreateReviewProps {
+  technologyId: number
+  content: string
+  rating: number
+  positive: string[]
+  negative: string[]
+}
+
+/**
+ * Creates a new technology review with the provided data.
+ *
+ * @param {object} data Technology data.
+ * @param {number} data.technologyId Technology id.
+ * @param {string} data.content Review content.
+ * @param {number} data.rating Review rating.
+ * @param {string[]} data.positive Review positive points.
+ * @param {string[]} data.negative Review negative points.
+ * @returns {object} The newly technology review.
+ */
+export const createTechnologyReview = async (data: CreateReviewProps) => {
+  const response = await api.post('reviews', data);
+
+  if (response.status !== 200) {
+    return false;
+  }
+
+  return response.data;
+};
