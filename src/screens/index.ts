@@ -8,6 +8,7 @@ export { default as RequestsFeedback } from './RequestsFeedback';
 export { default as RequestsFinish } from './RequestsFinish';
 export { default as RequestsDetails } from './RequestsDetails';
 export { default as Notifications } from './Notifications';
+export { default as Menu } from './Menu';
 export { default as Favorite } from './Favorite';
 export { default as Technology } from './Technology';
 export { default as SignIn } from './SignIn';

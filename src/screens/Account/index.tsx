@@ -17,10 +17,9 @@ import { useAuth } from '../../hooks/useAuth';
 import { formatDate } from '../../utils/formats';
 import { unMask } from '../../utils/unMask';
 import { updateUser as updateUserService, updateUserPassword } from '../../services/user';
-import Colors from '../../utils/colors';
 
 const Account = (): JSX.Element => {
-  const { user, signOut, updateUser } = useAuth();
+  const { user, updateUser } = useAuth();
   const { control, handleSubmit, errors } = useForm();
   const { control: controlPass, handleSubmit: handleSubmitPass, errors: errorsPass } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
@@ -292,19 +291,6 @@ const Account = (): JSX.Element => {
                   </KeyboardAvoidingView>
                 </S.ModalContent>
               </Modal>
-              <S.Divider />
-              <S.Touch
-                activeOpacity={0.7}
-                onPress={signOut}
-              >
-                <Feather
-                  name="log-out"
-                  size={24}
-                  color={Colors.danger}
-                  style={{ marginRight: 16 }}
-                />
-                <S.TouchText color="danger">Sair do aplicativo</S.TouchText>
-              </S.Touch>
             </S.Container>
           </S.Page>
         </KeyboardAvoidingView>

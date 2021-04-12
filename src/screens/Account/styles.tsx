@@ -31,7 +31,7 @@ export const Page = styled.ScrollView``;
 export const Container = styled.View`
   flex: 1;
   padding-horizontal: 16px;
-  padding-bottom: 20px;
+  padding-vertical: 20px;
 `;
 
 export const Title = styled(DefaultText)`
