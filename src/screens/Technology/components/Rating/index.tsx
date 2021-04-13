@@ -362,7 +362,6 @@ const Rating = (): JSX.Element => {
   const loadReviews = useCallback(
     async () => {
       await getReviews(technology.id).then((data) => {
-        console.log(data);
         setReviews(data);
         calcRating(data);
       });
