@@ -356,12 +356,13 @@ const Rating = (): JSX.Element => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const calcRating = (data: ReviewProps[]) => {
-    if (data && data.length) setRating(data.reduce((acc, cur) => acc + cur.rating, 0.0) / 2);
+    if (data && data.length) setRating(data.reduce((acc, cur) => acc + cur.rating, 0.0) / data.length);
   };
 
   const loadReviews = useCallback(
     async () => {
       await getReviews(technology.id).then((data) => {
+        console.log(data);
         setReviews(data);
         calcRating(data);
       });
