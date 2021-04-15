@@ -49,7 +49,7 @@ const Technologies = ({ navigation }: TechnologiesProps): JSX.Element => {
   );
 
   useEffect(() => {
-    loadBookmarks();
+    if (user) loadBookmarks();
   }, []);
 
   const { loading, technologies } = useFind('technologies', {

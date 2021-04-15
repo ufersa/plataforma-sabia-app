@@ -48,6 +48,8 @@ export const UserWrapper = styled.View`
   width: 40px;
   height: 40px;
   border-radius: 8px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ImageAvatar = styled.Image`
@@ -63,10 +65,14 @@ export const User = (): JSX.Element => {
   return (
     <Touch
       activeOpacity={0.7}
-      onPress={() => navigation.navigate('Menu')}
+      onPress={() => (user ? navigation.navigate('Menu') : null)}
     >
       <UserWrapper>
-        <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.full_name}&size=40` }} />
+        {user ? (
+          <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.full_name}&size=40` }} />
+        ) : (
+          <Feather name="user" size={24} />
+        )}
       </UserWrapper>
     </Touch>
   );

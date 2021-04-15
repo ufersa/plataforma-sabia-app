@@ -56,16 +56,18 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
   const solutionTypeProperty: string = `${type}Bookmarks`;
 
   useEffect(() => {
-    const solutionBookmarks = user[solutionTypeProperty];
-    const isLiked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === id);
-    setState(isLiked);
+    if (user) {
+      const solutionBookmarks = user[solutionTypeProperty];
+      const isLiked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === id);
+      setState(isLiked);
 
-    Animated.timing(animatePulse, {
-      toValue: state ? 0 : 1,
-      duration: state ? 100 : 50,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
+      Animated.timing(animatePulse, {
+        toValue: state ? 0 : 1,
+        duration: state ? 100 : 50,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start();
+    }
   }, [user, id, type, solutionTypeProperty]);
 
   const solutionType = `${type}Id`;
