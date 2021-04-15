@@ -1,10 +1,15 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/style-prop-object */
 /* eslint-disable import/no-unresolved */
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, connectSearchBox, connectRefinementList } from 'react-instantsearch-native';
+import {
+  InstantSearch,
+  connectSearchBox,
+  connectRefinementList,
+} from 'react-instantsearch-native';
 import { Feather } from '@expo/vector-icons';
 import {
   ALGOLIA_APP_ID,
@@ -20,7 +25,18 @@ const searchClient = algoliasearch(
   ALGOLIA_ADMIN_KEY,
 );
 
-const SearchBox = connectSearchBox(({ refine, currentRefinement, toggleFilters }: any): JSX.Element => (
+interface SearchBoxProps {
+  refine: (...args: any[]) => any;
+  currentRefinement: string
+  isSearchStalled: boolean
+  toggleFilters: () => void
+}
+
+const SearchBox = connectSearchBox(({
+  refine,
+  currentRefinement,
+  toggleFilters,
+}: SearchBoxProps): JSX.Element => (
   <S.InputSearchWrapper>
     <Input
       type="default"
@@ -34,17 +50,38 @@ const SearchBox = connectSearchBox(({ refine, currentRefinement, toggleFilters }
   </S.InputSearchWrapper>
 ));
 
-const RefinementList = connectRefinementList((props: any) => {
-  const { refine, items } = props;
+interface RefinementListProps {
+  refine: (value: string[]) => any
+  items: any
+  filters: {
+    [key: string]: any
+  }
+}
+
+const RefinementList = connectRefinementList(({
+  refine,
+  items,
+  filters = [],
+}: RefinementListProps) => {
+  const [filteredItems, setFilteredItems] = useState<any>([]);
+
+  useEffect(() => {
+    if (filters.length) setFilteredItems(filters);
+  }, [filters]);
+
   return (
     items.map((item: any) => (
       <S.OptionFilter
         key={item.value}
         onPress={() => refine(item.value)}
+        active={filteredItems.some((filter: string) => filter === item.label)}
       >
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <S.OptionFilterCount>
-            <S.OptionFilterLabel style={{ fontSize: 12, lineHeight: 20 }}>
+          <S.OptionFilterCount active={filteredItems.some((filter: string) => filter === item.label)}>
+            <S.OptionFilterLabel
+              active={filteredItems.some((filter: string) => filter === item.label)}
+              style={{ fontSize: 12, lineHeight: 20 }}
+            >
               {item.count}
             </S.OptionFilterLabel>
           </S.OptionFilterCount>
@@ -64,11 +101,6 @@ const Search = (): JSX.Element => {
 
   const onChange = (idx: number) => setTab(idx);
 
-  useEffect(() => {
-    setShowModalFilters(false);
-    setSearchState(searchState);
-  }, [searchState]);
-
   return (
     <S.Wrapper>
       <StatusBar style="dark" />
@@ -87,11 +119,23 @@ const Search = (): JSX.Element => {
             tabs={[
               {
                 title: 'Tecnologias',
-                content: <SearchList index={algoliaIndexes.technology} type="technology" />,
+                content: (
+                  <SearchList
+                    index={algoliaIndexes.technology}
+                    type="technology"
+                    filters={searchState}
+                  />
+                ),
               },
               {
                 title: 'Serviços',
-                content: <SearchList index={algoliaIndexes.service} type="service" />,
+                content: (
+                  <SearchList
+                    index={algoliaIndexes.service}
+                    type="service"
+                    filters={searchState}
+                  />
+                ),
               },
             ]}
           />
@@ -111,23 +155,44 @@ const Search = (): JSX.Element => {
           >
             <S.FiltersTitle>Tipo</S.FiltersTitle>
             <S.FiltersWrapper>
-              <RefinementList searchable attribute="type" />
+              <RefinementList
+                searchable
+                filters={searchState?.refinementList?.type}
+                defaultRefinement={searchState?.refinementList?.type ?? []}
+                attribute="type"
+              />
             </S.FiltersWrapper>
             <S.FiltersTitle>Classificação</S.FiltersTitle>
             <S.FiltersWrapper>
-              <RefinementList searchable attribute="classification" />
+              <RefinementList
+                searchable
+                filters={searchState?.refinementList?.classification}
+                attribute="classification"
+              />
             </S.FiltersWrapper>
             <S.FiltersTitle>Dimensão</S.FiltersTitle>
             <S.FiltersWrapper>
-              <RefinementList searchable attribute="dimension" />
+              <RefinementList
+                searchable
+                filters={searchState?.refinementList?.dimension}
+                attribute="dimension"
+              />
             </S.FiltersWrapper>
             <S.FiltersTitle>Instituição</S.FiltersTitle>
             <S.FiltersWrapper>
-              <RefinementList searchable attribute="institution" />
+              <RefinementList
+                searchable
+                filters={searchState?.refinementList?.institution}
+                attribute="institution"
+              />
             </S.FiltersWrapper>
             <S.FiltersTitle>Palavras-chave</S.FiltersTitle>
             <S.FiltersWrapper>
-              <RefinementList searchable attribute="keywords" />
+              <RefinementList
+                searchable
+                filters={searchState?.refinementList?.keywords}
+                attribute="keywords"
+              />
             </S.FiltersWrapper>
           </ScrollView>
         </Modal>

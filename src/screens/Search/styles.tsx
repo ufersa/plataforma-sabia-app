@@ -70,7 +70,11 @@ export const FiltersTitle = styled(DefaultText)`
   margin-bottom: 16px;
 `;
 
-export const OptionFilter = styled.TouchableOpacity`
+interface OptionProps {
+  active: boolean
+}
+
+export const OptionFilter = styled.TouchableOpacity<OptionProps>`
   min-width: 100px;
   height: 40px;
   padding: 8px;
@@ -81,18 +85,23 @@ export const OptionFilter = styled.TouchableOpacity`
   text-align: center;
   align-items: center;
   justify-content: center;
+
+  ${({ active }) => (active && `
+    background-color: ${Colors.primaryLight};
+    border-color: ${Colors.primaryLight};
+  `)};
 `;
 
-export const OptionFilterLabel = styled(DefaultText)`
+export const OptionFilterLabel = styled(DefaultText)<OptionProps>`
   font-family: Rubik_500Medium;
   font-weight: 500;
   line-height: 24px;
   font-size: 16px;
-  color: #4a4a4a;
+  color: ${({ active }) => (active ? '#ffffff' : '#4a4a4a')};
 `;
 
-export const OptionFilterCount = styled.View`
-  background-color: ${Colors.background};
+export const OptionFilterCount = styled.View<OptionProps>`
+  background-color: ${({ active }) => (active ? Colors.primary : Colors.background)};
   width: 22px;
   height: 22px;
   border-radius: 10px;
