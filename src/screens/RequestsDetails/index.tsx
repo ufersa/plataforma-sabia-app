@@ -36,6 +36,10 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
   } = params;
   const technologyPrice = type === 'technology' && technology.costs ? technology.costs[0].price : 0;
 
+  const openChat = useCallback(() => {
+    navigation.navigate('OrderChat', { orderId: id });
+  }, [id]);
+
   const onCancelOrder = useCallback(
     async () => {
       try {
@@ -130,7 +134,7 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
               </S.Detail>
 
               <S.Detail>
-                <S.OpenChat activeOpacity={0.7} onPress={() => { }}>
+                <S.OpenChat activeOpacity={0.7} onPress={() => { openChat(); }}>
                   <MaterialIcons name="chat-bubble-outline" size={24} color="#3498DB" />
                   <S.OpenChatText>
                     Chat com o responsável
