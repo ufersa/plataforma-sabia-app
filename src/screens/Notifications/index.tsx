@@ -8,12 +8,11 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import _ from 'lodash';
-import { format, parseISO } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import List from './components/List';
 import * as S from './styles';
 import { getMessages } from '../../services/notifications';
 import { NotificationsProps } from './components/NotificationCard';
+import { formatDateHelper } from '../../utils/formats';
 
 interface NotificationsListProps {
   date: string
@@ -34,7 +33,7 @@ const Notifications = (): JSX.Element => {
       });
       setNotifications(
         _(data)
-          .groupBy((date: any) => (format(parseISO(date.created_at.replace(' ', 'T')), 'MMMM', { locale: ptBR })))
+          .groupBy((date: any) => formatDateHelper(date.created_at, 'MMMM'))
           .map((group: any, date: any) => ({
             date,
             notifications: group.map((g: any) => ({
