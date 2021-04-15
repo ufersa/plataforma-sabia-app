@@ -31,20 +31,22 @@ const Notifications = (): JSX.Element => {
         orderBy: 'created_at',
         order: 'DESC',
       });
+
       setNotifications(
         _(data)
           .groupBy((date: any) => formatDateHelper(date.created_at, 'MMMM'))
-          .map((group: any, date: any) => ({
+          .map((groupedNotifications, date: string) => ({
             date,
-            notifications: group.map((g: any) => ({
-              id: g.id,
-              date: g.created_at,
-              title: g.subject,
-              body: g.content,
+            notifications: groupedNotifications.map((notification: any) => ({
+              id: notification.id,
+              date: notification.created_at,
+              title: notification.subject,
+              body: notification.content,
             })),
           }))
           .value(),
       );
+
       setLoading(false);
     },
     [],
