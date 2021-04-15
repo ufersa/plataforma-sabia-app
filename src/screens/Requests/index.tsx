@@ -19,8 +19,8 @@ const Requests = (): JSX.Element => {
     async () => {
       setLoading(true);
       const data = await getOrders({
-        perPage: 10,
-        orderBy: 'update_at',
+        perPage: 20,
+        orderBy: 'createad_at',
         order: 'DESC',
       });
       setOrders(data);

@@ -12,3 +12,5 @@ export const formatDate = (date: string, locale: string) => {
   const masks: string[] = ['dd/MM/yyyy', 'yyyy-MM-dd'];
   return format(new Date(date), masks[locales.indexOf(locale)]);
 };
+
+export const formatDateHelper = (date: string, display: string) => format(parseISO(date.replace(' ', 'T')), display, { locale: ptBR });

@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View } from 'react-native';
 import { format, parseISO } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { htmlToText } from 'html-to-text';
 import * as S from './styles';
 
-interface NotificationsProps {
+export interface NotificationsProps {
+  id: number
   title: string
   body: string
   date: string
@@ -15,26 +18,25 @@ interface NotificationCardProps {
   notifications: NotificationsProps[]
 }
 
-const NotificationCard = ({ date, notifications }: NotificationCardProps): JSX.Element => (
+const NotificationCard = ({ date: monthName, notifications }: NotificationCardProps): JSX.Element => (
   <S.CardWrapper>
-    <S.HeaderTitle>{format(parseISO(date), 'MMMM', { locale: ptBR })}</S.HeaderTitle>
+    <S.HeaderTitle>{monthName}</S.HeaderTitle>
     {notifications && notifications.length > 0 && (
       <S.ItemsWrapper>
-        {notifications.map((notification: NotificationsProps, idx) => (
-          <TouchableOpacity
-            key={`notification_${idx}`}
-            activeOpacity={0.7}
-          >
-            <S.NotificationWrapper>
+        {notifications.map((notification: NotificationsProps, idx: number) => (
+          <View key={`notification_${idx}`}>
+            <S.NotificationWrapper activeOpacity={1}>
               <S.NotificationTitle>
                 <S.Title numberOfLines={1}>{notification.title}</S.Title>
-                <S.Date>{format(parseISO(notification.date), 'dd/MM')}</S.Date>
+                <S.Date>{format(parseISO(notification.date), 'dd/MM', { locale: ptBR })}</S.Date>
               </S.NotificationTitle>
               <S.NotificationDescription numberOfLines={2}>
-                {notification.body}
+                {htmlToText(notification.body, {
+                  baseElement: 'div.content',
+                })}
               </S.NotificationDescription>
             </S.NotificationWrapper>
-          </TouchableOpacity>
+          </View>
         ))}
       </S.ItemsWrapper>
     )}
