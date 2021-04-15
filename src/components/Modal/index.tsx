@@ -11,8 +11,8 @@ interface ModalProps extends ModalBaseProps {
   title?: string
   titleStyle?: object
   children: JSX.Element
-  height?: number
   onClose(): void
+  height?: number | string
 }
 
 const Modal = ({ children, ...props }: ModalProps): JSX.Element => {

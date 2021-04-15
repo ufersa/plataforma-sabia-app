@@ -49,6 +49,7 @@ export const List = connectInfiniteHits(({
           contentContainerStyle={{
             paddingBottom: 266,
           }}
+          showsVerticalScrollIndicator={false}
         />
       )
   );
