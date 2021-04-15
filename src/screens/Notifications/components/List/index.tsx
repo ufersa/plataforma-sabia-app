@@ -11,7 +11,7 @@ interface ListItemProps {
 }
 
 interface ListProps {
-  data: ListItemProps[]
+  data?: ListItemProps[]
   loading: boolean
   onRefresh: () => void
 }

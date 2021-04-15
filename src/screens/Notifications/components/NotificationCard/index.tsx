@@ -23,7 +23,7 @@ const NotificationCard = ({ date: monthName, notifications }: NotificationCardPr
     <S.HeaderTitle>{monthName}</S.HeaderTitle>
     {notifications && notifications.length > 0 && (
       <S.ItemsWrapper>
-        {notifications.map((notification: NotificationsProps, idx) => (
+        {notifications.map((notification: NotificationsProps, idx: number) => (
           <View key={`notification_${idx}`}>
             <S.NotificationWrapper activeOpacity={1}>
               <S.NotificationTitle>

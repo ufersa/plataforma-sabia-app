@@ -13,10 +13,16 @@ import { ptBR } from 'date-fns/locale';
 import List from './components/List';
 import * as S from './styles';
 import { getMessages } from '../../services/notifications';
+import { NotificationsProps } from './components/NotificationCard';
+
+interface NotificationsListProps {
+  date: string
+  notifications: NotificationsProps[]
+}
 
 const Notifications = (): JSX.Element => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [notifications, setNotifications] = useState<NotificationsListProps[]>([]);
 
   const getNotifications = useCallback(
     async () => {
