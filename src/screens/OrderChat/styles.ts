@@ -1,6 +1,5 @@
 import { Button } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import {
   Input,
 } from '../../components';
