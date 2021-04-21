@@ -16,6 +16,7 @@ import {
 } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useAuth } from '../../../../hooks/useAuth';
+import { useModal } from '../../../../hooks/useModal';
 
 interface ReviewProps {
   content: string
@@ -343,6 +344,7 @@ const Reviews = ({ data }: ReviewsProps): JSX.Element => {
 
 const Rating = (): JSX.Element => {
   const { user } = useAuth();
+  const { openModal } = useModal();
   const technology = useTechnology();
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(null);
@@ -394,14 +396,20 @@ const Rating = (): JSX.Element => {
         <View style={{ paddingHorizontal: 16, marginBottom: 10 }}><S.RateCommentText>Nenhuma avaliação encontrada.</S.RateCommentText></View>
       )}
 
-      {user && (
-        <S.AnswersViewMore activeOpacity={0.7} onPress={() => setShowModal(true)}>
-          <Ionicons name="star-outline" size={20} color={Colors.primary} />
-          <S.AnswersViewMoreText>
-            Deixe a sua opinião
-          </S.AnswersViewMoreText>
-        </S.AnswersViewMore>
-      )}
+      <S.AnswersViewMore
+        activeOpacity={0.7}
+        onPress={
+          () => {
+            if (user) setShowModal(true);
+            openModal();
+          }
+        }
+      >
+        <Ionicons name="star-outline" size={20} color={Colors.primary} />
+        <S.AnswersViewMoreText>
+          Deixe a sua opinião
+        </S.AnswersViewMoreText>
+      </S.AnswersViewMore>
 
       <Modal
         title="Deixe sua avaliação"

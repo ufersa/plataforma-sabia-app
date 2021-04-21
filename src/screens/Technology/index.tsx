@@ -16,6 +16,7 @@ import { TechnologyProvider } from '../../hooks/useTechnology';
 import { useAuth } from '../../hooks/useAuth';
 import { useCart } from '../../hooks/useCart';
 import { formatMoney } from '../../utils/helper';
+import { useModal } from '../../hooks/useModal';
 
 interface TechnologyProps {
   navigation: StackNavigationProp<any, any>
@@ -24,28 +25,33 @@ interface TechnologyProps {
 
 const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
   const { user } = useAuth();
+  const { openModal } = useModal();
   const { data, type } = route.params;
   const { addCart } = useCart();
 
   const [showModalData, setShowModalData] = useState<boolean>(false);
 
   const navigate = () => {
-    if (type === 'technology') {
-      if (!user.operations?.can_buy_technology) {
-        setShowModalData(true);
+    if (user) {
+      if (type === 'technology') {
+        if (!user.operations?.can_buy_technology) {
+          setShowModalData(true);
+        } else {
+          navigation.navigate('RequestsFinish', { data });
+        }
       } else {
-        navigation.navigate('RequestsFinish', { data });
+        addCart({
+          id: data.id,
+          title: data.title,
+          quantity: 1,
+          price: data.price,
+          image: data.image,
+          measureUnit: data.measureUnit,
+          institution: data.institution,
+        });
       }
     } else {
-      addCart({
-        id: data.id,
-        title: data.title,
-        quantity: 1,
-        price: data.price,
-        image: data.image,
-        measureUnit: data.measureUnit,
-        institution: data.institution,
-      });
+      openModal();
     }
   };
 
@@ -95,7 +101,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             </>
           )}
         </S.Container>
-        {user && data.isSeller && (
+        {data.isSeller && (
           <S.ButtonWrapper>
             <Button onPress={navigate}>
               {type === 'technology' ? 'Adquirir tecnologia' : 'Adicionar ao carrinho'}
