@@ -7,7 +7,6 @@ import Colors from './src/utils/colors';
 import useFonts from './src/hooks/useFonts';
 import AppProvider from './src/hooks';
 import Routes from './src/routes';
-import { setNavigator } from './src/utils/navigator';
 
 SplashScreen.preventAutoHideAsync().catch(() => {
   // do nothing
@@ -21,7 +20,7 @@ const theme = {
   },
 };
 
-const App = () => {
+const App = (): JSX.Element => {
   const loadingFonts = useFonts();
 
   useEffect(() => {
@@ -37,7 +36,7 @@ const App = () => {
   }
 
   return (
-    <NavigationContainer ref={setNavigator} theme={theme}>
+    <NavigationContainer theme={theme}>
       <AppProvider>
         <Routes />
       </AppProvider>
