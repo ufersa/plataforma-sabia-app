@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import Colors from '../../../../utils/colors';
 import { DefaultText } from '../../../../components';
 import { useAuth } from '../../../../hooks/useAuth';
+import { useModal } from '../../../../hooks/useModal';
 
 export const Wrapper = styled.View`
   height: 55px;
@@ -61,11 +62,12 @@ const ImageAvatar = styled.Image`
 export const User = (): JSX.Element => {
   const navigation = useNavigation();
   const { user } = useAuth();
+  const { openModal } = useModal();
 
   return (
     <Touch
       activeOpacity={0.7}
-      onPress={() => (user ? navigation.navigate('Menu') : null)}
+      onPress={() => (user ? navigation.navigate('Menu') : openModal())}
     >
       <UserWrapper>
         {user ? (

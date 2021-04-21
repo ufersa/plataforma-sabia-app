@@ -95,7 +95,7 @@ const Technology = ({ route, navigation }: TechnologyProps): JSX.Element => {
             </>
           )}
         </S.Container>
-        {data.isSeller && (
+        {user && data.isSeller && (
           <S.ButtonWrapper>
             <Button onPress={navigate}>
               {type === 'technology' ? 'Adquirir tecnologia' : 'Adicionar ao carrinho'}

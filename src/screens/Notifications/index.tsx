@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState, useCallback } from 'react';
 import {
@@ -13,6 +14,9 @@ import * as S from './styles';
 import { getMessages } from '../../services/notifications';
 import { NotificationsProps } from './components/NotificationCard';
 import { formatDateHelper } from '../../utils/formats';
+import { Authenticated } from '../../components';
+import { useAuth } from '../../hooks/useAuth';
+import { useModal } from '../../hooks/useModal';
 
 interface NotificationsListProps {
   date: string
@@ -20,6 +24,8 @@ interface NotificationsListProps {
 }
 
 const Notifications = (): JSX.Element => {
+  const { user } = useAuth();
+  const { openModal } = useModal();
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<NotificationsListProps[]>([]);
 
@@ -53,8 +59,8 @@ const Notifications = (): JSX.Element => {
   );
 
   useEffect(() => {
-    getNotifications();
-  }, []);
+    if (user) getNotifications();
+  }, [user]);
 
   return (
     <SafeAreaView
@@ -67,15 +73,17 @@ const Notifications = (): JSX.Element => {
         <StatusBar style="auto" />
         <S.Container>
           <S.Title>Notificações</S.Title>
-          {!loading ? (
-            <List
-              loading={loading}
-              onRefresh={getNotifications}
-              data={notifications}
-            />
-          ) : (
-            <ActivityIndicator />
-          )}
+          {user ? (
+            !loading ? (
+              <List
+                loading={loading}
+                onRefresh={getNotifications}
+                data={notifications}
+              />
+            ) : (
+              <ActivityIndicator />
+            )
+          ) : <Authenticated title="Deseja ver suas notificações?" onPress={() => openModal()} />}
         </S.Container>
       </S.Wrapper>
     </SafeAreaView>

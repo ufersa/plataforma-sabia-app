@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState, useCallback } from 'react';
 import {
@@ -10,8 +11,13 @@ import { StatusBar } from 'expo-status-bar';
 import List from './components/List';
 import * as S from './styles';
 import { getOrders } from '../../services/orders';
+import { Authenticated } from '../../components';
+import { useAuth } from '../../hooks/useAuth';
+import { useModal } from '../../hooks/useModal';
 
 const Requests = (): JSX.Element => {
+  const { user } = useAuth();
+  const { openModal } = useModal();
   const [loading, setLoading] = useState<boolean>(true);
   const [orders, setOrders] = useState([]);
 
@@ -30,8 +36,8 @@ const Requests = (): JSX.Element => {
   );
 
   useEffect(() => {
-    getRequests();
-  }, []);
+    if (user) getRequests();
+  }, [user]);
 
   return (
     <SafeAreaView
@@ -44,15 +50,17 @@ const Requests = (): JSX.Element => {
         <StatusBar style="auto" />
         <S.Container>
           <S.Title>Meus pedidos</S.Title>
-          {!loading ? (
-            <List
-              loading={loading}
-              data={orders}
-              onRefresh={getRequests}
-            />
-          ) : (
-            <ActivityIndicator />
-          )}
+          {user ? (
+            !loading ? (
+              <List
+                loading={loading}
+                data={orders}
+                onRefresh={getRequests}
+              />
+            ) : (
+              <ActivityIndicator />
+            )
+          ) : <Authenticated title="Deseja ver seus pedidos?" onPress={() => openModal()} />}
         </S.Container>
       </S.Wrapper>
     </SafeAreaView>

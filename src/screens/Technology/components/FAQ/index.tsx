@@ -6,8 +6,12 @@ import * as S from './styles';
 import { Input, Button } from '../../../../components';
 import { createTechnologyQuestion, getTechnologyQuestions } from '../../../../services/technology';
 import { useTechnology } from '../../../../hooks/useTechnology';
+import { useAuth } from '../../../../hooks/useAuth';
+import { useModal } from '../../../../hooks/useModal';
 
 const FAQ = (): JSX.Element => {
+  const { user } = useAuth();
+  const { openModal } = useModal();
   const technology = useTechnology();
 
   const [questions, setQuestions] = useState([]);
@@ -72,35 +76,38 @@ const FAQ = (): JSX.Element => {
     <S.Wrapper>
       <S.Title>Perguntas e respostas</S.Title>
       <S.FormWrapper>
-
-        <Controller
-          name="question"
-          defaultValue=""
-          control={control}
-          render={({ onChange, value }) => (
-            <Input
-              type="default"
-              size="small"
-              placeholder="Digite uma pergunta"
-              returnKeyType="send"
-              value={value}
-              onChangeText={(text) => {
-                setFilled(text.length > 0);
-                onChange(text);
-              }}
-              onSubmitEditing={handleSubmit(sendQuestion)}
+        {user ? (
+          <>
+            <Controller
+              name="question"
+              defaultValue=""
+              control={control}
+              render={({ onChange, value }) => (
+                <Input
+                  type="default"
+                  size="small"
+                  placeholder="Digite uma pergunta"
+                  returnKeyType="send"
+                  value={value}
+                  onChangeText={(text) => {
+                    setFilled(text.length > 0);
+                    onChange(text);
+                  }}
+                  onSubmitEditing={handleSubmit(sendQuestion)}
+                />
+              )}
             />
-          )}
-        />
-
-        <S.FormButtonWrapper>
-          <Button disabled={loading || !filled} variant="primary-light" onPress={handleSubmit(sendQuestion)}>
-            {loading ? 'Aguarde...' : 'Enviar pergunta'}
-          </Button>
-        </S.FormButtonWrapper>
+            <S.FormButtonWrapper>
+              <Button disabled={loading || !filled} variant="primary-light" onPress={handleSubmit(sendQuestion)}>
+                {loading ? 'Aguarde...' : 'Enviar pergunta'}
+              </Button>
+            </S.FormButtonWrapper>
+          </>
+        ) : (
+          <Button onPress={() => openModal()}>Entrar na sua conta</Button>
+        )}
       </S.FormWrapper>
       <S.AnswersWrapper>
-
         {questions.length ? (
           <>
             {questions.map((question) => (
@@ -129,7 +136,6 @@ const FAQ = (): JSX.Element => {
             <S.AnswersTitle style={{ textAlign: 'center' }}>Nenhuma pergunta encontrada.</S.AnswersTitle>
           </S.AnswersContainer>
         )}
-
       </S.AnswersWrapper>
     </S.Wrapper>
   );

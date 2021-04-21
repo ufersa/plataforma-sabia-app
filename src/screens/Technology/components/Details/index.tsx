@@ -1,12 +1,18 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 import React, { useEffect, useState, useRef } from 'react';
-import { Platform, Linking, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  Linking,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ImageView from '@hamidfzm/react-native-image-viewing';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import MapView, { Marker } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as S from './styles';
-import { Accordion, Pins } from '../../../../components';
+import { Accordion, Pins, Button } from '../../../../components';
 import Colors from '../../../../utils/colors';
 import { useTechnology } from '../../../../hooks/useTechnology';
 import { unitsOptions } from '../../../../utils/technology';
@@ -18,6 +24,8 @@ import {
 } from '../../../../utils/helper';
 import ImageList from '../../../../components/Gallery/ImageList';
 import { getTechnologyTerms } from '../../../../services/technology';
+import { useAuth } from '../../../../hooks/useAuth';
+import { useModal } from '../../../../hooks/useModal';
 
 interface StagesProps {
   currentStep: number
@@ -134,6 +142,8 @@ interface MarkerProps {
 }
 
 export const Geo = (): JSX.Element => {
+  const { user } = useAuth();
+  const { openModal } = useModal();
   const technology = useTechnology();
   const types: string[] = ['who_develop', 'where_can_be_applied', 'where_is_already_implemented'];
   const region = {
@@ -162,83 +172,90 @@ export const Geo = (): JSX.Element => {
   };
 
   useEffect(() => {
-    const getTerms = async () => {
-      const terms = await getTechnologyTerms(technology.id);
-      const formattedMarkers = terms.filter(({ term }: any) => markerFilters.includes(term)).map(formatMarkers);
-      setMarkers(formattedMarkers);
-      setCachedMarkers(formattedMarkers);
-    };
+    if (user) {
+      const getTerms = async () => {
+        const terms = await getTechnologyTerms(technology.id);
+        const formattedMarkers = terms.filter(({ term }: any) => markerFilters.includes(term)).map(formatMarkers);
+        setMarkers(formattedMarkers);
+        setCachedMarkers(formattedMarkers);
+      };
 
-    getTerms();
+      getTerms();
 
-    // Animate zoom MAP
-    mapRef.current.animateCamera({
-      center: region,
-      zoom,
-      altitude: zoomToAltitude(zoom),
-    }, 400);
-  }, []);
+      mapRef.current.animateCamera({
+        center: region,
+        zoom,
+        altitude: zoomToAltitude(zoom),
+      }, 400);
+    }
+  }, [user]);
 
   useEffect(() => {
-    setMarkers(cachedMarkers.filter(({ type }: any) => markerFilters.includes(type)));
-  }, [markerFilters]);
+    if (user) setMarkers(cachedMarkers.filter(({ type }: any) => markerFilters.includes(type)));
+  }, [user, markerFilters]);
 
   return (
-    <>
-      <S.MapWrapper>
-        <MapView
-          ref={mapRef}
-          loadingEnabled
-          zoomControlEnabled
-          initialRegion={{
-            ...region,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          style={{
-            height: 300,
-          }}
-        >
-          {markers?.map((marker, idx) => (
-            <Marker
-              key={`marker_${idx}`}
-              title={marker.description}
-              coordinate={{
-                latitude: Number(marker.latitude),
-                longitude: Number(marker.longitude),
-              }}
-            >
-              <Pins color={marker.color} />
-            </Marker>
-          ))}
-        </MapView>
-      </S.MapWrapper>
-      <S.MapFiltersWrapper>
-        <S.Filter
-          selected={markerFilters}
-          data={[
-            {
-              name: 'Onde é desenvolvida',
-              ref: 'who_develop',
-              color: 'blue',
-            },
-            {
-              name: 'Onde pode ser aplicada',
-              ref: 'where_can_be_applied',
-              color: 'yellow',
-            },
-            {
-              name: 'Onde já está implementada',
-              ref: 'where_is_already_implemented',
-              color: 'red',
-            },
-          ]}
-          onChange={(filter: string) => {
-            setMarkerFilters((oldItems: string[]) => (oldItems.includes(filter) ? oldItems.filter((i) => i !== filter) : [...oldItems, filter]));
-          }}
-        />
-      </S.MapFiltersWrapper>
-    </>
+    user ? (
+      <>
+        <S.MapWrapper>
+          <MapView
+            ref={mapRef}
+            loadingEnabled
+            zoomControlEnabled
+            initialRegion={{
+              ...region,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
+            style={{
+              height: 300,
+            }}
+          >
+            {markers?.map((marker, idx) => (
+              <Marker
+                key={`marker_${idx}`}
+                title={marker.description}
+                coordinate={{
+                  latitude: Number(marker.latitude),
+                  longitude: Number(marker.longitude),
+                }}
+              >
+                <Pins color={marker.color} />
+              </Marker>
+            ))}
+          </MapView>
+        </S.MapWrapper>
+        <S.MapFiltersWrapper>
+          <S.Filter
+            selected={markerFilters}
+            data={[
+              {
+                name: 'Onde é desenvolvida',
+                ref: 'who_develop',
+                color: 'blue',
+              },
+              {
+                name: 'Onde pode ser aplicada',
+                ref: 'where_can_be_applied',
+                color: 'yellow',
+              },
+              {
+                name: 'Onde já está implementada',
+                ref: 'where_is_already_implemented',
+                color: 'red',
+              },
+            ]}
+            onChange={(filter: string) => {
+              setMarkerFilters((oldItems: string[]) => (oldItems.includes(filter) ? oldItems.filter((i) => i !== filter) : [...oldItems, filter]));
+            }}
+          />
+        </S.MapFiltersWrapper>
+      </>
+    ) : (
+      <S.ButtonWrapper>
+        <Button onPress={() => openModal()}>Entrar na sua conta</Button>
+      </S.ButtonWrapper>
+    )
   );
 };
 
@@ -254,13 +271,7 @@ interface CostsItemsProps {
 }
 
 export const CostsItems = ({ data } : CostsItemsProps) => {
-  const emptyMessage = 'Nenhum custo cadastrado.';
-  let isEmpty = false;
-
-  if (!data?.length || !Array.isArray(data)) {
-    isEmpty = true;
-  }
-
+  const isEmpty = !data?.length || !Array.isArray(data);
   const typesValues = [
     {
       value: 'service',
@@ -343,24 +354,32 @@ export const CostsItems = ({ data } : CostsItemsProps) => {
           </View>
         </>
       ) : (
-        <S.ColText style={{ marginBottom: 20 }}>{emptyMessage}</S.ColText>
+        <S.ColText style={{ marginBottom: 20 }}>
+          Nenhum custo cadastrado.
+        </S.ColText>
       )}
     </>
   );
 };
 
 export const Costs = () => {
+  const { user } = useAuth();
+  const { openModal } = useModal();
   const technology = useTechnology();
 
   return (
-    <S.AccordionItemWrapper>
-      <S.CostSection>Custos de Implantação</S.CostSection>
-      <CostsItems data={technology?.costs?.implementation_costs} />
-
-      <S.CostSection>Custos de Manutenção</S.CostSection>
-      <CostsItems data={technology?.costs?.maintenance_costs} />
-
-    </S.AccordionItemWrapper>
+    user ? (
+      <S.AccordionItemWrapper>
+        <S.CostSection>Custos de Implantação</S.CostSection>
+        <CostsItems data={technology?.costs?.implementation_costs} />
+        <S.CostSection>Custos de Manutenção</S.CostSection>
+        <CostsItems data={technology?.costs?.maintenance_costs} />
+      </S.AccordionItemWrapper>
+    ) : (
+      <S.ButtonWrapper>
+        <Button onPress={() => openModal()}>Entrar na sua conta</Button>
+      </S.ButtonWrapper>
+    )
   );
 };
 
@@ -383,13 +402,10 @@ export const Documents = () => {
   return (
     <S.AccordionItemWrapper>
       <S.CostSection>Fotos</S.CostSection>
-
       <ImageList
         images={images.map((image) => image.original)}
         onPress={(index: number) => onSelect(index)}
-        shift={0.25}
       />
-
       <ImageView
         data={images}
         getImage={getItem}

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState, useCallback } from 'react';
 import {
@@ -9,9 +10,11 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import List from './components/List';
 import * as S from './styles';
-import { useAuth } from '../../hooks/useAuth';
 import { getUserBookmarks } from '../../services/technology';
 import { handleBookmark } from '../../services/bookmark';
+import { Authenticated } from '../../components';
+import { useAuth } from '../../hooks/useAuth';
+import { useModal } from '../../hooks/useModal';
 
 export interface RemoveBookmarkProps {
   id: string,
@@ -20,6 +23,7 @@ export interface RemoveBookmarkProps {
 
 const Favorite = (): JSX.Element => {
   const { user } = useAuth();
+  const { openModal } = useModal();
   const [loading, setLoading] = useState<boolean>(true);
   const [technologies, setTechnologies] = useState([]);
 
@@ -49,8 +53,8 @@ const Favorite = (): JSX.Element => {
   );
 
   useEffect(() => {
-    getTechnologies();
-  }, []);
+    if (user) getTechnologies();
+  }, [user]);
 
   return (
     <SafeAreaView
@@ -63,16 +67,18 @@ const Favorite = (): JSX.Element => {
         <StatusBar style="auto" />
         <S.Container>
           <S.Title>Favoritos</S.Title>
-          {!loading ? (
-            <List
-              loading={loading}
-              onRefresh={getTechnologies}
-              onRemove={removeTechnologies}
-              data={technologies}
-            />
-          ) : (
-            <ActivityIndicator />
-          )}
+          {user ? (
+            !loading ? (
+              <List
+                loading={loading}
+                data={technologies}
+                onRefresh={getTechnologies}
+                onRemove={removeTechnologies}
+              />
+            ) : (
+              <ActivityIndicator />
+            )
+          ) : <Authenticated title="Deseja ver seus favoritos?" onPress={() => openModal()} />}
         </S.Container>
       </S.Wrapper>
     </SafeAreaView>

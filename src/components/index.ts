@@ -1,3 +1,4 @@
+export { default as Authenticated } from './Authenticated';
 export { default as Button } from './Button';
 export { default as DefaultText } from './Text';
 export { default as Card } from './Card';
