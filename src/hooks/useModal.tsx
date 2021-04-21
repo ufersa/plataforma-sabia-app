@@ -1,6 +1,4 @@
 import React, { useState, createContext, useContext } from 'react';
-import { Modal as Dialog } from '../components';
-import ModalLogin from '../components/ModalLogin';
 
 export interface Modal {
   modalState: boolean
@@ -14,7 +12,6 @@ const ModalProvider = ({ children }: any): JSX.Element => {
   const [modalState, setModalState] = useState<boolean>(false);
 
   const closeModal = () => setModalState(false);
-
   const openModal = () => setModalState(true);
 
   return (
@@ -25,18 +22,7 @@ const ModalProvider = ({ children }: any): JSX.Element => {
         openModal,
       }}
     >
-      <>
-        {children}
-        <Dialog
-          title="Para continuar, digite e-mail e senha"
-          animationType="slide"
-          visible={modalState}
-          height="50%"
-          onClose={() => setModalState(false)}
-        >
-          <ModalLogin onSuccess={() => setModalState(false)} />
-        </Dialog>
-      </>
+      {children}
     </ModalContext.Provider>
   );
 };

@@ -3,6 +3,8 @@ import { View, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '../../hooks/useAuth';
 import { Input, Button } from '..';
+import { useModal } from '../../hooks/useModal';
+import { redirect } from '../../utils/navigator';
 
 interface ModalLoginProps {
   onSuccess: () => void
@@ -15,6 +17,7 @@ interface SignInFormData {
 
 const ModalLogin = ({ onSuccess }: ModalLoginProps): JSX.Element => {
   const { signIn } = useAuth();
+  const { closeModal } = useModal();
   const { control, handleSubmit, errors } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -96,7 +99,16 @@ const ModalLogin = ({ onSuccess }: ModalLoginProps): JSX.Element => {
         disabled={loading}
         onPress={handleSubmit(handleSignIn)}
       >
-        {loading ? 'Aguarde...' : 'Fazer Login'}
+        {loading ? 'Aguarde...' : 'Continuar'}
+      </Button>
+      <Button
+        variant="white"
+        onPress={() => {
+          closeModal();
+          redirect('SignUp');
+        }}
+      >
+        Criar conta
       </Button>
     </View>
   );

@@ -14,7 +14,6 @@ interface ModalProps extends ModalBaseProps {
   children: JSX.Element
   height?: string | number
   onClose(): void
-  disabledBackgroundClick?: boolean
 }
 
 const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
@@ -24,22 +23,19 @@ const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
     titleStyle,
     visible,
     height,
-    disabledBackgroundClick,
   } = props;
   const opacity = new Animated.Value(0);
 
   const closeModal = (): void => {
-    if (!disabledBackgroundClick) {
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: false,
-      }).start();
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
 
-      setTimeout(() => {
-        onClose();
-      }, 200);
-    }
+    setTimeout(() => {
+      onClose();
+    }, 200);
   };
 
   useEffect(() => {

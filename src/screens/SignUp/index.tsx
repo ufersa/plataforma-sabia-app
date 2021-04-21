@@ -56,7 +56,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           setLoading(false);
           Alert.alert(
             'Plataforma Sabia',
-            '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.',
+            '🎉 Cadastro realizado com sucesso! Verifique seu e-mail para confirmá-lo.',
           );
           navigation.goBack();
         });
