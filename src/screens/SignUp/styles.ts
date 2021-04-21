@@ -23,10 +23,19 @@ export const Title = styled(DefaultText)`
   margin-bottom: 8px;
 `;
 
-export const InputWrapper = styled.View`
-  margin-bottom: 24px;
-`;
-
 export const ButtonWrapper = styled.TouchableOpacity`
   padding-horizontal: 16px;
+`;
+
+export const ChexboxWrapper = styled.View`
+  width: 100%;
+  flex-direction: row;
+`;
+
+export const TextTerms = styled(DefaultText)`
+  font-size: 16px;
+  line-height: 21px;
+  color: #4a4a4a;
+  font-family: Rubik_400Regular;
+  font-weight: 400;
 `;
