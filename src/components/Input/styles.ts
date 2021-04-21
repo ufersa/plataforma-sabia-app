@@ -30,8 +30,8 @@ export const InputWrapper = styled.View<InputWrapperProps>`
 export const InputContainer = styled.TextInput<InputContainerProps>`
   width: 100%;
   height: 100%;
-  font-family: Rubik_500Medium;
-  font-weight: 500;
+  font-family: Rubik_400Regular;
+  font-weight: 400;
   font-size: 16px;
   color: ${({ variant }) => (variant === 'dark' ? '#ffffff' : '#a5a5a5')};
   padding-left: 14px;

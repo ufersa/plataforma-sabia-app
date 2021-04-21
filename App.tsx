@@ -6,6 +6,7 @@ import Colors from './src/utils/colors';
 
 import useFonts from './src/hooks/useFonts';
 import AppProvider from './src/hooks';
+import { ModalProvider } from './src/hooks/useModal';
 import Routes from './src/routes';
 import { setNavigator } from './src/utils/navigator';
 
@@ -21,7 +22,7 @@ const theme = {
   },
 };
 
-const App = () => {
+const App = (): JSX.Element => {
   const loadingFonts = useFonts();
 
   useEffect(() => {
@@ -39,7 +40,9 @@ const App = () => {
   return (
     <NavigationContainer ref={setNavigator} theme={theme}>
       <AppProvider>
-        <Routes />
+        <ModalProvider>
+          <Routes />
+        </ModalProvider>
       </AppProvider>
     </NavigationContainer>
   );

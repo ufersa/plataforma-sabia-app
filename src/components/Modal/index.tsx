@@ -3,6 +3,7 @@ import {
   Modal as ModalRN,
   ModalBaseProps,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
   Animated,
 } from 'react-native';
 import * as S from './styles';
@@ -55,22 +56,27 @@ const Modal = ({ children, ...props }: ModalProps): JSX.Element => {
         transparent
         {...props}
       >
-        <TouchableWithoutFeedback onPress={closeModal}>
-          <Animated.View style={{ flex: 1, opacity }}>
-            <S.Background />
-          </Animated.View>
-        </TouchableWithoutFeedback>
-        <S.Container style={{ height: height || 289 }}>
-          <S.CloseWrapper>
-            <S.ButtonClose activeOpacity={0.7} onPress={closeModal} />
-          </S.CloseWrapper>
-          {!!title && (
-            <S.TitleWrapper>
-              <S.Title style={titleStyle}>{title}</S.Title>
-            </S.TitleWrapper>
-          )}
-          {children}
-        </S.Container>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior="padding"
+        >
+          <TouchableWithoutFeedback onPress={closeModal}>
+            <Animated.View style={{ flex: 1, opacity }}>
+              <S.Background />
+            </Animated.View>
+          </TouchableWithoutFeedback>
+          <S.Container style={{ height: height || 289 }}>
+            <S.CloseWrapper>
+              <S.ButtonClose activeOpacity={0.7} onPress={closeModal} />
+            </S.CloseWrapper>
+            {!!title && (
+              <S.TitleWrapper>
+                <S.Title style={titleStyle}>{title}</S.Title>
+              </S.TitleWrapper>
+            )}
+            {children}
+          </S.Container>
+        </KeyboardAvoidingView>
       </ModalRN>
     </S.Wrapper>
   );

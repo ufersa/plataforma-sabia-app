@@ -98,12 +98,16 @@ const LogoutText = styled(DefaultText)`
 `;
 
 export const Logout = (): JSX.Element => {
+  const navigation = useNavigation();
   const { signOut } = useAuth();
   return (
     <WrapperLogout>
       <LogoutItem
         activeOpacity={0.7}
-        onPress={() => signOut()}
+        onPress={() => {
+          signOut();
+          navigation.navigate('Root');
+        }}
       >
         <Feather
           name="log-out"

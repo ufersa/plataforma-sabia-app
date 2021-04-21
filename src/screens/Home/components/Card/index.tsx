@@ -16,6 +16,7 @@ import { handleBookmark } from '../../../../services/bookmark';
 import { Technology } from '../../../../hooks/useTechnology';
 import { useCart } from '../../../../hooks/useCart';
 import { getMe } from '../../../../services/auth';
+import { useModal } from '../../../../hooks/useModal';
 
 interface DataCardProps {
   id: number
@@ -53,19 +54,22 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
   });
 
   const { user, updateUser } = useAuth();
+  const { openModal } = useModal();
   const solutionTypeProperty: string = `${type}Bookmarks`;
 
   useEffect(() => {
-    const solutionBookmarks = user[solutionTypeProperty];
-    const isLiked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === id);
-    setState(isLiked);
+    if (user) {
+      const solutionBookmarks = user[solutionTypeProperty];
+      const isLiked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === id);
+      setState(isLiked);
 
-    Animated.timing(animatePulse, {
-      toValue: state ? 0 : 1,
-      duration: state ? 100 : 50,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
+      Animated.timing(animatePulse, {
+        toValue: state ? 0 : 1,
+        duration: state ? 100 : 50,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start();
+    }
   }, [user, id, type, solutionTypeProperty]);
 
   const solutionType = `${type}Id`;
@@ -81,7 +85,7 @@ const Favorite = ({ id, type }: FavoriteProps): JSX.Element => {
   };
 
   return (
-    <S.FavoriteButton onPress={handleLike}>
+    <S.FavoriteButton onPress={user ? handleLike : openModal}>
       <Animated.View
         style={{ transform: [{ scale }] }}
       >
@@ -103,6 +107,7 @@ export default ({
   loading = false,
   style = {},
 }: TechnologyCardProps): JSX.Element => {
+  const { user } = useAuth();
   const { addCart } = useCart();
   const [showModal, setShowModal] = useState<boolean>(false);
   const navigate = () => (type === 'technology' ? navigation.navigate('Technology', { data, type }) : setShowModal(true));
@@ -175,23 +180,25 @@ export default ({
             />
             <S.ModalActions>
               <View style={{ flex: 1 }}>
-                <Button
-                  variant="primary"
-                  onPress={() => {
-                    addCart({
-                      id: data.id,
-                      title: data.title,
-                      quantity: 1,
-                      price: data.price,
-                      image: data.image,
-                      measureUnit: data.measureUnit,
-                      institution: data.institution,
-                    });
-                    setShowModal(false);
-                  }}
-                >
-                  Adicionar no carrinho
-                </Button>
+                {user && (
+                  <Button
+                    variant="primary"
+                    onPress={() => {
+                      addCart({
+                        id: data.id,
+                        title: data.title,
+                        quantity: 1,
+                        price: data.price,
+                        image: data.image,
+                        measureUnit: data.measureUnit,
+                        institution: data.institution,
+                      });
+                      setShowModal(false);
+                    }}
+                  >
+                    Adicionar no carrinho
+                  </Button>
+                )}
               </View>
             </S.ModalActions>
           </S.ModalContent>
