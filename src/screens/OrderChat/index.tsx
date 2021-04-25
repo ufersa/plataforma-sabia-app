@@ -8,14 +8,16 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
+  Text,
 } from 'react-native';
 import { FlatList, TextInput } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
-import * as S from './styles';
 import { useAuth } from '../../hooks/useAuth';
 import { MessageItem } from './components/MessageItem';
 import { getChatInstance, getChatMessages, sendChatMessage } from '../../services/chat';
+import { isIphoneX } from '../../utils/helper';
+import { useKeyboard } from '../../hooks/useKeyboard';
 
 interface OrderChatProps {
   route: {
@@ -28,10 +30,11 @@ interface OrderChatProps {
 const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Element => {
   const { user } = useAuth();
   const [loading, setLoading] = useState<boolean>(false);
+  const [isVisibleKeyboard] = useKeyboard();
 
   const [chatInstance, setChatInstance] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [pages, setPages] = useState(1);
+  const [currentOffset, setCurrentoffset] = useState(10);
 
   const [inputValue, setInputValue] = useState('');
   const [refresh, setRefresh] = useState(true);
@@ -51,17 +54,59 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
         });
       }
 
-      if (chatInstance) {
-        await getChatMessages(chatInstance.id, { }).then((data) => {
-          setMessages(data);
-          timer.current = setTimeout(() => {
-            setRefresh(!refresh);
-          }, 5000);
-        });
-        setLoading(false);
+      if (!chatInstance) {
+        return;
       }
-    }, [user, messages, refresh, chatInstance],
+
+      let m;
+
+      await getChatMessages(chatInstance.id, { offset: 0 }).then((data) => {
+        m = merge(messages, data, 'id');
+        m = m.sort((a: any, b: any) => b.id - a.id);
+
+        setMessages(m);
+        setLoading(false);
+      });
+
+      timer.current = setTimeout(() => {
+        setRefresh(!refresh);
+      }, 5000);
+    }, [user, messages, refresh, chatInstance, currentOffset],
   );
+
+  const merge = (a: any, b: any, prop: string) => {
+    const reduced = a.filter((aitem: any) => !b.find((bitem: any) => aitem[prop] === bitem[prop]));
+    return reduced.concat(b);
+  };
+
+  const loadMore = useCallback(async () => {
+    clearTimeout(timer.current);
+
+    if (!chatInstance) {
+      return;
+    }
+
+    let m: any;
+
+    // get last 10 messages
+    await getChatMessages(chatInstance.id, { offset: 0 }).then(async (lastMessages) => {
+      m = merge(messages, lastMessages, 'id');
+
+      // get olders 10 non fetched messages
+      await getChatMessages(chatInstance.id, { offset: currentOffset }).then((olderMessages: any) => {
+        m = merge(m, olderMessages, 'id');
+        m = m.sort((a: any, b: any) => b.id - a.id);
+
+        setMessages(m);
+        setLoading(false);
+        setCurrentoffset(messages.length + 10);
+
+        timer.current = setTimeout(() => {
+          setRefresh(!refresh);
+        }, 5000);
+      });
+    });
+  }, [messages, chatInstance, currentOffset, refresh]);
 
   const handleSubmit = () => {
     sendMessage({
@@ -74,9 +119,10 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
     async ({ text }) => {
       await sendChatMessage(chatInstance.id, text);
 
-      loadMessages();
+      // setCurrentoffset(currentOffset);
+      loadMore();
     },
-    [user, messages, chatInstance],
+    [user, messages, chatInstance, currentOffset, refresh],
   );
 
   useEffect(() => {
@@ -93,14 +139,22 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
         <FlatList
           style={{ flex: 1, height: '100%' }}
           inverted
-          onEndReached={() => {}}
+          onEndReached={loadMore}
           onEndReachedThreshold={0.7}
           ListFooterComponent={() => (
             <>
-              {loading && <ActivityIndicator size="small" />}
+              <TouchableOpacity
+                onPress={() => {
+                  loadMore();
+                }}
+                style={[styles.loadMore]}
+              >
+                <Text style={styles.loadMoreText}>Carregar mais mensagens  </Text>
+                <Feather name="refresh-ccw" size={24} color="#00A688" />
+              </TouchableOpacity>
             </>
           )}
-          data={messages.concat(messages)}
+          data={messages}
           keyExtractor={(item, idx) => `${item.id}-${idx}`}
           renderItem={({ item }) => (
             <MessageItem
@@ -138,6 +192,9 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
             </TouchableOpacity>
           </View>
         </KeyboardAccessoryView>
+        {isIphoneX && !isVisibleKeyboard && (
+        <View style={{ height: 30 }} />
+        )}
       </View>
     </>
   );
@@ -148,8 +205,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
-    paddingVertical: 12,
-    paddingHorizontal: 5,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
     backgroundColor: '#ffffff',
     borderTopWidth: 1,
     borderTopColor: '#ccc',
@@ -175,6 +232,20 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     transform: [{ rotate: '45deg' }],
+  },
+  loadMore: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 20,
+    alignSelf: 'center',
+    alignItems: 'center',
+    height: 32,
+  },
+  loadMoreText: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#00A688',
   },
 });
 
