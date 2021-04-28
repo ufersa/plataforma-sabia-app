@@ -1,102 +1,113 @@
-import { Button } from 'react-native';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
-import {
-  Input,
-} from '../../components';
-import colors from '../../utils/colors';
 
 export const Wrapper = styled.SafeAreaView`
   flex: 1;
   width: 100%;
   height: 100%;
+  background-color: #F5F5F5;
+justify-content: center;
 `;
 
-export const Container = styled.View`
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const Page = styled.ScrollView`
-  height: 100%;
-  background-color: red;
-`;
-
-export const MessagesWrapper = styled.View`
-  flex: 1;
-  height: 100%;
-  padding: 50px;
-  padding-top: 20px;
-background-color: red;
-`;
-
-export const MessageBlock = styled.View`
-  display: flex;
-  flex-direction: column;
-
-  > span {
-    /* color: ${colors}; */
-    font-size: 1.2rem;
-    font-weight: 500;
-    line-height: 1.6rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
-`;
-
-export const MessageContent = styled.View`
-  display: flex;
-  flex-direction: column;
-
-  > p {
-    border-top-left-radius: 0;
-    background-color: ${colors.lightGray4};
-    font-size: 1.4rem;
-    font-weight: 500;
-    line-height: 2.4rem;
-    color: ${colors.black};
-    padding: 0.8rem;
-    margin: 0 0.8rem 0.8rem;
-  }
-
-  > span {
-    color: ${colors.lightGray2};
-    font-weight: 500;
-    font-size: 1.2rem;
-    line-height: 1.6rem;
-    align-self: flex-end;
-    margin-right: 0.8rem;
-  }
-`;
-
-export const SingleMessage = styled.View`
-  display: flex;
+export const KeyboardContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  margin: 25px 0;
-
-  > img {
-    border-radius: 50%;
-    max-width: 50px;
-    align-self: flex-start;
-  }
-
+  padding-vertical: 16px;
+  padding-horizontal: 10px;
+  background-color: #ffffff;
+  border-top-width: 1px;
+  border-top-color: #ccc;
 `;
 
-export const ChatButton = styled(Button)`
-  color: ${colors.secondary};
-
-  text-transform: uppercase;
-  font-weight: bold;
+export const SendButton = styled.TouchableOpacity`
+    margin-left: 0;
+    margin-right: 10px;
+    justify-content: center;
+    align-self: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    transform: { rotate: 45deg };
+    opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
 
-export const Actions = styled.View`
-  flex: 1;
-  display: flex;
+export const InputText = styled.TextInput`
+    flex: 1;
+    padding-bottom: ${Platform.OS === 'android' ? 6 : 9}px;
+    padding-top: ${Platform.OS === 'android' ? 5 : 8}px;
+    padding-horizontal: 12px;
+    font-size: 17px;
+    flex-grow: 1;
+    line-height: 20px;
+    max-height: 200px;
+    min-height: 36px;
+    color: #777777;
+`;
+
+export const LoadMore = styled.TouchableOpacity`
+    flex: 1;
+    flex-direction: row;
+    justify-content: center;
+    margin-vertical: 20px;
+    align-self: center;
+    align-items: center;
+    height: 32px;
+`;
+
+export const LoadMoreText = styled.Text`
+    font-weight: bold;
+    font-size: 18px;
+    color: #00A688;
+`;
+
+export const MessageContainer = styled.View`
+  margin-horizontal: 12px;
+  margin-vertical: 6px;
   flex-direction: row;
 `;
 
-export const InputText = styled(Input)`
-  display: flex;
+export const MessageWrapper = styled.View`
+  max-width: 80%;
+  flex-direction: column;
+`;
+
+export const Bubble = styled.View`
+  padding-vertical: 7px;
+  padding-horizontal: 12px;
+  border-radius: 18px;
+  flex-direction: row;
+  align-items: stretch;
+  flex-wrap: wrap;
+`;
+
+export const Message = styled.View``;
+
+export const MessageText = styled.Text`
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 500;
+  color: #1d1d1d;
+`;
+
+export const Nickname = styled.Text`
+  font-weight: bold;
+  font-size: 16px;
+  color: #4a4a4a;
+  margin-vertical: 10px;
+`;
+
+export const Time = styled.View`
+  align-self: stretch;
+  flex-grow: 1;
+  align-items: flex-end;
+  text-align: left;
+`;
+
+export const TimeText = styled.Text`
+  top: 2px;
+  font-size: 12px;
+  padding-left: 8px;
+  font-weight: 400;
+  color: #777;
 `;

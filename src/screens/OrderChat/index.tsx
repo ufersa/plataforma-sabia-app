@@ -3,14 +3,10 @@ import React, {
   useEffect, useState, useCallback, useRef,
 } from 'react';
 import {
-  Platform,
-  TouchableOpacity,
   View,
-  StyleSheet,
   ActivityIndicator,
-  Text,
 } from 'react-native';
-import { FlatList, TextInput } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
 import { useAuth } from '../../hooks/useAuth';
@@ -18,6 +14,7 @@ import { MessageItem } from './components/MessageItem';
 import { getChatInstance, getChatMessages, sendChatMessage } from '../../services/chat';
 import { isIphoneX } from '../../utils/helper';
 import { useKeyboard } from '../../hooks/useKeyboard';
+import * as S from './styles';
 
 interface OrderChatProps {
   route: {
@@ -88,11 +85,9 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
 
     let m: any;
 
-    // get last 10 messages
     await getChatMessages(chatInstance.id, { offset: 0 }).then(async (lastMessages) => {
       m = merge(messages, lastMessages, 'id');
 
-      // get olders 10 non fetched messages
       await getChatMessages(chatInstance.id, { offset: currentOffset }).then((olderMessages: any) => {
         m = merge(m, olderMessages, 'id');
         m = m.sort((a: any, b: any) => b.id - a.id);
@@ -119,7 +114,6 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
     async ({ text }) => {
       await sendChatMessage(chatInstance.id, text);
 
-      // setCurrentoffset(currentOffset);
       loadMore();
     },
     [user, messages, chatInstance, currentOffset, refresh],
@@ -135,7 +129,7 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
 
   return (
     <>
-      <View style={{ flex: 1, height: '100%', backgroundColor: '#F5F5F5' }}>
+      <S.Wrapper>
         <FlatList
           style={{ flex: 1, height: '100%' }}
           inverted
@@ -143,15 +137,14 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
           onEndReachedThreshold={0.7}
           ListFooterComponent={() => (
             <>
-              <TouchableOpacity
+              <S.LoadMore
                 onPress={() => {
                   loadMore();
                 }}
-                style={[styles.loadMore]}
               >
-                <Text style={styles.loadMoreText}>Carregar mais mensagens  </Text>
+                <S.LoadMoreText>Carregar mais mensagens  </S.LoadMoreText>
                 <Feather name="refresh-ccw" size={24} color="#00A688" />
-              </TouchableOpacity>
+              </S.LoadMore>
             </>
           )}
           data={messages}
@@ -173,80 +166,29 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
           hideBorder
         >
 
-          <View style={styles.accessoryContainer}>
-            <TextInput
+          <S.KeyboardContainer>
+            <S.InputText
               onChangeText={(text) => setInputValue(text)}
               onSubmitEditing={handleSubmit}
               value={inputValue}
               placeholder="Digite sua mensagem"
               placeholderTextColor="#9D9FA3"
-              style={styles.input}
             />
-            {loading && <ActivityIndicator size="small" style={{ marginBottom: 10 }} />}
-            <TouchableOpacity
+            {loading && <ActivityIndicator size="small" />}
+            <S.SendButton
               onPress={handleSubmit}
-              style={[styles.buttonSend, { opacity: inputValue ? 1 : 0.5 }]}
               disabled={!inputValue}
             >
-              <Feather name="send" size={24} color="#00A688" />
-            </TouchableOpacity>
-          </View>
+              <Feather name="send" size={24} color="#00A688" style={{ transform: [{ rotate: '45deg' }] }} />
+            </S.SendButton>
+          </S.KeyboardContainer>
         </KeyboardAccessoryView>
         {isIphoneX && !isVisibleKeyboard && (
         <View style={{ height: 30 }} />
         )}
-      </View>
+      </S.Wrapper>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  accessoryContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    paddingVertical: 16,
-    paddingHorizontal: 10,
-    backgroundColor: '#ffffff',
-    borderTopWidth: 1,
-    borderTopColor: '#ccc',
-  },
-  input: {
-    flex: 1,
-    paddingBottom: Platform.OS === 'android' ? 6 : 9,
-    paddingTop: Platform.OS === 'android' ? 5 : 8,
-    paddingHorizontal: 12,
-    fontSize: 17,
-    flexGrow: 1,
-    lineHeight: 20,
-    maxHeight: 200,
-    minHeight: 36,
-    color: '#777777',
-  },
-  buttonSend: {
-    marginLeft: 0,
-    marginRight: 10,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    alignItems: 'center',
-    width: 32,
-    height: 32,
-    transform: [{ rotate: '45deg' }],
-  },
-  loadMore: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginVertical: 20,
-    alignSelf: 'center',
-    alignItems: 'center',
-    height: 32,
-  },
-  loadMoreText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#00A688',
-  },
-});
 
 export default OrderChat;
