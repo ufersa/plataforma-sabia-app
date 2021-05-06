@@ -4,5 +4,5 @@ export const BanksWrapper = styled.View`
   padding: 16px;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
 `;

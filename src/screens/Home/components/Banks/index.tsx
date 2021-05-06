@@ -13,15 +13,17 @@ const Banks = ({ navigation }: BanksProps): JSX.Element => {
     {
       title: 'Banco de Editais',
       background: require('../../../../../assets/images/edicts.png'),
+      target: 'AnnouncementsBank',
     },
     {
-      title: 'Banco de Ideias',
+      title: 'Banco de \nIdeias',
       background: require('../../../../../assets/images/ideas.png'),
+      target: 'IdeasBank',
     },
-    {
-      title: 'Banco de Pequisadores',
-      background: require('../../../../../assets/images/researchers.png'),
-    },
+    // {
+    //   title: 'Banco de Pequisadores',
+    //   background: require('../../../../../assets/images/researchers.png'),
+    // },
   ];
 
   return (
