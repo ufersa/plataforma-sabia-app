@@ -12,7 +12,7 @@ import List from './components/List';
 import * as S from './styles';
 import { getUserBookmarks } from '../../services/technology';
 import { handleBookmark } from '../../services/bookmark';
-import { Authenticated } from '../../components';
+import { Unauthenticated } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
 import { useModal } from '../../hooks/useModal';
 
@@ -78,7 +78,7 @@ const Favorite = (): JSX.Element => {
             ) : (
               <ActivityIndicator />
             )
-          ) : <Authenticated title="Deseja ver seus favoritos?" onPress={() => openModal()} />}
+          ) : <Unauthenticated title="Deseja ver seus favoritos?" onPress={() => openModal()} />}
         </S.Container>
       </S.Wrapper>
     </SafeAreaView>

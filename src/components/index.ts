@@ -1,4 +1,4 @@
-export { default as Authenticated } from './Authenticated';
+export { default as Unauthenticated } from './Unauthenticated';
 export { default as Button } from './Button';
 export { default as Checkbox } from './Checkbox';
 export { default as DefaultText } from './Text';
