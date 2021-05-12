@@ -43,12 +43,6 @@ export const ButtonWrapper = styled.TouchableOpacity`
   border-radius: 8px;
 `;
 
-export const ButtonText = styled(DefaultText)`
-  padding: 16px;
-  background-color: white;
-  margin-left: 16px;
-`;
-
 export const ItemCards = styled.ScrollView`
   padding-top: 24px;
   padding-horizontal: 16px;
@@ -138,32 +132,10 @@ export const CardText = styled(DefaultText)`
   margin-left: 14px;
 `;
 
-export const ListWrapper = styled.FlatList`
-  padding-top: 16px;
-  padding-horizontal: 16px;
-`;
-
 export const ModalContent = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 50%;
   flex: 1;
-`;
-
-export const Details = styled(DefaultText)`
-  font-size: 16px;
-  line-height: 24px;
-  color: ${colors.primary};
-  font-family: Rubik_500Medium;
-  font-weight: 500;
-`;
-
-export const ModalActions = styled.View`
-  width: 100%;
-  flex-direction: row;
-  padding-horizontal: 16px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 32px;
 `;

@@ -5,7 +5,7 @@ import colors from '../../../utils/colors';
 export const Wrapper = styled.SafeAreaView`
   width: 100%;
   height: 100%;
-flex: 1;
+  flex: 1;
 `;
 
 export const Container = styled.View`
@@ -41,12 +41,6 @@ export const InputText = styled(Input)`
 
 export const ButtonWrapper = styled.TouchableOpacity`
   border-radius: 8px;
-`;
-
-export const ButtonText = styled(DefaultText)`
-  padding: 16px;
-  background-color: white;
-  margin-left: 16px;
 `;
 
 export const ItemCards = styled.ScrollView`
@@ -109,17 +103,6 @@ export const HWrapper = styled.View`
   flex-wrap: wrap;
 `;
 
-export const DateText = styled(Description)`
-  font-family: Rubik_500Medium;
-  font-weight: 500;
-  font-size: 12px;
-  color: #A5A5A5;
-`;
-
-export const UserText = styled(DateText)`
-  margin-left: 30px;
-`;
-
 export const CardTag = styled.View`
   padding: 2px;
   color: ${colors.orange};
@@ -158,32 +141,10 @@ export const CardText = styled(DefaultText)`
   margin-left: 14px;
 `;
 
-export const ListWrapper = styled.FlatList`
-  padding-top: 16px;
-  padding-horizontal: 16px;
-`;
-
 export const ModalContent = styled.View`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 50%;
   flex: 1;
-`;
-
-export const Details = styled(DefaultText)`
-  font-size: 16px;
-  line-height: 24px;
-  color: ${colors.primary};
-  font-family: Rubik_500Medium;
-  font-weight: 500;
-`;
-
-export const ModalActions = styled.View`
-  width: 100%;
-  flex-direction: row;
-  padding-horizontal: 16px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 32px;
 `;
