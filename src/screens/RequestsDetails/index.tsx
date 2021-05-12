@@ -5,6 +5,7 @@ import { useNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Alert, Image } from 'react-native';
 import { format, parseISO } from 'date-fns';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as S from './styles';
 import { Card, Badge, Button } from '../../components';
 import { formatMoney } from '../../utils/helper';
@@ -34,6 +35,10 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
     },
   } = params;
   const technologyPrice = type === 'technology' && technology.costs ? technology.costs[0].price : 0;
+
+  const openChat = useCallback(() => {
+    navigation.navigate('OrderChat', { orderId: id });
+  }, [id]);
 
   const onCancelOrder = useCallback(
     async () => {
@@ -126,6 +131,15 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
               <S.Detail>
                 <S.DetailTitle>Observações</S.DetailTitle>
                 <S.DetailDescription>{comment ?? '–'}</S.DetailDescription>
+              </S.Detail>
+
+              <S.Detail>
+                <S.OpenChat activeOpacity={0.7} onPress={() => { openChat(); }}>
+                  <MaterialIcons name="chat-bubble-outline" size={24} color="#3498DB" />
+                  <S.OpenChatText>
+                    Chat com o responsável
+                  </S.OpenChatText>
+                </S.OpenChat>
               </S.Detail>
             </S.CardDetails>
             {status === 'open' && (
