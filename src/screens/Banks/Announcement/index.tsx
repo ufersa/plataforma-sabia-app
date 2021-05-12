@@ -48,7 +48,7 @@ const AnnouncementCard = ({ data, showModal, selectItem }: CardProps): JSX.Eleme
     <Card>
       <S.CardContainer>
         <S.CardTitle>
-          {data.title}
+          {data.title.trim()}
         </S.CardTitle>
         <S.Institution>
           {data.institution.name}
@@ -109,13 +109,11 @@ export const SearchList = connectInfiniteHits(({
       ? <Empty />
       : (
         <>
-          <S.ListWrapper
-            data={hits}
-            keyExtractor={(item: any) => item.objectID}
-            renderItem={({ item }: any): JSX.Element => (
-              <AnnouncementCard data={item} showModal={setShowModal} selectItem={setShowItem} />
-            )}
-          />
+          <S.ItemCards>
+            {hits.map((item: any) => (
+              <AnnouncementCard key={item.objectID} data={item} showModal={setShowModal} selectItem={setShowItem} />
+            ))}
+          </S.ItemCards>
 
           {showItem !== null && (
             <Modal

@@ -52,7 +52,7 @@ const IdeaCard = ({ data, showModal, selectItem }: CardProps): JSX.Element => (
     <Card>
       <S.CardContainer>
         <S.CardTitle>
-          {data.title ?? 'Oi'}
+          {data.title.trim()}
         </S.CardTitle>
         <S.Description>
           {data.description}
@@ -122,13 +122,11 @@ export const SearchList = connectInfiniteHits(({
       ? <Empty type="editais" />
       : (
         <>
-          <S.ListWrapper
-            data={hits}
-            keyExtractor={(item: any) => item.objectID}
-            renderItem={({ item }: any): JSX.Element => (
-              <IdeaCard data={item} showModal={setShowModal} selectItem={setShowItem} />
-            )}
-          />
+          <S.ItemCards>
+            {hits.map((item: any) => (
+              <IdeaCard key={item.objectID} data={item} showModal={setShowModal} selectItem={setShowItem} />
+            ))}
+          </S.ItemCards>
 
           {showItem !== null && (
             <Modal

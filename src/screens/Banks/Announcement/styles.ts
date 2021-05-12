@@ -105,7 +105,6 @@ export const Value = styled(Description)`
 `;
 
 export const HWrapper = styled.View`
-  display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 `;
