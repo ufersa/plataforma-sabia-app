@@ -12,6 +12,7 @@ import {
   Contact,
   Logout,
   SignUp,
+  OrderChat,
 } from '../screens';
 import Colors from '../utils/colors';
 import { CartProvider } from '../hooks/useCart';
@@ -121,6 +122,18 @@ const AppRoutes = (): JSX.Element => (
         }}
         name="Contact"
         component={Contact}
+      />
+      <App.Screen
+        options={{
+          title: 'Chat',
+          headerBackTitleVisible: false,
+          headerTintColor: '#4A4A4A',
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+        }}
+        name="OrderChat"
+        component={OrderChat}
       />
       <App.Screen
         options={{
