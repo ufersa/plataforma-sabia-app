@@ -125,8 +125,8 @@ export const CardAction = styled.View`
 `;
 
 export const CardButton = styled.TouchableOpacity`
-width: 100%;
-padding: 16px;
+  width: 100%;
+  padding: 16px;
   flex-direction: row;
   align-items: center;
   justify-content: center;

@@ -5,7 +5,7 @@ import colors from '../../../utils/colors';
 export const Wrapper = styled.SafeAreaView`
   width: 100%;
   height: 100%;
-flex: 1;
+  flex: 1;
 `;
 
 export const Container = styled.View`
@@ -116,8 +116,8 @@ export const CardAction = styled.View`
 `;
 
 export const CardButton = styled.TouchableOpacity`
-width: 100%;
-padding: 16px;
+  width: 100%;
+  padding: 16px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
