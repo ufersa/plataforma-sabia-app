@@ -93,8 +93,6 @@ const SearchBox = connectSearchBox((props: any): JSX.Element => {
 interface SearchListProps {
   hits: any
   refine?: () => void
-  hasMore: boolean
-  renderOn?: () => JSX.Element
 }
 
 export const SearchList = connectInfiniteHits(({
