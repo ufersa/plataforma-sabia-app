@@ -6,11 +6,10 @@ export const Wrapper = styled.View`
   width: 100%;
   padding: 16px;
   justify-content: center;
-  align-items: center;
 `;
 
 export const ImageWrapper = styled.View`
-  margin-top: 24px;
+  margin-top: 100px;
   align-items: center;
 `;
 
@@ -21,7 +20,7 @@ export const Title = styled(DefaultText)`
   font-weight: 700;
   line-height: 36px;
   color: ${Colors.info};
-  margin-top: 32px;
+  margin-top: 48px;
   margin-bottom: 16px;
 `;
 

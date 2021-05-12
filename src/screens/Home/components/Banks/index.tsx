@@ -11,7 +11,7 @@ interface BanksProps {
 const Banks = ({ navigation }: BanksProps): JSX.Element => {
   const banks = [
     {
-      title: 'Banco de Editais',
+      title: 'Banco de \nEditais',
       background: require('../../../../../assets/images/edicts.png'),
       target: 'AnnouncementsBank',
     },

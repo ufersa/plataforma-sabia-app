@@ -120,7 +120,7 @@ export const SearchList = connectInfiniteHits(({
       ? <Empty type="editais" />
       : (
         <>
-          <S.ItemCards>
+          <S.ItemCards showsVerticalScrollIndicator={false}>
             {hits.map((item: any) => (
               <IdeaCard key={item.objectID} data={item} showModal={setShowModal} selectItem={setShowItem} />
             ))}
@@ -137,7 +137,7 @@ export const SearchList = connectInfiniteHits(({
               }}
             >
               <S.ModalContent>
-                <ScrollView style={{ marginBottom: 36 }}>
+                <ScrollView showsVerticalScrollIndicator={false} style={{ marginBottom: 36 }}>
                   <S.CardContainer>
                     <S.CardTitle>
                       {showItem.title ?? 'Oi'}
