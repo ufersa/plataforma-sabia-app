@@ -55,13 +55,13 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
         return;
       }
 
-      let m;
+      let currentMessages = [...messages];
 
-      await getChatMessages(chatInstance.id, { offset: 0 }).then((data) => {
-        m = merge(messages, data, 'id');
-        m = m.sort((a: any, b: any) => b.id - a.id);
+      await getChatMessages(chatInstance.id, { offset: 0 }).then((lastMessages) => {
+        currentMessages = mergeUnique(lastMessages, currentMessages);
+        currentMessages = currentMessages.sort((a: any, b: any) => b.id - a.id);
 
-        setMessages(m);
+        setMessages(currentMessages);
         setLoading(false);
       });
 
@@ -71,10 +71,7 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
     }, [user, messages, refresh, chatInstance, currentOffset],
   );
 
-  const merge = (a: any, b: any, prop: string) => {
-    const reduced = a.filter((aitem: any) => !b.find((bitem: any) => aitem[prop] === bitem[prop]));
-    return reduced.concat(b);
-  };
+  const mergeUnique = (newMessages: any, currentMessages: any) => newMessages.filter((newMessage: any) => !currentMessages.find((message: any) => newMessage.id === message.id)).concat(currentMessages);
 
   const loadMore = useCallback(async () => {
     clearTimeout(timer.current);
@@ -83,16 +80,16 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
       return;
     }
 
-    let m: any;
+    let currentMessages = [...messages];
 
     await getChatMessages(chatInstance.id, { offset: 0 }).then(async (lastMessages) => {
-      m = merge(messages, lastMessages, 'id');
+      currentMessages = mergeUnique(lastMessages, currentMessages);
 
       await getChatMessages(chatInstance.id, { offset: currentOffset }).then((olderMessages: any) => {
-        m = merge(m, olderMessages, 'id');
-        m = m.sort((a: any, b: any) => b.id - a.id);
+        currentMessages = mergeUnique(olderMessages, currentMessages);
+        currentMessages = currentMessages.sort((a: any, b: any) => b.id - a.id);
 
-        setMessages(m);
+        setMessages(currentMessages);
         setLoading(false);
         setCurrentoffset(messages.length + 10);
 

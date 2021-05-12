@@ -6,7 +6,7 @@ export const Wrapper = styled.SafeAreaView`
   width: 100%;
   height: 100%;
   background-color: #F5F5F5;
-justify-content: center;
+  justify-content: center;
 `;
 
 export const KeyboardContainer = styled.View`
@@ -28,7 +28,6 @@ export const SendButton = styled.TouchableOpacity`
     align-items: center;
     width: 32px;
     height: 32px;
-    transform: { rotate: 45deg };
     opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
 
