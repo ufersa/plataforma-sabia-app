@@ -14,7 +14,7 @@ const Routes = (): JSX.Element => {
         title="Para continuar, digite e-mail e senha ou crie uma conta"
         animationType="slide"
         visible={modalState}
-        height="50%"
+        height="55%"
         onClose={() => closeModal()}
       >
         <ModalLogin onSuccess={() => closeModal()} />

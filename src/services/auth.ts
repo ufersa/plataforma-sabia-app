@@ -60,3 +60,18 @@ export async function register({
     disclaimers,
   });
 }
+
+interface ConfirmAccountProps {
+  email: string;
+  token: string;
+}
+
+/**
+ * Calls the confirmation account endpoint.
+ *
+ * @param {string} token The confirmation token.
+ * @param {string} email User email.
+ */
+export async function accountConfirmation({ token, email }: ConfirmAccountProps) {
+  return api.post('auth/confirm-account', { token, email });
+}

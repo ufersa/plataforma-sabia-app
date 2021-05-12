@@ -12,6 +12,7 @@ import {
   Contact,
   Logout,
   SignUp,
+  Code,
 } from '../screens';
 import Colors from '../utils/colors';
 import { CartProvider } from '../hooks/useCart';
@@ -140,6 +141,25 @@ const AppRoutes = (): JSX.Element => (
         }}
         name="SignUp"
         component={SignUp}
+      />
+      <App.Screen
+        options={{
+          cardStyle: { backgroundColor: Colors.background },
+          headerBackTitleVisible: false,
+          headerTintColor: '#4a4a4a',
+          headerTitleStyle: {
+            fontSize: 16,
+            fontFamily: 'Montserrat_500Medium',
+            fontWeight: '500',
+            color: '#4a4a4a',
+          },
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+          title: 'Confirmação de Cadastro',
+        }}
+        name="Code"
+        component={Code}
       />
       <App.Screen
         options={{ headerShown: false }}
