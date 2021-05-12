@@ -9,7 +9,7 @@ interface MessageItemProps {
   message: any;
 }
 
-export const MessageItem: React.FC<MessageItemProps> = ({ isImSender, message }) => (
+export const MessageItem = ({ isImSender, message }: MessageItemProps) => (
   <S.MessageContainer style={{ justifyContent: isImSender ? 'flex-end' : 'flex-start' }}>
     <S.MessageWrapper>
       <S.Bubble style={{ backgroundColor: isImSender ? '#00A688' : '#E8E8E8' }}>
