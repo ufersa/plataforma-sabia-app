@@ -1,5 +1,6 @@
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
+import { Dimensions, Platform } from 'react-native';
 
 /**
  * Format currency to integer
@@ -85,3 +86,11 @@ export const zoomToAltitude = (zoom: number) => {
   const altitude = Math.round(-1050 * zoom + 18952);
   return altitude;
 };
+
+const { width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
+
+export const isIphoneX = Platform.OS === 'ios'
+  && !Platform.isPad
+  && !Platform.isTVOS
+  && (height === 812 || width === 812 || height === 896 || width === 896);

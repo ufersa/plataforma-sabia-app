@@ -101,3 +101,19 @@ export const ButtonWrapper = styled.View`
   padding-horizontal: 16px;
   padding-bottom: 32px;
 `;
+
+export const OpenChat = styled.TouchableOpacity`
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #3498DB;
+`;
+
+export const OpenChatText = styled(DetailDescription)`
+  color: #3498DB;
+  margin-left: 10px;
+  font-family: Rubik_500Medium;
+  font-weight: 500;
+  font-size: 16px;
+  padding-top: 10px;
+`;
