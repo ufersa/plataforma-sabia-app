@@ -5,17 +5,20 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as S from './styles';
 
-const cardWidth = (Dimensions.get('window').width / 3) - 26;
+const cardWidth = (Dimensions.get('window').width / 2) - 24;
 interface BankCardProps {
   data: {
     title: string
     background: ImageSourcePropType
+    target: string
   },
   navigation: StackNavigationProp<any, any>
 }
 
 export default ({ navigation, data }: BankCardProps): JSX.Element => {
   const { title, background } = data;
+
+  const navigate = () => navigation.navigate(data.target, { data });
 
   return (
     <TouchableOpacity
@@ -24,6 +27,7 @@ export default ({ navigation, data }: BankCardProps): JSX.Element => {
         borderRadius: 4,
       }}
       activeOpacity={0.7}
+      onPress={navigate}
     >
       <ImageBackground
         source={background}

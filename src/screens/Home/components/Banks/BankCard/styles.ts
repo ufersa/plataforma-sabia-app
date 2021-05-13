@@ -12,7 +12,7 @@ export const Container = styled.View`
 export const Title = styled(DefaultText)`
   font-family: Rubik_500Medium;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 21px;
   color: #ffffff;
   border-width: 2px;

@@ -6,4 +6,6 @@ declare module '@env' {
   export const ALGOLIA_PREFIX: string;
   export const ALGOLIA_INDEX_NAME_TECHNOLOGY: string;
   export const ALGOLIA_INDEX_NAME_SERVICE: string;
+  export const ALGOLIA_INDEX_NAME_IDEAS: string;
+  export const ALGOLIA_INDEX_NAME_ANNOUNCEMENTS: string;
 }

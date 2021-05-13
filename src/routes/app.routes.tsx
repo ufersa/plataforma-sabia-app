@@ -17,6 +17,8 @@ import {
 import Colors from '../utils/colors';
 import { CartProvider } from '../hooks/useCart';
 import HeaderButtons from '../components/HeaderButtons';
+import IdeasBank from '../screens/Banks/Ideas';
+import AnnouncementsBank from '../screens/Banks/Announcement';
 
 const App = createStackNavigator();
 
@@ -134,6 +136,30 @@ const AppRoutes = (): JSX.Element => (
         }}
         name="OrderChat"
         component={OrderChat}
+      />
+      <App.Screen
+        options={{
+          title: '',
+          headerBackTitleVisible: false,
+          headerTintColor: '#4A4A4A',
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+        }}
+        name="IdeasBank"
+        component={IdeasBank}
+      />
+      <App.Screen
+        options={{
+          title: '',
+          headerBackTitleVisible: false,
+          headerTintColor: '#4A4A4A',
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+        }}
+        name="AnnouncementsBank"
+        component={AnnouncementsBank}
       />
       <App.Screen
         options={{

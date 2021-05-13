@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { DefaultText } from '../../../../components';
 
 export const TechnologiesWrapper = styled.ScrollView`
-  height: 377px;
+  height: 370px;
   padding-left: 16px;
 `;
 

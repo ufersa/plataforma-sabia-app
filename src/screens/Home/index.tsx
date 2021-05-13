@@ -28,9 +28,7 @@ const Home = ({ navigation }: HomeProps): JSX.Element => (
         showsVerticalScrollIndicator={false}
       >
         <Technologies navigation={navigation} />
-        {false && (
-          <Banks navigation={navigation} />
-        )}
+        <Banks navigation={navigation} />
         <Services navigation={navigation} />
       </S.Container>
     </S.Wrapper>
