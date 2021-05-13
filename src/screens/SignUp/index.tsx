@@ -16,7 +16,6 @@ import * as S from './styles';
 
 import { register } from '../../services/auth';
 import Colors from '../../utils/colors';
-import { useAuth } from '../../hooks/useAuth';
 
 interface SignUpFormData {
   name: string
@@ -35,8 +34,8 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
     handleSubmit,
     errors,
     watch,
+    reset,
   } = useForm();
-  const { signIn } = useAuth();
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [validSignUp, setValidSignUp] = useState<boolean>(false);
@@ -58,18 +57,10 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           password: data.password,
           disclaimers: [1, 2, 3, 4, 5, 6, 7],
         }).then(async () => {
-          // setLoading(false);
-          // Alert.alert(
-          //   'Plataforma Sabia',
-          //   '🎉 Cadastro realizado com sucesso! Verifique seu e-mail para confirmá-lo.',
-          // );
-          // navigation.goBack();
-          await signIn({
-            email: data.email,
-            password: data.password,
-          });
           setLoading(false);
-          navigation.navigate('Root');
+          setValidSignUp(false);
+          reset();
+          navigation.navigate('Code', { email: data.email });
         });
       }
     }, [],
@@ -228,6 +219,18 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
             {loading ? 'Aguarde...' : 'Cadastrar'}
           </Button>
         </S.ButtonWrapper>
+        <S.TextTerms
+          style={{
+            fontFamily: 'Rubik_500Medium',
+            color: '#a5a5a5',
+            fontWeight: '500',
+            textAlign: 'center',
+            marginVertical: 16,
+          }}
+          onPress={() => navigation.navigate('Code')}
+        >
+          Confirmar conta
+        </S.TextTerms>
       </SafeAreaView>
     </>
   );

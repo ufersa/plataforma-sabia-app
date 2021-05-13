@@ -1,15 +1,15 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
-import { Button } from '..';
+import Button from '../Button';
 import { IllustrationLogin } from '../../utils/svgs';
 import * as S from './styles';
 
-interface AuthenticatedProps {
+interface UnauthenticatedProps {
   title: string
   onPress: () => void
 }
 
-const Authenticated = ({ title, onPress }: AuthenticatedProps) => (
+const Unauthenticated = ({ title, onPress }: UnauthenticatedProps) => (
   <S.Wrapper>
     <S.ImageWrapper>
       <SvgXml xml={IllustrationLogin} />
@@ -19,4 +19,4 @@ const Authenticated = ({ title, onPress }: AuthenticatedProps) => (
   </S.Wrapper>
 );
 
-export default Authenticated;
+export default Unauthenticated;

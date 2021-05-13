@@ -14,7 +14,7 @@ import * as S from './styles';
 import { getMessages } from '../../services/notifications';
 import { NotificationsProps } from './components/NotificationCard';
 import { formatDateHelper } from '../../utils/formats';
-import { Authenticated } from '../../components';
+import { Unauthenticated } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
 import { useModal } from '../../hooks/useModal';
 
@@ -83,7 +83,7 @@ const Notifications = (): JSX.Element => {
             ) : (
               <ActivityIndicator />
             )
-          ) : <Authenticated title="Deseja ver suas notificações?" onPress={() => openModal()} />}
+          ) : <Unauthenticated title="Deseja ver suas notificações?" onPress={() => openModal()} />}
         </S.Container>
       </S.Wrapper>
     </SafeAreaView>

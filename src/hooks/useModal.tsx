@@ -6,9 +6,13 @@ export interface Modal {
   openModal?: () => void
 }
 
+interface ModalProviderProps {
+  children: JSX.Element | JSX.Element[]
+}
+
 const ModalContext = createContext<Modal | null>(null);
 
-const ModalProvider = ({ children }: any): JSX.Element => {
+const ModalProvider = ({ children }: ModalProviderProps): JSX.Element => {
   const [modalState, setModalState] = useState<boolean>(false);
 
   const closeModal = () => setModalState(false);

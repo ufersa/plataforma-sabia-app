@@ -1,6 +1,7 @@
 export { default as Account } from './Account';
 export { default as Cart } from './Cart';
 export { default as Contact } from './Contact';
+export { default as Code } from './Code';
 export { default as Home } from './Home';
 export { default as OrderChat } from './OrderChat';
 export { default as Search } from './Search';

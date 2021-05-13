@@ -11,7 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import List from './components/List';
 import * as S from './styles';
 import { getOrders } from '../../services/orders';
-import { Authenticated } from '../../components';
+import { Unauthenticated } from '../../components';
 import { useAuth } from '../../hooks/useAuth';
 import { useModal } from '../../hooks/useModal';
 
@@ -60,7 +60,7 @@ const Requests = (): JSX.Element => {
             ) : (
               <ActivityIndicator />
             )
-          ) : <Authenticated title="Deseja ver seus pedidos?" onPress={() => openModal()} />}
+          ) : <Unauthenticated title="Deseja ver seus pedidos?" onPress={() => openModal()} />}
         </S.Container>
       </S.Wrapper>
     </SafeAreaView>
