@@ -6,14 +6,17 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Linking,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Input, Button } from '../../components';
+import { Input, Button, Checkbox } from '../../components';
 import * as S from './styles';
 
 import { register } from '../../services/auth';
+import Colors from '../../utils/colors';
+import { useAuth } from '../../hooks/useAuth';
 
 interface SignUpFormData {
   name: string
@@ -33,8 +36,10 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
     errors,
     watch,
   } = useForm();
+  const { signIn } = useAuth();
   const [focusedInput, setFocusedInput] = React.useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [validSignUp, setValidSignUp] = useState<boolean>(false);
 
   const field = watch();
 
@@ -52,13 +57,19 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           email: data.email,
           password: data.password,
           disclaimers: [1, 2, 3, 4, 5, 6, 7],
-        }).then(() => {
+        }).then(async () => {
+          // setLoading(false);
+          // Alert.alert(
+          //   'Plataforma Sabia',
+          //   '🎉 Cadastro realizado com sucesso! Verifique seu e-mail para confirmá-lo.',
+          // );
+          // navigation.goBack();
+          await signIn({
+            email: data.email,
+            password: data.password,
+          });
           setLoading(false);
-          Alert.alert(
-            'Plataforma Sabia',
-            '🎉 Cadastro realizado com sucesso! Verifique seu e-mail.',
-          );
-          navigation.goBack();
+          navigation.navigate('Root');
         });
       }
     }, [],
@@ -170,12 +181,47 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
                   />
                 )}
               />
+              <S.ChexboxWrapper>
+                <Checkbox onChange={(state: boolean) => setValidSignUp(state)} />
+                <S.TextTerms
+                  style={{
+                    flex: 1,
+                    marginLeft: 16,
+                  }}
+                >
+                  Li e concordo com a
+                  {' '}
+                  <S.TextTerms
+                    style={{
+                      fontFamily: 'Rubik_500Medium',
+                      color: Colors.primary,
+                      fontWeight: '500',
+                    }}
+                    onPress={() => Linking.openURL('https://plataformasabia.com/privacy-policy')}
+                  >
+                    Política de Privacidade
+                  </S.TextTerms>
+                  {' '}
+                  e os
+                  {' '}
+                  <S.TextTerms
+                    style={{
+                      fontFamily: 'Rubik_500Medium',
+                      color: Colors.primary,
+                      fontWeight: '500',
+                    }}
+                    onPress={() => Linking.openURL('https://plataformasabia.com/terms-of-use')}
+                  >
+                    Termos e Condições de Uso.
+                  </S.TextTerms>
+                </S.TextTerms>
+              </S.ChexboxWrapper>
             </S.Container>
           </ScrollView>
         </KeyboardAvoidingView>
         <S.ButtonWrapper>
           <Button
-            disabled={loading}
+            disabled={loading || !validSignUp}
             variant="secondary"
             onPress={handleSubmit(handleSignUp)}
           >

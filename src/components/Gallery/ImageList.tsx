@@ -1,13 +1,6 @@
-/**
- * Copyright (c) JOB TODAY S.A. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-import React from "react";
-import { Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import styled from 'styled-components/native';
 
 type Props = {
   images: string[];
@@ -18,41 +11,41 @@ type Props = {
 const IMAGE_WIDTH = 120;
 const IMAGE_HEIGH = 120;
 
+const ScrollViewWrapper = styled.ScrollView`
+  flex-grow: 0;
+`;
+
+const ImageTouchable = styled.TouchableOpacity`
+  margin-right: 10px;
+`;
+
+const ImageWrapper = styled.Image`
+  width: ${IMAGE_WIDTH}px;
+  height: ${IMAGE_HEIGH}px;
+  border-radius: 10px;
+`;
+
 const ImageList = ({ images, shift = 0, onPress }: Props) => (
-  <ScrollView
+  <ScrollViewWrapper
     horizontal
-    style={styles.root}
     contentOffset={{ x: shift * IMAGE_WIDTH, y: 0 }}
-    contentContainerStyle={styles.container}
+    contentContainerStyle={{
+      flex: 0,
+      paddingLeft: 10,
+      marginBottom: 10,
+    }}
+    showsHorizontalScrollIndicator={false}
   >
     {images.map((imageUrl, index) => (
-      <TouchableOpacity
-        style={styles.button}
+      <ImageTouchable
         key={`${imageUrl}_${index}`}
         activeOpacity={0.8}
         onPress={() => onPress(index)}
       >
-        <Image source={{ uri: imageUrl }} style={styles.image} />
-      </TouchableOpacity>
+        <ImageWrapper source={{ uri: imageUrl }} />
+      </ImageTouchable>
     ))}
-  </ScrollView>
+  </ScrollViewWrapper>
 );
-
-const styles = StyleSheet.create({
-  root: { flexGrow: 0 },
-  container: {
-    flex: 0,
-    paddingLeft: 10,
-    marginBottom: 10
-  },
-  button: {
-    marginRight: 10
-  },
-  image: {
-    width: IMAGE_WIDTH,
-    height: IMAGE_HEIGH,
-    borderRadius: 10
-  }
-});
 
 export default ImageList;

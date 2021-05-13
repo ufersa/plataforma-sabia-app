@@ -1,9 +1,7 @@
 import styled from 'styled-components/native';
 import DefaultText from '../Text';
 
-export const Wrapper = styled.View`
-  flex: 1;
-`;
+export const Wrapper = styled.View``;
 
 export const Container = styled.View`
   background-color: #ffffff;
@@ -36,7 +34,7 @@ export const TitleWrapper = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
-  padding-horizontal: 16px;
+  padding-horizontal: 24px;
 `;
 
 export const Title = styled(DefaultText)`

@@ -1,22 +1,26 @@
 import React from 'react';
-import { View, ActivityIndicator } from 'react-native';
-import colors from '../utils/colors';
-import AuthRoutes from './auth.routes';
 import AppRoutes from './app.routes';
-import { useAuth } from '../hooks/useAuth';
+import { useModal } from '../hooks/useModal';
+import { Modal as Dialog } from '../components';
+import ModalLogin from '../components/ModalLogin';
 
-const Routes: React.FC = () => {
-  const { user, loading } = useAuth();
+const Routes = (): JSX.Element => {
+  const { modalState, closeModal } = useModal();
 
-  if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color={colors.border} />
-      </View>
-    );
-  }
-
-  return user ? <AppRoutes /> : <AuthRoutes />;
+  return (
+    <>
+      <AppRoutes />
+      <Dialog
+        title="Para continuar, digite e-mail e senha ou crie uma conta"
+        animationType="slide"
+        visible={modalState}
+        height="50%"
+        onClose={() => closeModal()}
+      >
+        <ModalLogin onSuccess={() => closeModal()} />
+      </Dialog>
+    </>
+  );
 };
 
 export default Routes;

@@ -6,6 +6,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { FlatList } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
@@ -126,6 +127,7 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
 
   return (
     <>
+      <StatusBar style="dark" />
       <S.Wrapper>
         <FlatList
           style={{ flex: 1, height: '100%' }}
@@ -133,16 +135,14 @@ const OrderChat = ({ route: { params: { orderId } } }: OrderChatProps): JSX.Elem
           onEndReached={loadMore}
           onEndReachedThreshold={0.7}
           ListFooterComponent={() => (
-            <>
+            messages.length !== 0 && (
               <S.LoadMore
-                onPress={() => {
-                  loadMore();
-                }}
+                onPress={() => loadMore()}
               >
                 <S.LoadMoreText>Carregar mais mensagens  </S.LoadMoreText>
                 <Feather name="refresh-ccw" size={24} color="#00A688" />
               </S.LoadMore>
-            </>
+            )
           )}
           data={messages}
           keyExtractor={(item, idx) => `${item.id}-${idx}`}

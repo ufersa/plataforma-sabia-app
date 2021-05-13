@@ -1,5 +1,5 @@
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Platform, Share } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import { Technology } from '../../hooks/useTechnology';
@@ -22,39 +22,45 @@ const HeaderButtons = ({
   const solutionTypeProperty: string = `${type}Bookmarks`;
 
   useEffect(() => {
-    const solutionBookmarks = user[solutionTypeProperty];
-    const liked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === data.id);
-    setState(liked);
+    if (user) {
+      const solutionBookmarks = user[solutionTypeProperty];
+      const liked = solutionBookmarks?.some((bookmark: Technology) => bookmark.id === data.id);
+      setState(liked);
+    }
   }, [user, type, state, solutionTypeProperty]);
 
   const solutionType = `${type}Id`;
 
-  const handleLike = async () => {
-    setState(!state);
+  const handleLike = useCallback(
+    async () => {
+      setState(!state);
 
-    await handleBookmark({
-      active: state,
-      [solutionType]: data.id,
-      userId: user?.id,
-    });
+      await handleBookmark({
+        active: state,
+        [solutionType]: data.id,
+        userId: user?.id,
+      });
 
-    updateUser(await getMe());
-  };
+      updateUser(await getMe());
+    }, [state, solutionType, user, data],
+  );
 
   return (
     <S.ButtonsHeaderWrapper>
-      <Button
-        size="md"
-        variant="orange-light"
-        style={{ width: 40 }}
-        onPress={() => handleLike()}
-      >
-        <FontAwesome5
-          name="heart"
-          size={16}
-          solid={state}
-        />
-      </Button>
+      {user && (
+        <Button
+          size="md"
+          variant="orange-light"
+          style={{ width: 40 }}
+          onPress={() => handleLike()}
+        >
+          <FontAwesome5
+            name="heart"
+            size={16}
+            solid={state}
+          />
+        </Button>
+      )}
       <Button
         size="md"
         variant="info-light"

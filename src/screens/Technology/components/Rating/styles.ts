@@ -5,7 +5,7 @@ import { DefaultText } from '../../../../components';
 import Colors from '../../../../utils/colors';
 
 export const Wrapper = styled.View`
-  margin-top: 32px;
+  margin-vertical: 32px;
 `;
 
 export const Title = styled(DefaultText)`

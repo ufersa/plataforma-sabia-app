@@ -15,6 +15,8 @@ import {
   Button, Input, Modal, Tabs,
 } from '../../../../components';
 import Colors from '../../../../utils/colors';
+import { useAuth } from '../../../../hooks/useAuth';
+import { useModal } from '../../../../hooks/useModal';
 
 interface ReviewProps {
   content: string
@@ -165,15 +167,11 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
   return (
     <>
       <Stars size={36} active updateScore={setScore} />
-
       <S.ReviewForm>
-
         <S.ModalWrapper showsVerticalScrollIndicator={false}>
-
           <S.ReviewLabel>
             Opinião Geral
           </S.ReviewLabel>
-
           <Controller
             name="review"
             control={control}
@@ -191,7 +189,6 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
               />
             )}
           />
-
           <Tabs
             tabs={[
               {
@@ -296,16 +293,13 @@ const ReviewForm = ({ onFinish }: ReviewFormProps): JSX.Element => {
               },
             ]}
           />
-
         </S.ModalWrapper>
       </S.ReviewForm>
-
       <S.ButtonWrapper>
         <Button disabled={loading} onPress={() => { handleReview(); }}>
           {`${loading ? 'Enviando...' : 'Finalizar e enviar avaliação'}`}
         </Button>
       </S.ButtonWrapper>
-
     </>
   );
 };
@@ -349,6 +343,8 @@ const Reviews = ({ data }: ReviewsProps): JSX.Element => {
 };
 
 const Rating = (): JSX.Element => {
+  const { user } = useAuth();
+  const { openModal } = useModal();
   const technology = useTechnology();
   const [reviews, setReviews] = useState(null);
   const [rating, setRating] = useState(null);
@@ -400,7 +396,15 @@ const Rating = (): JSX.Element => {
         <View style={{ paddingHorizontal: 16, marginBottom: 10 }}><S.RateCommentText>Nenhuma avaliação encontrada.</S.RateCommentText></View>
       )}
 
-      <S.AnswersViewMore activeOpacity={0.7} onPress={() => setShowModal(true)}>
+      <S.AnswersViewMore
+        activeOpacity={0.7}
+        onPress={
+          () => {
+            if (user) setShowModal(true);
+            openModal();
+          }
+        }
+      >
         <Ionicons name="star-outline" size={20} color={Colors.primary} />
         <S.AnswersViewMoreText>
           Deixe a sua opinião

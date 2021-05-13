@@ -266,3 +266,7 @@ export const Filter = ({ selected, data, onChange }: FilterProps): JSX.Element =
     ))}
   </>
 );
+
+export const ButtonWrapper = styled.View`
+  margin-bottom: 24px;
+`;

@@ -5,6 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import Colors from '../../../../utils/colors';
 import { DefaultText } from '../../../../components';
 import { useAuth } from '../../../../hooks/useAuth';
+import { useModal } from '../../../../hooks/useModal';
 
 export const Wrapper = styled.View`
   height: 55px;
@@ -48,6 +49,8 @@ export const UserWrapper = styled.View`
   width: 40px;
   height: 40px;
   border-radius: 8px;
+  align-items: center;
+  justify-content: center;
 `;
 
 const ImageAvatar = styled.Image`
@@ -59,14 +62,19 @@ const ImageAvatar = styled.Image`
 export const User = (): JSX.Element => {
   const navigation = useNavigation();
   const { user } = useAuth();
+  const { openModal } = useModal();
 
   return (
     <Touch
       activeOpacity={0.7}
-      onPress={() => navigation.navigate('Menu')}
+      onPress={() => (user ? navigation.navigate('Menu') : openModal())}
     >
       <UserWrapper>
-        <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.full_name}&size=40` }} />
+        {user ? (
+          <ImageAvatar source={{ uri: `https://ui-avatars.com/api/?name=${user?.full_name}&size=40` }} />
+        ) : (
+          <Feather name="user" size={24} />
+        )}
       </UserWrapper>
     </Touch>
   );
