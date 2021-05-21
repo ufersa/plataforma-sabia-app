@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { DefaultText } from '../../../../components';
+import { DefaultText } from '@components/.';
 
 export const ListWrapper = styled.View`
   height: 100%;

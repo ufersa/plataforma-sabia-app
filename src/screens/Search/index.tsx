@@ -9,10 +9,10 @@ import {
   ALGOLIA_APP_ID,
   ALGOLIA_ADMIN_KEY,
 } from '@env';
+import { Input, Tabs } from '@components/.';
+import { algoliaIndexes } from '@utils/algolia';
 import * as S from './styles';
-import { Input, Tabs } from '../../components';
 import SearchList from './components/SearchList';
-import { algoliaIndexes } from '../../utils/algolia';
 
 const searchClient = algoliasearch(
   ALGOLIA_APP_ID,

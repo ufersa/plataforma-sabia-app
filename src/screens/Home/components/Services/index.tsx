@@ -2,10 +2,10 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Placeholder } from '@components/.';
+import useFind from '@hooks/useFind';
 import TechnologyCard from '../Card';
 import * as S from './styles';
-import { Placeholder } from '../../../../components';
-import useFind from '../../../../hooks/useFind';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>

@@ -6,11 +6,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Alert, Image } from 'react-native';
 import { format, parseISO } from 'date-fns';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Card, Badge, Button } from '@components/.';
+import { formatMoney } from '@utils/helper';
+import { UseStatus, FundingStatus } from '@utils/requests';
+import { cancelOrder } from '@services/orders';
 import * as S from './styles';
-import { Card, Badge, Button } from '../../components';
-import { formatMoney } from '../../utils/helper';
-import { UseStatus, FundingStatus } from '../../utils/requests';
-import { cancelOrder } from '../../services/orders';
 
 interface RequestsDetailsProps {
   route: NavigatorScreenParams<any, any>

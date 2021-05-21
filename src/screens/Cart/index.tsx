@@ -10,15 +10,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import * as S from './styles';
 import {
   Input,
   InputNumber,
   Button,
   Modal,
-} from '../../components';
-import { useCart } from '../../hooks/useCart';
-import { createOrder } from '../../services/orders';
+} from '@components/.';
+import { useCart } from '@hooks/useCart';
+import { createOrder } from '@services/orders';
+import * as S from './styles';
 
 interface CartFormProps {
   comment: string

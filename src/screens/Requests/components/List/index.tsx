@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import React from 'react';
 import { ListRenderItemInfo } from 'react-native';
-import { DefaultText } from '../../../../components';
+import { DefaultText } from '@components/.';
 import RequestCard from '../RequestCard';
 import * as S from './styles';
 

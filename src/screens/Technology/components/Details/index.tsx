@@ -11,21 +11,21 @@ import ImageView from '@hamidfzm/react-native-image-viewing';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import MapView, { Marker } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as S from './styles';
-import { Accordion, Pins, Button } from '../../../../components';
-import Colors from '../../../../utils/colors';
-import { useTechnology } from '../../../../hooks/useTechnology';
-import { unitsOptions } from '../../../../utils/technology';
+import { Accordion, Pins, Button } from '@components/.';
+import Colors from '@utils/colors';
+import { useTechnology } from '@hooks/useTechnology';
+import { unitsOptions } from '@utils/technology';
 import {
   formatCurrencyToInt,
   formatMoney,
   technologyStages,
   zoomToAltitude,
-} from '../../../../utils/helper';
-import ImageList from '../../../../components/Gallery/ImageList';
-import { getTechnologyTerms } from '../../../../services/technology';
-import { useAuth } from '../../../../hooks/useAuth';
-import { useModal } from '../../../../hooks/useModal';
+} from '@utils/helper';
+import ImageList from '@components/Gallery/ImageList';
+import { getTechnologyTerms } from '@services/technology';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
+import * as S from './styles';
 
 interface StagesProps {
   currentStep: number

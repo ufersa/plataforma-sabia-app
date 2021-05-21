@@ -1,5 +1,5 @@
 import React from 'react';
-import { RequestsStatus } from '../../utils/status';
+import { RequestsStatus } from '@utils/status';
 import * as S from './styles';
 
 export interface BadgeProps {

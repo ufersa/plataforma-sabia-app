@@ -11,11 +11,11 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Input, Button, Checkbox } from '../../components';
-import * as S from './styles';
+import { Input, Button, Checkbox } from '@components/.';
 
-import { register } from '../../services/auth';
-import Colors from '../../utils/colors';
+import { register } from '@services/auth';
+import Colors from '@utils/colors';
+import * as S from './styles';
 
 interface SignUpFormData {
   name: string

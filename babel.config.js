@@ -15,6 +15,21 @@ module.exports = (api) => {
           safe: false,
           allowUndefined: false,
         },
+      ], [
+        require.resolve('babel-plugin-module-resolver'),
+        {
+          // cwd: 'babelrc',
+          extensions: ['.ts', '.tsx', '.js', '.ios.js', '.android.js'],
+          alias: {
+            '@components': './src/components',
+            '@hooks': './src/hooks',
+            '@routes': './src/routes',
+            '@screens': './src/screens',
+            '@services': './src/services',
+            '@utils': './src/utils',
+            '@assets': './assets',
+          },
+        },
       ],
     ],
   };

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
-import Colors from '../../utils/colors';
-import { DefaultText } from '../../components';
+import Colors from '@utils/colors';
+import { DefaultText } from '@components/.';
 
 export const Wrapper = styled.SafeAreaView`
   background-color: #ffffff;

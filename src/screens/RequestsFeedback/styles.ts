@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { DefaultText } from '../../components';
-import Colors from '../../utils/colors';
+import { DefaultText } from '@components/.';
+import Colors from '@utils/colors';
 
 export const Wrapper = styled.SafeAreaView`
   flex: 1;

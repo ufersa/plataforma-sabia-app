@@ -2,9 +2,9 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
-import { Card, Badge } from '../../../../components';
+import { Card, Badge } from '@components/.';
+import { formatMoney } from '@utils/helper';
 import * as S from './styles';
-import { formatMoney } from '../../../../utils/helper';
 
 interface RequestCardProps {
   service: {

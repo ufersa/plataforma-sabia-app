@@ -2,7 +2,7 @@
 import React, {
   useState, createContext, useContext, useEffect, useCallback,
 } from 'react';
-import { getAttachments, getTechnology, getTechnologyCosts } from '../services/technology';
+import { getAttachments, getTechnology, getTechnologyCosts } from '@services/technology';
 
 export interface Technology {
   id?: number;

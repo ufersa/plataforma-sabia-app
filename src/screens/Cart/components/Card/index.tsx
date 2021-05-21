@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, TouchableOpacity } from 'react-native';
+import { formatMoney } from '@utils/helper';
+import { Units } from '@utils/units';
 import * as S from './styles';
-import { formatMoney } from '../../../../utils/helper';
-import { Units } from '../../../../utils/units';
 
 export default (props: any): JSX.Element => {
   const {

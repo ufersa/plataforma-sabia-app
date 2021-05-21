@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import {
   DefaultText,
-} from '../../components';
+} from '@components/.';
 
 export const Wrapper = styled.SafeAreaView`
   flex: 1;

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Platform, StatusBar as StatusBarHelper, SafeAreaView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import User from '../../components/User';
+import User from '@components/User';
 
 import * as S from './styles';
 

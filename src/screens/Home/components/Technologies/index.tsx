@@ -2,12 +2,12 @@
 /* eslint-disable camelcase */
 import React, { useCallback, useEffect } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import TechnologyCard from '../Card';
+import { Placeholder } from '@components/.';
+import useFind from '@hooks/useFind';
+import { useAuth } from '@hooks/useAuth';
+import { getBookmarks } from '@services/bookmark';
 import * as S from './styles';
-import { Placeholder } from '../../../../components';
-import useFind from '../../../../hooks/useFind';
-import { useAuth } from '../../../../hooks/useAuth';
-import { getBookmarks } from '../../../../services/bookmark';
+import TechnologyCard from '../Card';
 
 interface TechnologiesProps {
   navigation: StackNavigationProp<any, any>
