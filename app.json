@@ -3,7 +3,7 @@
     "name": "Plataforma Sabiá",
     "slug": "plataforma-sabia",
     "owner": "plataformasabia",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.plataformasabia.app",
-      "buildNumber": "1.1.0",
+      "buildNumber": "1.2.0",
       "supportsTablet": false,
       "config": {
         "googleMapsApiKey": "AIzaSyDlQrq14K2OTjUxioB4fW7NJTzZQ2ZFtxA"
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "com.plataformasabia.app",
-      "versionCode": 10,
+      "versionCode": 12,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#00a688"
