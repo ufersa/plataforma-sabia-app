@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import DefaultText from '../../components/Text';
-import { useAuth } from '../../hooks/useAuth';
-import Colors from '../../utils/colors';
+import DefaultText from '@components/Text';
+import { useAuth } from '@hooks/useAuth';
+import Colors from '@utils/colors';
 
 interface MenuProps {
   title: string

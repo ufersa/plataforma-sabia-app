@@ -14,11 +14,11 @@ import {
   Input,
   Select,
   Modal,
-} from '../../components';
+} from '@components/.';
+import { sendContact, SendContactProps } from '@services/contact';
+import Colors from '@utils/colors';
+import { useAuth } from '@hooks/useAuth';
 import * as S from './styles';
-import { sendContact, SendContactProps } from '../../services/contact';
-import Colors from '../../utils/colors';
-import { useAuth } from '../../hooks/useAuth';
 
 const Contact = (): JSX.Element => {
   const navigation = useNavigation();

@@ -10,11 +10,11 @@ import { StatusBar } from 'expo-status-bar';
 import { FlatList } from 'react-native-gesture-handler';
 import { Feather } from '@expo/vector-icons';
 import { KeyboardAccessoryView } from 'react-native-keyboard-accessory';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@hooks/useAuth';
+import { getChatInstance, getChatMessages, sendChatMessage } from '@services/chat';
+import { isIphoneX } from '@utils/helper';
+import { useKeyboard } from '@hooks/useKeyboard';
 import { MessageItem } from './components/MessageItem';
-import { getChatInstance, getChatMessages, sendChatMessage } from '../../services/chat';
-import { isIphoneX } from '../../utils/helper';
-import { useKeyboard } from '../../hooks/useKeyboard';
 import * as S from './styles';
 
 interface OrderChatProps {

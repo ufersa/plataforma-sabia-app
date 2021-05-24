@@ -2,7 +2,7 @@
 /* eslint-disable camelcase */
 import React, { useEffect, useState } from 'react';
 import { ListRenderItemInfo } from 'react-native';
-import { DefaultText, Modal, Button } from '../../../../components';
+import { DefaultText, Modal, Button } from '@components/.';
 import FavoriteCard from '../FavoriteCard';
 import * as S from './styles';
 import { RemoveBookmarkProps } from '../../index';

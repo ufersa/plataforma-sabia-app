@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import _ from 'lodash';
-import List from './components/List';
-import * as S from './styles';
-import { getMessages } from '../../services/notifications';
+import { getMessages } from '@services/notifications';
+import { formatDateHelper } from '@utils/formats';
+import { Unauthenticated } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
 import { NotificationsProps } from './components/NotificationCard';
-import { formatDateHelper } from '../../utils/formats';
-import { Unauthenticated } from '../../components';
-import { useAuth } from '../../hooks/useAuth';
-import { useModal } from '../../hooks/useModal';
+import * as S from './styles';
+import List from './components/List';
 
 interface NotificationsListProps {
   date: string

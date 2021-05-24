@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
-import Colors from '../../utils/colors';
+import Colors from '@utils/colors';
 import * as S from './styles';
 
 interface InputProps extends TextInputProps {

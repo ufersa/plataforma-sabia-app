@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { DefaultText, Input } from '../../../components';
-import colors from '../../../utils/colors';
+import { DefaultText, Input } from '@components/.';
+import colors from '@utils/colors';
 
 export const Wrapper = styled.SafeAreaView`
   width: 100%;

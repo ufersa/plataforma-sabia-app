@@ -12,9 +12,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
-import { login } from '../services/auth';
-import { createToken, deleteToken } from '../services/deviceToken';
-import api from '../services/api';
+import { login } from '@services/auth';
+import { createToken, deleteToken } from '@services/deviceToken';
+import api from '@services/api';
 
 interface User {
   id: string;

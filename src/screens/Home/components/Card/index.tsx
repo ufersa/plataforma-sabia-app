@@ -8,15 +8,15 @@ import {
   Modal,
   Button,
   Placeholder,
-} from '../../../../components';
+} from '@components/.';
+import { formatMoney } from '@utils/helper';
+import { useAuth } from '@hooks/useAuth';
+import { handleBookmark } from '@services/bookmark';
+import { Technology } from '@hooks/useTechnology';
+import { useCart } from '@hooks/useCart';
+import { getMe } from '@services/auth';
+import { useModal } from '@hooks/useModal';
 import * as S from './styles';
-import { formatMoney } from '../../../../utils/helper';
-import { useAuth } from '../../../../hooks/useAuth';
-import { handleBookmark } from '../../../../services/bookmark';
-import { Technology } from '../../../../hooks/useTechnology';
-import { useCart } from '../../../../hooks/useCart';
-import { getMe } from '../../../../services/auth';
-import { useModal } from '../../../../hooks/useModal';
 
 interface DataCardProps {
   id: number

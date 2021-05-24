@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { SignIn, SignUp } from '../screens';
-import Colors from '../utils/colors';
+import { SignIn, SignUp } from '@screens/.';
+import Colors from '@utils/colors';
 
 const Auth = createStackNavigator();
 

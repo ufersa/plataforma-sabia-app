@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
-import { DefaultText } from '../../../../components';
+import { DefaultText } from '@components/.';
 
 export const CardWrapper = styled.View``;
 

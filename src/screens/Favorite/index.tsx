@@ -8,13 +8,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import List from './components/List';
+import { getUserBookmarks } from '@services/technology';
+import { handleBookmark } from '@services/bookmark';
+import { Unauthenticated } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
 import * as S from './styles';
-import { getUserBookmarks } from '../../services/technology';
-import { handleBookmark } from '../../services/bookmark';
-import { Unauthenticated } from '../../components';
-import { useAuth } from '../../hooks/useAuth';
-import { useModal } from '../../hooks/useModal';
+import List from './components/List';
 
 export interface RemoveBookmarkProps {
   id: string,

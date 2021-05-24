@@ -3,20 +3,20 @@ import React, { useState } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { formatDistance } from '../../utils/formats';
-import { Button, Modal } from '../../components';
+import { formatDistance } from '@utils/formats';
+import { Button, Modal } from '@components/.';
+import { TechnologyProvider } from '@hooks/useTechnology';
+import { useAuth } from '@hooks/useAuth';
+import { useCart } from '@hooks/useCart';
+import { formatMoney } from '@utils/helper';
+import { useModal } from '@hooks/useModal';
+import * as S from './styles';
 import {
   About,
   Details,
   Rating,
   FAQ,
 } from './components';
-import * as S from './styles';
-import { TechnologyProvider } from '../../hooks/useTechnology';
-import { useAuth } from '../../hooks/useAuth';
-import { useCart } from '../../hooks/useCart';
-import { formatMoney } from '../../utils/helper';
-import { useModal } from '../../hooks/useModal';
 
 interface TechnologyProps {
   navigation: StackNavigationProp<any, any>

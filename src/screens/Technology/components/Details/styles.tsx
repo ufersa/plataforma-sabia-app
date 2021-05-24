@@ -3,8 +3,8 @@ import React from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { SvgXml } from 'react-native-svg';
-import { DefaultText, Pins } from '../../../../components';
-import Colors from '../../../../utils/colors';
+import { DefaultText, Pins } from '@components/.';
+import Colors from '@utils/colors';
 
 export const Wrapper = styled.View`
   border-top-width: 1px;

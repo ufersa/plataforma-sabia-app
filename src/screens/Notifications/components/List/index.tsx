@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { ListRenderItemInfo } from 'react-native';
+import { DefaultText } from '@components/.';
 import NotificationCard, { NotificationsProps } from '../NotificationCard';
-import { DefaultText } from '../../../../components';
 import * as S from './styles';
 
 interface ListItemProps {

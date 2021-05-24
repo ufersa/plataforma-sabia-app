@@ -1,8 +1,8 @@
 import React from 'react';
+import { useModal } from '@hooks/useModal';
+import { Modal as Dialog } from '@components/.';
+import ModalLogin from '@components/ModalLogin';
 import AppRoutes from './app.routes';
-import { useModal } from '../hooks/useModal';
-import { Modal as Dialog } from '../components';
-import ModalLogin from '../components/ModalLogin';
 
 const Routes = (): JSX.Element => {
   const { modalState, closeModal } = useModal();

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
+import Colors from '@utils/colors';
 import DefaultText from '../Text';
-import Colors from '../../utils/colors';
 import { BadgeProps } from '.';
 
 const buildStyle = (variant: string = 'default') => {
