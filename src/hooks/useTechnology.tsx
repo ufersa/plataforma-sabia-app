@@ -14,6 +14,7 @@ export interface Technology {
     target_audience: string;
     biome: string;
   }
+  knowledgeAreas: string;
   currentLevel: number;
   primary_purpose: string;
   application_mode: string;
@@ -46,7 +47,7 @@ interface TechnologyProps {
 const TechnologyContext = createContext<Technology | null>(null);
 
 const TechnologyProvider = ({ children, technologyId }: TechnologyProps): JSX.Element => {
-  const [technology, setTechnology] = useState<Technology>({});
+  const [technology, setTechnology] = useState<Technology | {}>({});
 
   const loadData = useCallback(
     async () => {
