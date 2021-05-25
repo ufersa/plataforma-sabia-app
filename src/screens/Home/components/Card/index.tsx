@@ -21,7 +21,7 @@ import * as S from './styles';
 interface DataCardProps {
   id: number
   title: string
-  slug: string
+  slug?: string
   image: string
   price: number
   description?: string

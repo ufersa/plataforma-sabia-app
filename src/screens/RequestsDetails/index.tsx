@@ -57,6 +57,38 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
     }, [id],
   );
 
+  const navigate = () => (type === 'technology'
+    ? navigation.navigate('Technology', {
+      data: {
+        id: technology.id,
+        title: technology.title,
+        slug: technology.slug,
+        image: technology.thumbnail?.url,
+        description: technology.description,
+        price: technology.costs.length ? technology.costs[0].price : 0,
+        createdAt: technology.created_at,
+        isSeller: !!(technology.costs.length && technology.costs[0].is_seller === 1),
+        type: 'technology',
+        terms: technology.terms,
+      },
+      type,
+    })
+    : navigation.navigate('Technology', {
+      data: {
+        id: service.id,
+        title: service.name,
+        description: service.description,
+        image: service.thumbnail?.url,
+        price: service.price,
+        createdAt: service.created_at,
+        measureUnit: service.measure_unit,
+        institution: service.user.institution.name,
+        isSeller: true,
+        type: 'service',
+      },
+      type,
+    }));
+
   return (
     <>
       <StatusBar style="light" />
@@ -65,21 +97,25 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
           <Card>
             <S.CardContainer>
               <S.CardImage>
-                <Image
-                  source={{
-                    uri: type === 'technology' ? technology.thumbnail?.url : service.thumbnail?.url,
-                  }}
-                  style={{
-                    width: 110,
-                    height: 83,
-                    borderRadius: 8,
-                  }}
-                />
+                <S.NavigateLink activeOpacity={0.7} onPress={navigate}>
+                  <Image
+                    source={{
+                      uri: type === 'technology' ? technology.thumbnail?.url : service.thumbnail?.url,
+                    }}
+                    style={{
+                      width: 110,
+                      height: 83,
+                      borderRadius: 8,
+                    }}
+                  />
+                </S.NavigateLink>
               </S.CardImage>
               <S.CardInfo>
-                <S.Title numberOfLines={1}>
-                  {type === 'technology' ? technology.title : service.name}
-                </S.Title>
+                <S.NavigateLink activeOpacity={0.7} onPress={navigate}>
+                  <S.Title numberOfLines={1}>
+                    {type === 'technology' ? technology.title : service.name}
+                  </S.Title>
+                </S.NavigateLink>
                 {type === 'service' && (
                   <S.CardPrice>
                     <S.DetailTitle>Subtotal</S.DetailTitle>
