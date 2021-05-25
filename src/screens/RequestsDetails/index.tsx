@@ -187,8 +187,8 @@ const CancelForm = ({ order } : CancelFormProps): JSX.Element => {
       try {
         setLoading(true);
         await cancelOrder(id, type, reason);
-        setLoading(false);
         navigation.navigate('Requests');
+        setLoading(false);
       } catch (err) {
         setLoading(false);
         Alert.alert(
