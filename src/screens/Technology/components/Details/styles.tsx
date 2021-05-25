@@ -14,10 +14,10 @@ export const Wrapper = styled.View`
 
 export const Subtitle = styled(DefaultText)`
   color: ${Colors.primary};
-  font-family: Rubik_500Medium;
+  font-family: Montserrat_700Bold;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 16px;
+  line-height: 24px;
   margin-vertical: 8px;
 `;
 
@@ -33,8 +33,8 @@ export const Description = styled(DefaultText)`
 
 export const DetailsText = styled(Description)`
   font-weight: 400;
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 24px;
   margin-bottom: 8px;
   text-align: justify;
 `;

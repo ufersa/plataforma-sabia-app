@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import {
   normalizeAttachments,
-  normalizeCosts, normalizeTaxonomies, normalizeTerms, normalizeTrl,
+  normalizeCosts, normalizeKnowledgeAreas, normalizeTaxonomies, normalizeTerms, normalizeTrl,
 } from '../utils/technology';
 import api from './api';
 
@@ -40,6 +40,8 @@ export const getTechnology = async (id: number, options: OptionsProp) => {
   if (options.normalize && response?.data?.terms) {
     response.data.terms = normalizeTerms(response.data.terms);
   }
+
+  response.data.knowledgeAreas = await getCNPQAreas(response.data.knowledge_area_id, { normalizeKnowledgeAreas: options.normalize });
 
   const { slug } = normalizeTrl(response.data.terms);
   response.data.currentLevel = Number(slug.split('-', 2)[1]) || 1;
@@ -261,6 +263,29 @@ export const createTechnologyReview = async (data: CreateReviewProps) => {
 
   if (response.status !== 200) {
     return false;
+  }
+
+  return response.data;
+};
+
+/**
+ * Gets technologies CNPQ areas
+ *
+ * @param {string|number} id Optional ID to retrieve single area
+ * @param {object} options Optional parameters
+ * @param {boolean} [options.normalizeKnowledgeAreas] Normalizes received area to reuse in RHF
+ */
+export const getCNPQAreas = async (id: number, options:any = {}) => {
+  const response = await api.get(`areas${id ? `/${id}` : ''}`, {
+    params: {
+      ...options,
+    },
+  });
+
+  if (response.status !== 200) return false;
+
+  if (options.normalizeKnowledgeAreas) {
+    response.data = normalizeKnowledgeAreas(response.data);
   }
 
   return response.data;
