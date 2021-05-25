@@ -129,7 +129,7 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 </S.OpenChat>
               </S.Detail>
             </S.CardDetails>
-            {(status === 'open' || status === 'requested') && (
+            {['open', 'requested'].includes(status) && (
               <S.ButtonWrapper>
                 <Button
                   variant="danger"
