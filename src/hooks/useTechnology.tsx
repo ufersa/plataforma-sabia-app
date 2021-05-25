@@ -13,11 +13,23 @@ export interface Technology {
     dimension: string;
     target_audience: string;
     biome: string;
+    government_program: string;
   }
-  knowledgeAreas: string;
+  knowledgeAreas: {
+    greatArea: {name: string}
+    area: {name: string}
+    subArea: {name: string}
+    speciality: {name: string}
+  };
+  public_domain: string;
+  patent: string;
   currentLevel: number;
   primary_purpose: string;
   application_mode: string;
+  application_examples: string;
+  solves_problem: string;
+  contribution: string;
+  risks: string;
   requirements: string;
   installation_time: number;
   costs?: {
@@ -44,10 +56,10 @@ interface TechnologyProps {
   technologyId: number
 }
 
-const TechnologyContext = createContext<Technology | null>(null);
+const TechnologyContext = createContext<Technology | {}>(null);
 
 const TechnologyProvider = ({ children, technologyId }: TechnologyProps): JSX.Element => {
-  const [technology, setTechnology] = useState<Technology | {}>({});
+  const [technology, setTechnology] = useState<Technology | {} >({});
 
   const loadData = useCallback(
     async () => {
