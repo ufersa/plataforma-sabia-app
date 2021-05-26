@@ -113,6 +113,8 @@ export const OpenChat = styled.TouchableOpacity`
   color: #3498DB;
 `;
 
+export const NavigateLink = styled(OpenChat)``;
+
 export const OpenChatText = styled(DetailDescription)`
   color: #3498DB;
   margin-left: 10px;
