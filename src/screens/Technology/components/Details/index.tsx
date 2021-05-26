@@ -100,10 +100,12 @@ export const Technology = () => {
         <S.Highlight>Área: </S.Highlight>
         {technology.knowledgeAreas?.area.name}
       </S.DetailsText>
-      <S.DetailsText>
-        <S.Highlight>Sub-área: </S.Highlight>
-        {technology.knowledgeAreas?.subArea.name}
-      </S.DetailsText>
+      {technology.knowledgeAreas?.subArea ? (
+        <S.DetailsText>
+          <S.Highlight>Sub-área: </S.Highlight>
+          {technology.knowledgeAreas?.subArea.name}
+        </S.DetailsText>
+      ) : (<></>)}
       {technology.knowledgeAreas?.speciality ? (
         <S.DetailsText>
           <S.Highlight>Especialidade: </S.Highlight>
@@ -132,7 +134,7 @@ export const Technology = () => {
       </S.DetailsText>
       <S.DetailsText>
         <S.Highlight>Programa Governamental: </S.Highlight>
-        {technology.taxonomies?.government_program}
+        {technology.taxonomies?.government_program || 'Nenhum'}
       </S.DetailsText>
       <S.DetailsText>
         <S.Highlight>Registro de patente depositado: </S.Highlight>

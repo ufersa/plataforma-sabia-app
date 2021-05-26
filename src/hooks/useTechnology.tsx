@@ -7,6 +7,7 @@ import { getAttachments, getTechnology, getTechnologyCosts } from '@services/tec
 export interface Technology {
   id?: number;
   title: string;
+  type: string;
   taxonomies: {
     category: string;
     classification: string;
