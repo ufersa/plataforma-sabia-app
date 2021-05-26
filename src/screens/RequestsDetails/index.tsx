@@ -57,9 +57,9 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
     }, [id],
   );
 
-  const navigate = () => (type === 'technology'
-    ? navigation.navigate('Technology', {
-      data: {
+  const navigate = () => {
+    const data = (type === 'technology')
+      ? {
         id: technology.id,
         title: technology.title,
         slug: technology.slug,
@@ -68,13 +68,9 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
         price: technology.costs.length ? technology.costs[0].price : 0,
         createdAt: technology.created_at,
         isSeller: !!(technology.costs.length && technology.costs[0].is_seller === 1),
-        type: 'technology',
         terms: technology.terms,
-      },
-      type,
-    })
-    : navigation.navigate('Technology', {
-      data: {
+      }
+      : {
         id: service.id,
         title: service.name,
         description: service.description,
@@ -84,10 +80,10 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
         measureUnit: service.measure_unit,
         institution: service.user.institution.name,
         isSeller: true,
-        type: 'service',
-      },
-      type,
-    }));
+      };
+
+    navigation.navigate('Technology', { data, type });
+  };
 
   return (
     <>
