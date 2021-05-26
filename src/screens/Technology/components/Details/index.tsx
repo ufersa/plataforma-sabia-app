@@ -149,8 +149,6 @@ export const Technology = () => {
 export const Characteristics = () => {
   const technology = useTechnology();
 
-  console.log(technology.knowledgeAreas);
-
   return (
     <S.AccordionItemWrapper>
       <S.Subtitle>Objetivos</S.Subtitle>
