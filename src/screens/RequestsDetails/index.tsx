@@ -1,15 +1,19 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/style-prop-object */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Alert, Image } from 'react-native';
 import { format, parseISO } from 'date-fns';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Card, Badge, Button } from '@components/.';
+import {
+  Card, Badge, Button, Modal, Input,
+} from '@components/.';
 import { formatMoney } from '@utils/helper';
 import { UseStatus, FundingStatus } from '@utils/requests';
 import { cancelOrder } from '@services/orders';
+import { Controller, useForm } from 'react-hook-form';
+import colors from '@utils/colors';
 import * as S from './styles';
 
 interface RequestsDetailsProps {
@@ -18,7 +22,7 @@ interface RequestsDetailsProps {
 
 const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Element => {
   const navigation = useNavigation();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const {
     data: {
@@ -39,23 +43,6 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
   const openChat = useCallback(() => {
     navigation.navigate('OrderChat', { orderId: id });
   }, [id]);
-
-  const onCancelOrder = useCallback(
-    async () => {
-      try {
-        setLoading(true);
-        await cancelOrder(id);
-        setLoading(false);
-        navigation.goBack();
-      } catch (err) {
-        setLoading(false);
-        Alert.alert(
-          'Erro ao cancelar pedido',
-          'Tente novamente mais tarde.',
-        );
-      }
-    }, [id],
-  );
 
   const navigate = () => {
     const data = (type === 'technology')
@@ -174,36 +161,112 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 </S.OpenChat>
               </S.Detail>
             </S.CardDetails>
-            {status === 'open' && (
+            {['open', 'requested'].includes(status) && (
               <S.ButtonWrapper>
                 <Button
-                  disabled={loading}
                   variant="danger"
                   onPress={() => {
-                    Alert.alert(
-                      'Deseja realmente cancelar este pedido?',
-                      null,
-                      [
-                        {
-                          text: 'Cancelar',
-                          onPress: () => {},
-                          style: 'destructive',
-                        },
-                        {
-                          text: 'Confirmar',
-                          onPress: () => onCancelOrder(),
-                        },
-                      ],
-                    );
+                    setShowModal(true);
                   }}
                 >
-                  {loading ? 'Aguarde...' : 'Cancelar pedido'}
+                  Cancelar pedido
                 </Button>
               </S.ButtonWrapper>
             )}
           </Card>
+          <Modal
+            title="Deseja cancelar este pedido?"
+            titleStyle={{
+              fontSize: 24,
+              lineHeight: 32,
+              color: colors.danger,
+            }}
+            height={450}
+            animationType="slide"
+            visible={showModal}
+            onClose={() => { setShowModal(false); }}
+          >
+            <S.ModalContent>
+              <CancelForm order={params.data} />
+            </S.ModalContent>
+          </Modal>
         </S.Page>
       </S.Wrapper>
+    </>
+  );
+};
+
+interface CancelFormProps {
+  order: any
+}
+
+const CancelForm = ({ order } : CancelFormProps): JSX.Element => {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { id, type } = order;
+
+  const {
+    control,
+    errors,
+  } = useForm();
+  const { reason } = control.getValues();
+
+  const handleCancel = useCallback(
+    async () => {
+      if (!control.getValues().reason) return;
+
+      try {
+        setLoading(true);
+        await cancelOrder(id, type, reason);
+        navigation.navigate('Requests');
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        Alert.alert(
+          'Erro ao cancelar pedido',
+          'Tente novamente mais tarde.',
+        );
+      }
+    }, [id, type, reason, control],
+  );
+
+  useEffect(() => {
+  }, []);
+
+  return (
+    <>
+      <S.ReviewForm>
+        <S.ModalWrapper showsVerticalScrollIndicator={false}>
+          <S.ReasonLabel>
+            Antes de cancelar, nos conte o que aconteceu, qual o motivo pelo qual está cancelando o pedido?
+          </S.ReasonLabel>
+          <Controller
+            name="reason"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ onChange, value }) => (
+              <Input
+                type="default"
+                autoCorrect={false}
+                keyboardType="default"
+                onChangeText={onChange}
+                placeholder="Digite sua mensagem..."
+                value={value}
+                multiline
+                error={errors.reason}
+              />
+            )}
+          />
+
+        </S.ModalWrapper>
+      </S.ReviewForm>
+      <S.ButtonWrapper>
+        <Button variant="danger" disabled={loading} onPress={handleCancel}>
+          {`${loading ? 'Enviando...' : 'Confirmar cancelamento'}`}
+        </Button>
+      </S.ButtonWrapper>
     </>
   );
 };

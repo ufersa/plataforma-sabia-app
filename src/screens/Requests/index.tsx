@@ -12,6 +12,7 @@ import { getOrders } from '@services/orders';
 import { Unauthenticated } from '@components/.';
 import { useAuth } from '@hooks/useAuth';
 import { useModal } from '@hooks/useModal';
+import { useNavigation } from '@react-navigation/core';
 import * as S from './styles';
 import List from './components/List';
 
@@ -20,6 +21,15 @@ const Requests = (): JSX.Element => {
   const { openModal } = useModal();
   const [loading, setLoading] = useState<boolean>(true);
   const [orders, setOrders] = useState([]);
+
+  const navigation = useNavigation();
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getRequests();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const getRequests = useCallback(
     async () => {
