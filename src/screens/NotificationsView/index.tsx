@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { Platform, Linking } from 'react-native';
+import { Alert, Platform, Linking } from 'react-native';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 import Colors from '@utils/colors';
@@ -13,9 +13,13 @@ const NotificationsView = ({ route }: NotificationsViewProps): JSX.Element => {
   const { params: { data } } = route;
 
   const readMessage = useCallback(async () => {
-    await markAsRead({
-      messages: [data.id],
-    });
+    try {
+      await markAsRead({
+        messages: [data.id],
+      });
+    } catch (err) {
+      Alert.alert('Ops!', 'Tente novamente');
+    }
   }, [data.id]);
 
   useEffect(() => {

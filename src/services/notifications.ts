@@ -41,7 +41,7 @@ export const markAsRead = async (params?: MarkAsReadProps) => {
     ...params,
   });
 
-  if (response.status !== 200) return {};
+  if (response.status !== 200) return false;
 
   const { data } = response;
 
