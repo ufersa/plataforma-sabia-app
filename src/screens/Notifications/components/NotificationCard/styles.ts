@@ -26,8 +26,10 @@ export const NotificationWrapper = styled.TouchableOpacity`
 `;
 
 export const NotificationTitle = styled.View`
+  height: 28px;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Title = styled(DefaultText)`
@@ -38,6 +40,8 @@ export const Title = styled(DefaultText)`
   font-size: 16px;
   color: #4a4a4a;
   margin-bottom: 8px;
+  flex-grow: 1;
+  padding-right: 6px;
 `;
 
 export const Date = styled(DefaultText)`

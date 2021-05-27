@@ -24,7 +24,7 @@ const Requests = (): JSX.Element => {
 
   const navigation = useNavigation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getRequests();
     });

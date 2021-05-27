@@ -38,10 +38,7 @@ interface MarkAsReadProps {
  */
 export const markAsRead = async (params?: MarkAsReadProps) => {
   const response = await api.put('messages/mark-as-read', {
-    params: {
-      ...params,
-      embed: true,
-    },
+    ...params,
   });
 
   if (response.status !== 200) return {};
