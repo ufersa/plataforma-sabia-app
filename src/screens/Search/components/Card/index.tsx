@@ -2,8 +2,8 @@
 /* eslint-disable no-restricted-globals */
 import React from 'react';
 import { Image } from 'react-native';
-import { Card, Badge } from '../../../../components';
-import { formatMoney } from '../../../../utils/formats';
+import { Card, Badge } from '@components/.';
+import { formatMoney } from '@utils/formats';
 import * as S from './styles';
 
 interface CardProps {

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import styled from 'styled-components/native';
-import { DefaultText } from '../../components';
-import Colors from '../../utils/colors';
+import { DefaultText } from '@components/.';
+import Colors from '@utils/colors';
+import { formatMoney } from '@utils/helper';
+import { CartItems } from '@hooks/useCart';
 import Card from './components/Card';
-import { formatMoney } from '../../utils/helper';
-import { CartItems } from '../../hooks/useCart';
 
 interface ItemsProps {
   data: CartItems[]

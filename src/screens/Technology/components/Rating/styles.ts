@@ -1,8 +1,8 @@
 import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-import { DefaultText } from '../../../../components';
-import Colors from '../../../../utils/colors';
+import { DefaultText } from '@components/.';
+import Colors from '@utils/colors';
 
 export const Wrapper = styled.View`
   margin-vertical: 32px;

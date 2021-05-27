@@ -2,8 +2,8 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import Colors from '../../../../utils/colors';
-import { DefaultText } from '../../../../components';
+import Colors from '@utils/colors';
+import { DefaultText } from '@components/.';
 
 export const CardWrapper = styled.View`
   width: 248px;

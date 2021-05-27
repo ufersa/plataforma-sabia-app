@@ -1,7 +1,7 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
+import { IllustrationLogin } from '@utils/svgs';
 import Button from '../Button';
-import { IllustrationLogin } from '../../utils/svgs';
 import * as S from './styles';
 
 interface UnauthenticatedProps {

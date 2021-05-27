@@ -8,15 +8,15 @@ import { Alert, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Controller, useForm } from 'react-hook-form';
-import * as S from './styles';
-import { useTechnology } from '../../../../hooks/useTechnology';
-import { createTechnologyReview, getReviews } from '../../../../services/technology';
+import { useTechnology } from '@hooks/useTechnology';
+import { createTechnologyReview, getReviews } from '@services/technology';
 import {
   Button, Input, Modal, Tabs,
-} from '../../../../components';
-import Colors from '../../../../utils/colors';
-import { useAuth } from '../../../../hooks/useAuth';
-import { useModal } from '../../../../hooks/useModal';
+} from '@components/.';
+import Colors from '@utils/colors';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
+import * as S from './styles';
 
 interface ReviewProps {
   content: string

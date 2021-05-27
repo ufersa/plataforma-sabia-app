@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import api from '../services/api';
-import capitalize from '../utils/capitalize';
+import api from '@services/api';
+import capitalize from '@utils/capitalize';
 
 export default function useFind(modelName: string, params = {}) {
   const capitalizedModel = capitalize(modelName);

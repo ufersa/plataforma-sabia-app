@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import Colors from '../../../../utils/colors';
-import { DefaultText } from '../../../../components';
-import { useAuth } from '../../../../hooks/useAuth';
-import { useModal } from '../../../../hooks/useModal';
+import Colors from '@utils/colors';
+import { DefaultText } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
 
 export const Wrapper = styled.View`
   height: 55px;

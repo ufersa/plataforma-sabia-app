@@ -2,8 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { Controller } from 'react-hook-form';
-import { Input } from '../../../components';
-import { useAuth } from '../../../hooks/useAuth';
+import { Input } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
 import * as S from '../styles';
 
 const AddressWrapper = styled.View`

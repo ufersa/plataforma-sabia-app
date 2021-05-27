@@ -9,7 +9,7 @@ interface AboutProps {
 const About = ({ type, description = '' }: AboutProps) => (
   <S.Wrapper>
     <S.Title>
-      {`Descrição do ${type === 'service' ? 'serviço' : 'produto'}`}
+      {`Descrição ${type === 'service' ? 'do Serviço' : 'da Tecnologia'}`}
     </S.Title>
     <S.Description>
       {description}

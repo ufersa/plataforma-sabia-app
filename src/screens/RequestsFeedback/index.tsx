@@ -4,8 +4,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { SvgXml } from 'react-native-svg';
-import { Button } from '../../components';
-import { IllustrationError, IllustrationSuccess } from '../../utils/svgs';
+import { Button } from '@components/.';
+import { IllustrationError, IllustrationSuccess } from '@utils/svgs';
 import * as S from './styles';
 
 interface RequestsFeedbackProps {

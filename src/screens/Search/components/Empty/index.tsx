@@ -1,8 +1,8 @@
 import React from 'react';
 import { SvgXml } from 'react-native-svg';
+import { Button } from '@components/.';
+import { IllustrationEmpty } from '@utils/svgs';
 import * as S from './styles';
-import { Button } from '../../../../components';
-import { IllustrationEmpty } from '../../../../utils/svgs';
 
 export default (): JSX.Element => (
   <S.Wrapper>

@@ -26,12 +26,14 @@ module.exports = {
     'max-len': 'off',
     'react/prop-types': 'off',
     'no-console': 'warn',
+    'import/no-extraneous-dependencies': 'off',
   },
   settings: {
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+      typescript: {},
     },
   },
 };

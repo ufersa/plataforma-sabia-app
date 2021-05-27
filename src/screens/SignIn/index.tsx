@@ -12,11 +12,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
-import { useAuth } from '../../hooks/useAuth';
-import { Input, Button } from '../../components';
+import Logo from '@assets/logo/Logo-color.png';
+import { useAuth } from '@hooks/useAuth';
+import { Input, Button } from '@components/.';
+import Colors from '@utils/colors';
 import * as S from './styles';
-import Logo from '../../../assets/logo/Logo-color.png';
-import Colors from '../../utils/colors';
 
 interface SignInFormData {
   email: string;

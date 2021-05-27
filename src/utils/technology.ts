@@ -82,6 +82,24 @@ export const normalizeCosts = (costs) => {
   return normalizedCosts;
 };
 
+/**
+ * Normalizes knowledge areas from API to fill technology form using react-hook-form fields array pattern
+ *
+ * @param {object} knowledgeArea Knowledge area object
+ * @returns {object} Normalized areas for react-hook-form use
+ */
+export const normalizeKnowledgeAreas = (knowledgeArea) => {
+  const fields = ['greatArea', 'area', 'subArea', 'speciality'];
+
+  return fields.reduce((acc, field, index) => {
+    if (knowledgeArea[field]) {
+      acc[`knowledge_area_id[${index}]`] = knowledgeArea[field].knowledge_area_id;
+    }
+
+    return acc;
+  }, {});
+};
+
 interface AttachmentsProps {
   url: string;
 }
@@ -207,4 +225,15 @@ export const unitsOptions = [
     value: 'others',
     label: 'Outro',
   },
+];
+
+export const TYPES = [
+  { label: 'Equipamento', value: 'equipment' },
+  { label: 'Material', value: 'material' },
+  { label: 'Metodologia', value: 'methodology' },
+  { label: 'Modelo', value: 'model' },
+  { label: 'Processo', value: 'process' },
+  { label: 'Serviço', value: 'service' },
+  { label: 'Software', value: 'software' },
+  { label: 'Outro', value: 'other' },
 ];

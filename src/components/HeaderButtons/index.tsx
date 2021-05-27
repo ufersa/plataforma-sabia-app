@@ -1,10 +1,10 @@
 import { Feather, FontAwesome5 } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Platform, Share } from 'react-native';
-import { useAuth } from '../../hooks/useAuth';
-import { Technology } from '../../hooks/useTechnology';
-import { getMe } from '../../services/auth';
-import { handleBookmark } from '../../services/bookmark';
+import { useAuth } from '@hooks/useAuth';
+import { Technology } from '@hooks/useTechnology';
+import { getMe } from '@services/auth';
+import { handleBookmark } from '@services/bookmark';
 import Button from '../Button';
 import * as S from './styles';
 

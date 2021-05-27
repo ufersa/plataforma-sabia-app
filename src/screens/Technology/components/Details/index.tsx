@@ -11,21 +11,22 @@ import ImageView from '@hamidfzm/react-native-image-viewing';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import MapView, { Marker } from 'react-native-maps';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as S from './styles';
-import { Accordion, Pins, Button } from '../../../../components';
-import Colors from '../../../../utils/colors';
-import { useTechnology } from '../../../../hooks/useTechnology';
-import { unitsOptions } from '../../../../utils/technology';
+import { Accordion, Pins, Button } from '@components/.';
+import Colors from '@utils/colors';
+import { useTechnology } from '@hooks/useTechnology';
+import { unitsOptions, TYPES as typesEnum } from '@utils/technology';
 import {
   formatCurrencyToInt,
   formatMoney,
   technologyStages,
   zoomToAltitude,
-} from '../../../../utils/helper';
-import ImageList from '../../../../components/Gallery/ImageList';
-import { getTechnologyTerms } from '../../../../services/technology';
-import { useAuth } from '../../../../hooks/useAuth';
-import { useModal } from '../../../../hooks/useModal';
+} from '@utils/helper';
+import ImageList from '@components/Gallery/ImageList';
+import { getTechnologyTerms } from '@services/technology';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
+
+import * as S from './styles';
 
 interface StagesProps {
   currentStep: number
@@ -88,6 +89,34 @@ export const Technology = () => {
         {technology.title}
       </S.DetailsText>
       <S.DetailsText>
+        <S.Highlight>Tipo: </S.Highlight>
+        {typesEnum.find((type) => type.value === technology.type)?.label}
+      </S.DetailsText>
+      <S.DetailsText>
+        <S.Highlight>Grande área: </S.Highlight>
+        {technology.knowledgeAreas?.greatArea.name}
+      </S.DetailsText>
+      <S.DetailsText>
+        <S.Highlight>Área: </S.Highlight>
+        {technology.knowledgeAreas?.area.name}
+      </S.DetailsText>
+      {technology.knowledgeAreas?.subArea ? (
+        <S.DetailsText>
+          <S.Highlight>Sub-área: </S.Highlight>
+          {technology.knowledgeAreas?.subArea.name}
+        </S.DetailsText>
+      ) : (<></>)}
+      {technology.knowledgeAreas?.speciality ? (
+        <S.DetailsText>
+          <S.Highlight>Especialidade: </S.Highlight>
+          {technology.knowledgeAreas?.speciality?.name}
+        </S.DetailsText>
+      ) : (<></>)}
+      <S.DetailsText>
+        <S.Highlight>Domínio público: </S.Highlight>
+        {technology.public_domain ? 'Sim' : 'Não'}
+      </S.DetailsText>
+      <S.DetailsText>
         <S.Highlight>Classificação: </S.Highlight>
         {technology.taxonomies?.classification}
       </S.DetailsText>
@@ -103,6 +132,14 @@ export const Technology = () => {
         <S.Highlight>Bioma: </S.Highlight>
         {technology.taxonomies?.biome}
       </S.DetailsText>
+      <S.DetailsText>
+        <S.Highlight>Programa Governamental: </S.Highlight>
+        {technology.taxonomies?.government_program || 'Nenhum'}
+      </S.DetailsText>
+      <S.DetailsText>
+        <S.Highlight>Registro de patente depositado: </S.Highlight>
+        {technology.patent ? 'Sim' : 'Não'}
+      </S.DetailsText>
       <S.Subtitle>Estágio de desenvolvimento</S.Subtitle>
       <Stages currentStep={technology.currentLevel || 1} />
     </S.AccordionItemWrapper>
@@ -115,14 +152,21 @@ export const Characteristics = () => {
   return (
     <S.AccordionItemWrapper>
       <S.Subtitle>Objetivos</S.Subtitle>
+
       <S.DetailsText>
         <S.Highlight>Objetivo Principal: </S.Highlight>
         {technology.primary_purpose}
       </S.DetailsText>
+
       <S.Subtitle>Aplicação</S.Subtitle>
+
       <S.DetailsText>
         <S.Highlight>Onde é a Aplicação: </S.Highlight>
         {technology.application_mode}
+      </S.DetailsText>
+      <S.DetailsText>
+        <S.Highlight>Exemplos de Aplicação: </S.Highlight>
+        {technology.application_examples}
       </S.DetailsText>
       <S.DetailsText>
         <S.Highlight>Pré-requisitos para a implantação: </S.Highlight>
@@ -132,6 +176,26 @@ export const Characteristics = () => {
         <S.Highlight>Duração do processo de instalação da tecnologia: </S.Highlight>
         {`${technology.installation_time} dias.`}
       </S.DetailsText>
+
+      <S.Subtitle>Problematização</S.Subtitle>
+
+      <S.DetailsText>
+        <S.Highlight>Problemas que a tecnologa soliciona: </S.Highlight>
+        {technology.solves_problem}
+      </S.DetailsText>
+
+      <S.Subtitle>Contribuição</S.Subtitle>
+      <S.DetailsText>
+        <S.Highlight>Contribuição para o semiárido: </S.Highlight>
+        {technology.contribution}
+      </S.DetailsText>
+
+      <S.Subtitle>Riscos</S.Subtitle>
+      <S.DetailsText>
+        <S.Highlight>Riscos associados à tecnologia: </S.Highlight>
+        {technology.risks}
+      </S.DetailsText>
+
     </S.AccordionItemWrapper>
   );
 };
@@ -466,7 +530,7 @@ const Details = () => (
           content: <Characteristics />,
         },
         {
-          title: 'Georreferenciamento',
+          title: 'Mapas',
           content: <Geo />,
         },
         {
