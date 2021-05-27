@@ -6,6 +6,15 @@
       "dom",
       "esnext"
     ],
+    "baseUrl": "./",
+    "paths": {
+      "@*": [
+        "src/*",
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+    },
     "moduleResolution": "node",
     "noEmit": true,
     "skipLibCheck": true,
@@ -34,5 +43,9 @@
         }
       }
     ]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "public"
+  ]
 }

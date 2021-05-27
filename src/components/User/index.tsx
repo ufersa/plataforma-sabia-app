@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@hooks/useAuth';
 import * as S from './styles';
 
 const User = (): JSX.Element => {

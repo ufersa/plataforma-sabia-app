@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
 import { View, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
+import { redirect } from '@utils/navigator';
 import { Input, Button } from '..';
-import { useModal } from '../../hooks/useModal';
-import { redirect } from '../../utils/navigator';
 
 interface ModalLoginProps {
   onSuccess: () => void

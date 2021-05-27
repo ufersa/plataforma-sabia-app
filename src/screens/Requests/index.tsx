@@ -8,18 +8,28 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import List from './components/List';
+import { getOrders } from '@services/orders';
+import { Unauthenticated } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
+import { useNavigation } from '@react-navigation/core';
 import * as S from './styles';
-import { getOrders } from '../../services/orders';
-import { Unauthenticated } from '../../components';
-import { useAuth } from '../../hooks/useAuth';
-import { useModal } from '../../hooks/useModal';
+import List from './components/List';
 
 const Requests = (): JSX.Element => {
   const { user } = useAuth();
   const { openModal } = useModal();
   const [loading, setLoading] = useState<boolean>(true);
   const [orders, setOrders] = useState([]);
+
+  const navigation = useNavigation();
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getRequests();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const getRequests = useCallback(
     async () => {

@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import styled, { css } from 'styled-components/native';
-import colors from '../../utils/colors';
+import colors from '@utils/colors';
 
 export const TabContainer = styled.View`
   background-color: #ffffff;

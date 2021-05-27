@@ -11,12 +11,11 @@ import {
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { Controller, useForm } from 'react-hook-form';
-import { Input, Button } from '../../components';
-import { useAuth } from '../../hooks/useAuth';
-import { useModal } from '../../hooks/useModal';
+import { Input, Button } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
+import { accountConfirmation } from '@services/auth';
 import * as S from './styles';
-
-import { accountConfirmation } from '../../services/auth';
 
 interface CodeFormData {
   email: string;

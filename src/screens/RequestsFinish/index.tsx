@@ -9,11 +9,11 @@ import {
   Button,
   Input,
   Select,
-} from '../../components';
+} from '@components/.';
+import { buyTechnology, BuyTechnologyProps } from '@services/technology';
+import { UseStatus, FundingStatus } from '@utils/requests';
 import Card from './components/Card';
 import * as S from './styles';
-import { buyTechnology, BuyTechnologyProps } from '../../services/technology';
-import { UseStatus, FundingStatus } from '../../utils/requests';
 
 interface RequestsFinishProps {
   navigation: StackNavigationProp<any, any>

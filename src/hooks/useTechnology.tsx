@@ -2,21 +2,35 @@
 import React, {
   useState, createContext, useContext, useEffect, useCallback,
 } from 'react';
-import { getAttachments, getTechnology, getTechnologyCosts } from '../services/technology';
+import { getAttachments, getTechnology, getTechnologyCosts } from '@services/technology';
 
 export interface Technology {
   id?: number;
   title: string;
+  type: string;
   taxonomies: {
     category: string;
     classification: string;
     dimension: string;
     target_audience: string;
     biome: string;
+    government_program: string;
   }
+  knowledgeAreas: {
+    greatArea: {name: string}
+    area: {name: string}
+    subArea: {name: string}
+    speciality: {name: string}
+  };
+  public_domain: string;
+  patent: string;
   currentLevel: number;
   primary_purpose: string;
   application_mode: string;
+  application_examples: string;
+  solves_problem: string;
+  contribution: string;
+  risks: string;
   requirements: string;
   installation_time: number;
   costs?: {
@@ -43,10 +57,10 @@ interface TechnologyProps {
   technologyId: number
 }
 
-const TechnologyContext = createContext<Technology | null>(null);
+const TechnologyContext = createContext<Technology | {}>(null);
 
 const TechnologyProvider = ({ children, technologyId }: TechnologyProps): JSX.Element => {
-  const [technology, setTechnology] = useState<Technology>({});
+  const [technology, setTechnology] = useState<Technology | {} >({});
 
   const loadData = useCallback(
     async () => {

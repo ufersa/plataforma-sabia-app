@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Root from '..';
 import {
   Technology,
   RequestsFeedback,
@@ -15,12 +14,13 @@ import {
   Code,
   OrderChat,
   NotificationsView,
-} from '../screens';
-import Colors from '../utils/colors';
-import { CartProvider } from '../hooks/useCart';
-import HeaderButtons from '../components/HeaderButtons';
-import IdeasBank from '../screens/Banks/Ideas';
-import AnnouncementsBank from '../screens/Banks/Announcement';
+} from '@screens/.';
+import Colors from '@utils/colors';
+import { CartProvider } from '@hooks/useCart';
+import HeaderButtons from '@components/HeaderButtons';
+import IdeasBank from '@screens/Banks/Ideas';
+import AnnouncementsBank from '@screens/Banks/Announcement';
+import Root from '..';
 
 const App = createStackNavigator();
 

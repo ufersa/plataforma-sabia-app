@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { Feather } from '@expo/vector-icons';
-import * as S from './styles';
-import { Input, Button, Modal } from '../../components';
+import { Input, Button, Modal } from '@components/.';
+import { useAuth } from '@hooks/useAuth';
+import { formatDate } from '@utils/formats';
+import { unMask } from '@utils/unMask';
+import { updateUser as updateUserService, updateUserPassword } from '@services/user';
 import Address from './components/Address';
-import { useAuth } from '../../hooks/useAuth';
-import { formatDate } from '../../utils/formats';
-import { unMask } from '../../utils/unMask';
-import { updateUser as updateUserService, updateUserPassword } from '../../services/user';
+import * as S from './styles';
 
 const Account = (): JSX.Element => {
   const { user, updateUser } = useAuth();

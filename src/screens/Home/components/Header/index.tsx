@@ -1,11 +1,11 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'react-native';
+import Logo from '@assets/logo/Logo.png';
+import { useAuth } from '@hooks/useAuth';
+import { useCart } from '@hooks/useCart';
+import { useModal } from '@hooks/useModal';
 import * as S from './styles';
-import Logo from '../../../../../assets/logo/Logo.png';
-import { useAuth } from '../../../../hooks/useAuth';
-import { useCart } from '../../../../hooks/useCart';
-import { useModal } from '../../../../hooks/useModal';
 
 const Header = (): JSX.Element => {
   const navigation = useNavigation();

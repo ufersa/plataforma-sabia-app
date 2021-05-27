@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import React from 'react';
 import { Image } from 'react-native';
-import { Card, InputNumber } from '../../../../components';
+import { Card, InputNumber } from '@components/.';
+import { formatMoney } from '@utils/helper';
 import * as S from './styles';
-import { formatMoney } from '../../../../utils/helper';
 
 interface CardProps {
   data: {

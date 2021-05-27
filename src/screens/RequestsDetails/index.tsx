@@ -1,16 +1,20 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/style-prop-object */
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigation, NavigatorScreenParams } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import { Alert, Image } from 'react-native';
 import { format, parseISO } from 'date-fns';
 import { MaterialIcons } from '@expo/vector-icons';
+import {
+  Card, Badge, Button, Modal, Input,
+} from '@components/.';
+import { formatMoney } from '@utils/helper';
+import { UseStatus, FundingStatus } from '@utils/requests';
+import { cancelOrder } from '@services/orders';
+import { Controller, useForm } from 'react-hook-form';
+import colors from '@utils/colors';
 import * as S from './styles';
-import { Card, Badge, Button } from '../../components';
-import { formatMoney } from '../../utils/helper';
-import { UseStatus, FundingStatus } from '../../utils/requests';
-import { cancelOrder } from '../../services/orders';
 
 interface RequestsDetailsProps {
   route: NavigatorScreenParams<any, any>
@@ -18,7 +22,7 @@ interface RequestsDetailsProps {
 
 const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Element => {
   const navigation = useNavigation();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const {
     data: {
@@ -40,22 +44,33 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
     navigation.navigate('OrderChat', { orderId: id });
   }, [id]);
 
-  const onCancelOrder = useCallback(
-    async () => {
-      try {
-        setLoading(true);
-        await cancelOrder(id);
-        setLoading(false);
-        navigation.goBack();
-      } catch (err) {
-        setLoading(false);
-        Alert.alert(
-          'Erro ao cancelar pedido',
-          'Tente novamente mais tarde.',
-        );
+  const navigate = () => {
+    const data = (type === 'technology')
+      ? {
+        id: technology.id,
+        title: technology.title,
+        slug: technology.slug,
+        image: technology.thumbnail?.url,
+        description: technology.description,
+        price: technology.costs.length ? technology.costs[0].price : 0,
+        createdAt: technology.created_at,
+        isSeller: !!(technology.costs.length && technology.costs[0].is_seller === 1),
+        terms: technology.terms,
       }
-    }, [id],
-  );
+      : {
+        id: service.id,
+        title: service.name,
+        description: service.description,
+        image: service.thumbnail?.url,
+        price: service.price,
+        createdAt: service.created_at,
+        measureUnit: service.measure_unit,
+        institution: service.user.institution.name,
+        isSeller: true,
+      };
+
+    navigation.navigate('Technology', { data, type });
+  };
 
   return (
     <>
@@ -65,21 +80,25 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
           <Card>
             <S.CardContainer>
               <S.CardImage>
-                <Image
-                  source={{
-                    uri: type === 'technology' ? technology.thumbnail?.url : service.thumbnail?.url,
-                  }}
-                  style={{
-                    width: 110,
-                    height: 83,
-                    borderRadius: 8,
-                  }}
-                />
+                <S.NavigateLink activeOpacity={0.7} onPress={navigate}>
+                  <Image
+                    source={{
+                      uri: type === 'technology' ? technology.thumbnail?.url : service.thumbnail?.url,
+                    }}
+                    style={{
+                      width: 110,
+                      height: 83,
+                      borderRadius: 8,
+                    }}
+                  />
+                </S.NavigateLink>
               </S.CardImage>
               <S.CardInfo>
-                <S.Title numberOfLines={1}>
-                  {type === 'technology' ? technology.title : service.name}
-                </S.Title>
+                <S.NavigateLink activeOpacity={0.7} onPress={navigate}>
+                  <S.Title numberOfLines={1}>
+                    {type === 'technology' ? technology.title : service.name}
+                  </S.Title>
+                </S.NavigateLink>
                 {type === 'service' && (
                   <S.CardPrice>
                     <S.DetailTitle>Subtotal</S.DetailTitle>
@@ -142,36 +161,112 @@ const RequestsDetails = ({ route: { params } }: RequestsDetailsProps): JSX.Eleme
                 </S.OpenChat>
               </S.Detail>
             </S.CardDetails>
-            {status === 'open' && (
+            {['open', 'requested'].includes(status) && (
               <S.ButtonWrapper>
                 <Button
-                  disabled={loading}
                   variant="danger"
                   onPress={() => {
-                    Alert.alert(
-                      'Deseja realmente cancelar este pedido?',
-                      null,
-                      [
-                        {
-                          text: 'Cancelar',
-                          onPress: () => {},
-                          style: 'destructive',
-                        },
-                        {
-                          text: 'Confirmar',
-                          onPress: () => onCancelOrder(),
-                        },
-                      ],
-                    );
+                    setShowModal(true);
                   }}
                 >
-                  {loading ? 'Aguarde...' : 'Cancelar pedido'}
+                  Cancelar pedido
                 </Button>
               </S.ButtonWrapper>
             )}
           </Card>
+          <Modal
+            title="Deseja cancelar este pedido?"
+            titleStyle={{
+              fontSize: 24,
+              lineHeight: 32,
+              color: colors.danger,
+            }}
+            height={450}
+            animationType="slide"
+            visible={showModal}
+            onClose={() => { setShowModal(false); }}
+          >
+            <S.ModalContent>
+              <CancelForm order={params.data} />
+            </S.ModalContent>
+          </Modal>
         </S.Page>
       </S.Wrapper>
+    </>
+  );
+};
+
+interface CancelFormProps {
+  order: any
+}
+
+const CancelForm = ({ order } : CancelFormProps): JSX.Element => {
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { id, type } = order;
+
+  const {
+    control,
+    errors,
+  } = useForm();
+  const { reason } = control.getValues();
+
+  const handleCancel = useCallback(
+    async () => {
+      if (!control.getValues().reason) return;
+
+      try {
+        setLoading(true);
+        await cancelOrder(id, type, reason);
+        navigation.navigate('Requests');
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        Alert.alert(
+          'Erro ao cancelar pedido',
+          'Tente novamente mais tarde.',
+        );
+      }
+    }, [id, type, reason, control],
+  );
+
+  useEffect(() => {
+  }, []);
+
+  return (
+    <>
+      <S.ReviewForm>
+        <S.ModalWrapper showsVerticalScrollIndicator={false}>
+          <S.ReasonLabel>
+            Antes de cancelar, nos conte o que aconteceu, qual o motivo pelo qual está cancelando o pedido?
+          </S.ReasonLabel>
+          <Controller
+            name="reason"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+            render={({ onChange, value }) => (
+              <Input
+                type="default"
+                autoCorrect={false}
+                keyboardType="default"
+                onChangeText={onChange}
+                placeholder="Digite sua mensagem..."
+                value={value}
+                multiline
+                error={errors.reason}
+              />
+            )}
+          />
+
+        </S.ModalWrapper>
+      </S.ReviewForm>
+      <S.ButtonWrapper>
+        <Button variant="danger" disabled={loading} onPress={handleCancel}>
+          {`${loading ? 'Enviando...' : 'Confirmar cancelamento'}`}
+        </Button>
+      </S.ButtonWrapper>
     </>
   );
 };

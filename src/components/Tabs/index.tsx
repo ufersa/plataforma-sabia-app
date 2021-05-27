@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import Colors from '../../utils/colors';
+import Colors from '@utils/colors';
 import * as S from './styles';
 
 interface TabOptionsProps {

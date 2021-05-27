@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
-import { DefaultText, Badge } from '../../../../components';
-import Colors from '../../../../utils/colors';
+import { DefaultText, Badge } from '@components/.';
+import Colors from '@utils/colors';
 
 export const CardWrapper = styled.TouchableOpacity`
   height: 115px;

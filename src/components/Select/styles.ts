@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
+import Colors from '@utils/colors';
 import DefaultText from '../Text';
-import Colors from '../../utils/colors';
 
 export const SelectWrapper = styled.TouchableOpacity`
   width: 100%;

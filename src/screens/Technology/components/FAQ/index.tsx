@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { Controller, useForm } from 'react-hook-form';
 import { Alert } from 'react-native';
+import { Input, Button } from '@components/.';
+import { createTechnologyQuestion, getTechnologyQuestions } from '@services/technology';
+import { useTechnology } from '@hooks/useTechnology';
+import { useAuth } from '@hooks/useAuth';
+import { useModal } from '@hooks/useModal';
 import * as S from './styles';
-import { Input, Button } from '../../../../components';
-import { createTechnologyQuestion, getTechnologyQuestions } from '../../../../services/technology';
-import { useTechnology } from '../../../../hooks/useTechnology';
-import { useAuth } from '../../../../hooks/useAuth';
-import { useModal } from '../../../../hooks/useModal';
 
 const FAQ = (): JSX.Element => {
   const { user } = useAuth();

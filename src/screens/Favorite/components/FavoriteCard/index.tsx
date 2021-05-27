@@ -2,10 +2,10 @@
 import React from 'react';
 import { Image } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Card } from '../../../../components';
-import { formatMoney } from '../../../../utils/helper';
+import { Card } from '@components/.';
+import { formatMoney } from '@utils/helper';
+import Colors from '@utils/colors';
 import * as S from './styles';
-import Colors from '../../../../utils/colors';
 
 interface RequestCardProps {
   title: string
@@ -63,6 +63,5 @@ const RequestCard = ({
     </S.CardWrapper>
   );
 };
-
 
 export default RequestCard;

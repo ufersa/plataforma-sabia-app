@@ -18,9 +18,9 @@ import {
   connectInfiniteHits, connectSearchBox, Index, InstantSearch,
 } from 'react-instantsearch-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Button, Card, Modal } from '@components/.';
+import { algoliaIndexes } from '@utils/algolia';
 import * as S from './styles';
-import { Button, Card, Modal } from '../../../components';
-import { algoliaIndexes } from '../../../utils/algolia';
 import Empty from '../components/Empty';
 
 const searchClient = algoliasearch(
