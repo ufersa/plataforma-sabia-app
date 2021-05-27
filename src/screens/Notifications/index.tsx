@@ -48,6 +48,7 @@ const Notifications = (): JSX.Element => {
               date: notification.created_at,
               title: notification.subject,
               body: notification.content,
+              status: notification.status,
             })),
           }))
           .value(),

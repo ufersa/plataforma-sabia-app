@@ -14,6 +14,7 @@ import {
   SignUp,
   Code,
   OrderChat,
+  NotificationsView,
 } from '../screens';
 import Colors from '../utils/colors';
 import { CartProvider } from '../hooks/useCart';
@@ -137,6 +138,18 @@ const AppRoutes = (): JSX.Element => (
         }}
         name="OrderChat"
         component={OrderChat}
+      />
+      <App.Screen
+        options={{
+          title: 'Notificações',
+          headerBackTitleVisible: false,
+          headerTintColor: '#4A4A4A',
+          headerStyle: {
+            backgroundColor: Colors.background,
+          },
+        }}
+        name="NotificationsView"
+        component={NotificationsView}
       />
       <App.Screen
         options={{
