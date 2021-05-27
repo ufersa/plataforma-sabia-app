@@ -94,16 +94,16 @@ export const Technology = () => {
       </S.DetailsText>
       <S.DetailsText>
         <S.Highlight>Grande área: </S.Highlight>
-        {technology.knowledgeAreas?.greatArea.name}
+        {technology.knowledgeAreas?.greatArea?.name}
       </S.DetailsText>
       <S.DetailsText>
         <S.Highlight>Área: </S.Highlight>
-        {technology.knowledgeAreas?.area.name}
+        {technology.knowledgeAreas?.area?.name}
       </S.DetailsText>
       {technology.knowledgeAreas?.subArea ? (
         <S.DetailsText>
           <S.Highlight>Sub-área: </S.Highlight>
-          {technology.knowledgeAreas?.subArea.name}
+          {technology.knowledgeAreas?.subArea?.name}
         </S.DetailsText>
       ) : (<></>)}
       {technology.knowledgeAreas?.speciality ? (
