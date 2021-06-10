@@ -26,3 +26,24 @@ export const getMessages = async (params?: GetMessagesProps) => {
 
   return data;
 };
+
+interface MarkAsReadProps {
+  messages: number[],
+}
+
+/**
+ * Message mark as read status
+ *
+ * @param {array} messages The message ID's
+ */
+export const markAsRead = async (params?: MarkAsReadProps) => {
+  const response = await api.put('messages/mark-as-read', {
+    ...params,
+  });
+
+  if (response.status !== 200) return false;
+
+  const { data } = response;
+
+  return data;
+};
