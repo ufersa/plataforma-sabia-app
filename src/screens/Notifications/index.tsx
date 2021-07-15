@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState, useCallback } from 'react';
+import { useNavigation } from '@react-navigation/core';
 import {
   Platform,
   StatusBar as StatusBarHelper,
@@ -24,6 +25,7 @@ interface NotificationsListProps {
 }
 
 const Notifications = (): JSX.Element => {
+  const navigation = useNavigation();
   const { user } = useAuth();
   const { openModal } = useModal();
   const [loading, setLoading] = useState(true);
@@ -48,6 +50,7 @@ const Notifications = (): JSX.Element => {
               date: notification.created_at,
               title: notification.subject,
               body: notification.content,
+              status: notification.status,
             })),
           }))
           .value(),
@@ -57,6 +60,13 @@ const Notifications = (): JSX.Element => {
     },
     [],
   );
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getNotifications();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   useEffect(() => {
     if (user) getNotifications();
