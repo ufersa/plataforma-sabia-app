@@ -246,11 +246,13 @@ export const Geo = (): JSX.Element => {
 
       getTerms();
 
-      mapRef.current.animateCamera({
-        center: region,
-        zoom,
-        altitude: zoomToAltitude(zoom),
-      }, 400);
+      if (mapRef.current) {
+        mapRef.current.animateCamera({
+          center: region,
+          zoom,
+          altitude: zoomToAltitude(zoom),
+        }, 400);
+      }
     }
   }, [user]);
 
