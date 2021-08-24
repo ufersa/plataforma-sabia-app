@@ -6,6 +6,8 @@ import { useModal } from '@hooks/useModal';
 import { redirect } from '@utils/navigator';
 import { Input, Button } from '..';
 
+import { RecoveryPassword } from './components/RecoveryPassword';
+
 interface ModalLoginProps {
   onSuccess: () => void
 }
@@ -91,6 +93,14 @@ const ModalLogin = ({ onSuccess }: ModalLoginProps): JSX.Element => {
               onSubmitEditing={handleSubmit(handleSignIn)}
               onBlur={() => setFocusedInput(null)}
               error={errors.password}
+              rightLabel={(
+                <RecoveryPassword
+                  onPress={() => {
+                    closeModal();
+                    redirect('RecoveryPassword');
+                  }}
+                />
+              )}
             />
           </>
         )}

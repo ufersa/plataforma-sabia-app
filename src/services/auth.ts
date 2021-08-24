@@ -75,3 +75,42 @@ interface ConfirmAccountProps {
 export async function accountConfirmation({ token, email }: ConfirmAccountProps) {
   return api.post('auth/confirm-account', { token, email });
 }
+
+/**
+ * Handle password resets.
+ *
+ * @param {string} email The email in the system.
+ *
+ * @returns {boolean} The response status.
+ */
+export async function forgotPassword(email: string): Promise<any> {
+  return api.get('auth/forgot-password', {
+    params: {
+      email,
+      scope: 'web',
+    },
+  });
+}
+
+interface ResetPasswordProps {
+  email: string;
+  token: string;
+  password: string;
+}
+
+/**
+ * Calls the reset password endpoint.
+ *
+ * @param {string} token The reset password token.
+ * @param {string} password New user password.
+ * @param {string} email User email.
+ *
+ * @returns {object} The response status.
+ */
+export function resetPassword({ token, password, email }: ResetPasswordProps): Promise<any> {
+  return api.post('auth/reset-password', {
+    token,
+    password,
+    email,
+  });
+}

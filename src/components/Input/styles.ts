@@ -37,6 +37,7 @@ export const InputContainer = styled.TextInput<InputContainerProps>`
   padding-left: 14px;
   padding-right: 0;
   text-align-vertical: ${({ multiline }) => (multiline ? 'top' : 'center')};
+  flex: 1;
 `;
 
 export const IconWrapper = styled.View`
