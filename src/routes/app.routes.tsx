@@ -20,7 +20,7 @@ import { CartProvider } from '@hooks/useCart';
 import HeaderButtons from '@components/HeaderButtons';
 import IdeasBank from '@screens/Banks/Ideas';
 import AnnouncementsBank from '@screens/Banks/Announcement';
-import Root from '..';
+import Root from '../index';
 
 const App = createStackNavigator();
 
