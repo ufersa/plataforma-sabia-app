@@ -9,11 +9,11 @@
     "baseUrl": "./",
     "paths": {
       "@*": [
-        "src/*",
+        "src/*"
       ],
       "@assets/*": [
         "assets/*"
-      ],
+      ]
     },
     "moduleResolution": "node",
     "noEmit": true,
@@ -47,5 +47,6 @@
   "exclude": [
     "node_modules",
     "public"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }

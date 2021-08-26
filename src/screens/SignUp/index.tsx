@@ -1,5 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState, useCallback } from 'react';
+import * as Analytics from 'expo-firebase-analytics';
 import {
   SafeAreaView,
   ScrollView,
@@ -60,6 +61,7 @@ const SignUp = ({ navigation }: SignUpProps): JSX.Element => {
           setLoading(false);
           setValidSignUp(false);
           reset();
+          await Analytics.logEvent('sign_up', { name: data.name, email: data.email });
           navigation.navigate('Code', { email: data.email });
         });
       }

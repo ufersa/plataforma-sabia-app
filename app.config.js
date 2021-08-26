@@ -22,6 +22,7 @@ export default ({ config }) => ({
   assetBundlePatterns: ['**/*'],
   ios: {
     bundleIdentifier: 'com.plataformasabia.app',
+    googleServicesFile: './GoogleService-Info.plist',
     buildNumber: buildNumber.toString(),
     supportsTablet: false,
     config: {
@@ -30,6 +31,7 @@ export default ({ config }) => ({
   },
   android: {
     package: 'com.plataformasabia.app',
+    googleServicesFile: './google-services.json',
     versionCode: buildNumber,
     adaptiveIcon: {
       foregroundImage: './assets/adaptive-icon.png',
@@ -38,6 +40,16 @@ export default ({ config }) => ({
     config: {
       googleMaps: {
         apiKey: process.env.GOOGLE_MAPS_API,
+      },
+    },
+  },
+  web: {
+    config: {
+      firebase: {
+        appId: process.env.FIREBASE_APP_ID,
+        apiKey: process.env.FIREBASE_API_KEY,
+        projectId: process.env.FIREBASE_PROJECT_ID,
+        measurementId: `G-${process.env.FIREBASE_MEASUREMENT_ID}`,
       },
     },
   },

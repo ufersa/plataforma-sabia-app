@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import * as Analytics from 'expo-firebase-analytics';
 import { View, Alert } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from '@hooks/useAuth';
@@ -33,6 +34,7 @@ const ModalLogin = ({ onSuccess }: ModalLoginProps): JSX.Element => {
           email: data.email,
           password: data.password,
         });
+        await Analytics.logEvent('login', { email: data.email });
         onSuccess();
       } catch (err) {
         setLoading(false);
