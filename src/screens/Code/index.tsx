@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/style-prop-object */
 import React, { useEffect, useState, useCallback } from 'react';
 import { NavigatorScreenParams } from '@react-navigation/native';
@@ -14,12 +15,16 @@ import { Controller, useForm } from 'react-hook-form';
 import { Input, Button } from '@components/.';
 import { useAuth } from '@hooks/useAuth';
 import { useModal } from '@hooks/useModal';
-import { accountConfirmation } from '@services/auth';
+import { accountConfirmation, resetPassword } from '@services/auth';
 import * as S from './styles';
 
 interface CodeFormData {
   email: string;
   token: string;
+}
+
+interface CodePasswordFormData extends CodeFormData {
+  password: string;
 }
 
 interface CodeProps {
@@ -30,29 +35,37 @@ interface CodeProps {
 const Code = ({ navigation, route }: CodeProps): JSX.Element => {
   const { user } = useAuth();
   const { openModal } = useModal();
+  const { email, recovery } = route?.params;
   const {
     control,
     handleSubmit,
     errors,
+    reset,
   } = useForm({
     defaultValues: {
-      email: route?.params?.email ?? undefined,
+      email: email ?? undefined,
       token: undefined,
+      password: undefined,
     },
   });
 
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleConfirm = useCallback(
-    async (data: CodeFormData) => {
+    async (data: CodePasswordFormData) => {
       setLoading(true);
       try {
-        await accountConfirmation(data);
+        if (recovery) {
+          await resetPassword(data);
+        } else {
+          await accountConfirmation(data);
+        }
         setLoading(false);
         openModal();
+        reset();
       } catch (err) {
         Alert.alert(
-          'Erro na confirmação',
+          'Erro na solicitação',
           err.response.data?.error?.message ?? 'Tente novamente',
         );
         setLoading(false);
@@ -96,9 +109,6 @@ const Code = ({ navigation, route }: CodeProps): JSX.Element => {
                       onChangeText={onChange}
                       value={value}
                       style={{ marginTop: 32, marginBottom: 24 }}
-                      // focus={focusedInput === 'email'}
-                      // onSubmitEditing={() => setFocusedInput('password')}
-                      // onBlur={() => setFocusedInput(null)}
                       error={errors.email}
                       disabled={route?.params?.email}
                     />
@@ -122,10 +132,36 @@ const Code = ({ navigation, route }: CodeProps): JSX.Element => {
                       value={value}
                       error={errors.token}
                       maxLength={6}
+                      style={{ marginBottom: 24 }}
                     />
                   )}
                 />
               </S.InputWrapper>
+              {recovery && (
+                <Controller
+                  name="password"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: true }}
+                  render={({
+                    onChange, value,
+                  }) => (
+                    <>
+                      <Input
+                        type="default"
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        secureTextEntry
+                        placeholder="Senha"
+                        returnKeyType="go"
+                        onChangeText={onChange}
+                        value={value}
+                        error={errors.password}
+                      />
+                    </>
+                  )}
+                />
+              )}
             </S.Container>
           </ScrollView>
         </KeyboardAvoidingView>
@@ -134,7 +170,7 @@ const Code = ({ navigation, route }: CodeProps): JSX.Element => {
             disabled={loading}
             onPress={handleSubmit(handleConfirm)}
           >
-            {loading ? 'Aguarde...' : 'Confirmar'}
+            {loading ? 'Aguarde...' : recovery ? 'Alterar' : 'Confirmar'}
           </Button>
         </S.ButtonWrapper>
       </SafeAreaView>

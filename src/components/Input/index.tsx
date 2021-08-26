@@ -28,7 +28,8 @@ interface InputProps extends TextInputProps {
   },
   focus?: boolean
   mask?: string,
-  error?: boolean
+  error?: boolean,
+  rightLabel?: JSX.Element
 }
 interface SizesProps {
   [name: string]: number
@@ -58,6 +59,7 @@ const Input = (props: InputProps): JSX.Element => {
     onFocus,
     mask,
     error = false,
+    rightLabel,
   } = props;
 
   const [isFocused, setIsFocused] = useState(false);
@@ -134,6 +136,7 @@ const Input = (props: InputProps): JSX.Element => {
           ref={ref}
         />
       )}
+      {rightLabel && rightLabel}
     </S.InputWrapper>
   );
 };

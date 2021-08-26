@@ -11,6 +11,7 @@ import {
   Contact,
   Logout,
   SignUp,
+  RecoveryPassword,
   Code,
   OrderChat,
   NotificationsView,
@@ -208,7 +209,29 @@ const AppRoutes = (): JSX.Element => (
           headerStyle: {
             backgroundColor: Colors.background,
           },
-          title: 'Confirmação de Cadastro',
+          title: 'Recuperar Senha',
+        }}
+        name="RecoveryPassword"
+        component={RecoveryPassword}
+      />
+      <App.Screen
+        options={({ route: { params } }: any) => {
+          const { recovery } = params;
+          return ({
+            cardStyle: { backgroundColor: Colors.background },
+            headerBackTitleVisible: false,
+            headerTintColor: '#4a4a4a',
+            headerTitleStyle: {
+              fontSize: 16,
+              fontFamily: 'Montserrat_500Medium',
+              fontWeight: '500',
+              color: '#4a4a4a',
+            },
+            headerStyle: {
+              backgroundColor: Colors.background,
+            },
+            title: `Confirmação de ${recovery ? 'Senha' : 'Cadastro'}`,
+          });
         }}
         name="Code"
         component={Code}
