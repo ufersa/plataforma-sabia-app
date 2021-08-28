@@ -28,8 +28,17 @@ interface User {
   address?: string;
   zipcode?: string;
   district?: string;
-  city?: string;
-  state?: string;
+  city?: {
+    id: number;
+    name: string;
+  };
+  city_id?: number;
+  state?: {
+    id: number;
+    initials: string;
+    name: string;
+  };
+  state_id?: number;
   country?: string;
   operations: any;
 }

@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable react/style-prop-object */
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
   Platform,
@@ -15,16 +15,41 @@ import { useAuth } from '@hooks/useAuth';
 import { formatDate } from '@utils/formats';
 import { unMask } from '@utils/unMask';
 import { updateUser as updateUserService, updateUserPassword } from '@services/user';
+import { getStates, getCities } from '@services/localization';
 import Address from './components/Address';
 import * as S from './styles';
 
 const Account = (): JSX.Element => {
   const { user, updateUser } = useAuth();
-  const { control, handleSubmit, errors } = useForm();
+  const {
+    control,
+    register,
+    handleSubmit,
+    errors,
+    setValue,
+    watch,
+  } = useForm({
+    defaultValues: {
+      state: {
+        id: 1,
+        initials: 'MG',
+        name: 'Minas Gerais',
+      },
+      city: {
+        id: 1,
+        name: 'Unaí',
+      },
+    },
+  });
   const { control: controlPass, handleSubmit: handleSubmitPass, errors: errorsPass } = useForm();
   const [loading, setLoading] = useState<boolean>(false);
 
   const [passModal, setPassModal] = useState<boolean>(false);
+
+  const [loadingState, setLoadingState] = useState<boolean>(false);
+  const [states, setStates] = useState([]);
+
+  const field = watch();
 
   const handleUpdate = useCallback(
     async (data) => {
@@ -40,6 +65,14 @@ const Account = (): JSX.Element => {
           birth_date,
           zipcode,
           cpf,
+          city: {
+            id: data.city_id,
+            name: data.city,
+          },
+          state: {
+            id: data.state_id,
+            initials: data.state,
+          },
         });
 
         setLoading(false);
@@ -77,6 +110,54 @@ const Account = (): JSX.Element => {
       }
     }, [],
   );
+
+  const getAllStates = useCallback(
+    async () => {
+      try {
+        const { data } = await getStates();
+
+        setStates(data);
+        setValue('state_id', user.state_id);
+        // setValue('state', data.find((state: any) => state.id === user.state_id));
+      } catch (err) {
+        Alert.alert(
+          'Ops!',
+          'Não possível buscar os estados',
+        );
+      }
+    }, [user, setValue],
+  );
+
+  const getCity = useCallback(
+    async () => {
+      try {
+        const { data } = await getCities({ stateId: user.state_id });
+
+        setValue('city_id', user.city_id);
+        // setValue('city', data.find((city: any) => city.id === user.city_id));
+      } catch (err) {
+        Alert.alert(
+          'Ops!',
+          'Não possível buscar as cidades',
+        );
+      }
+    }, [user, setValue],
+  );
+
+  useEffect(() => {
+    if (user.state_id) {
+      getAllStates();
+
+      if (user.city_id) {
+        getCity();
+      }
+    }
+  }, [user]);
+
+  useEffect(() => {
+    register({ name: 'state' });
+    register({ name: 'city' });
+  }, [user]);
 
   return (
     <>
@@ -208,7 +289,13 @@ const Account = (): JSX.Element => {
                   </>
                 )}
               />
-              <Address form={control} errors={errors} />
+              <Address
+                form={control}
+                field={field}
+                errors={errors}
+                data={{ states }}
+                loading={{ state: loadingState }}
+              />
               <S.Divider />
               <S.Title>Credenciais</S.Title>
               <S.Touch activeOpacity={0.7} style={{ marginVertical: 12 }} onPress={() => setPassModal(true)}>

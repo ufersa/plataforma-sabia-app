@@ -15,6 +15,7 @@ interface SelectProps extends TouchableOpacityProps {
   value?: string | number
   options: SelectOptionProps[]
   onSelect?: (value: string | number) => void
+  fullOptions?: boolean
 }
 
 const Option = ({ selected, label, ...props }: any): JSX.Element => (
@@ -37,8 +38,9 @@ const Select = (props: SelectProps): JSX.Element => {
     options,
     placeholder = '',
     onSelect,
+    fullOptions,
   } = props;
-  const getSelectedValue: SelectOptionProps = options.find((option) => option.value === value);
+  const getSelectedValue: SelectOptionProps = options.find((option) => option.value === value) ?? { label: value.toString(), value };
 
   const [showOptions, setShowOptions] = useState<boolean>(false);
   const [currentValue, setCurrentValue] = useState<string | number>(getSelectedValue?.value);
@@ -64,7 +66,7 @@ const Select = (props: SelectProps): JSX.Element => {
         visible={showOptions}
         onClose={() => setShowOptions(false)}
       >
-        <S.OptionsWrapper>
+        <S.OptionsWrapper full={fullOptions}>
           {options.map((option, idx) => (
             <Option
               {...option}
@@ -74,6 +76,7 @@ const Select = (props: SelectProps): JSX.Element => {
                 setCurrentValue(option.value);
                 setShowOptions(false);
               }}
+              full={fullOptions}
             />
           ))}
         </S.OptionsWrapper>

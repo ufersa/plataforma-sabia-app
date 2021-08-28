@@ -21,15 +21,15 @@ export const SelectText = styled(DefaultText)`
   color: #4a4a4a;
 `;
 
-export const OptionsWrapper = styled.View`
+export const OptionsWrapper = styled.View<{full?: boolean}>`
   padding: 0 24px;
-  flex-direction: row;
+  flex-direction: ${({ full }) => (full ? 'column' : 'row')};
   flex-wrap: wrap;
   justify-content: space-around;
 `;
 
-export const OptionsItem = styled.TouchableOpacity`
-  min-width: 100px;
+export const OptionsItem = styled.TouchableOpacity<{full?: boolean}>`
+  min-width: ${({ full }) => (full ? '100%' : '100px')};
   height: 40px;
   padding: 8px;
   border-radius: 8px;

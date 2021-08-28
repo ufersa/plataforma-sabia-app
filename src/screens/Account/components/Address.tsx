@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { Controller } from 'react-hook-form';
-import { Input } from '@components/.';
+import { Input, Select } from '@components/.';
 import { useAuth } from '@hooks/useAuth';
 import * as S from '../styles';
 
@@ -12,8 +12,15 @@ const AddressWrapper = styled.View`
 
 export const Required = (): JSX.Element => (<S.Error>Obrigatório.</S.Error>);
 
-const Address = ({ form, errors }: any): JSX.Element => {
+const Address = ({
+  form,
+  field,
+  errors, data: { states },
+  loading: { state: loadingStates },
+}: any): JSX.Element => {
   const { user } = useAuth();
+
+  console.log(field);
 
   return (
     <AddressWrapper>
@@ -95,34 +102,10 @@ const Address = ({ form, errors }: any): JSX.Element => {
       </View>
       <View style={{ flexDirection: 'row', marginHorizontal: -8 }}>
         <View style={{ flex: 1, marginHorizontal: 8 }}>
-          <Controller
-            name="city"
-            control={form}
-            defaultValue={user?.city}
-            rules={{ required: true }}
-            render={({ onChange, value }) => (
-              <>
-                <Input
-                  type="default"
-                  placeholder="Cidade"
-                  returnKeyType="next"
-                  autoCorrect={false}
-                  autoCapitalize="none"
-                  value={value}
-                  onChangeText={onChange}
-                  style={{ marginBottom: 16 }}
-                  error={errors.city}
-                />
-                {errors.city ? (<Required />) : null}
-              </>
-            )}
-          />
-        </View>
-        <View style={{ flex: 1, marginHorizontal: 8 }}>
-          <Controller
+          {/* <Controller
             name="state"
             control={form}
-            defaultValue={user?.state}
+            defaultValue={user?.state?.name}
             rules={{ required: true }}
             render={({ onChange, value }) => (
               <>
@@ -141,6 +124,44 @@ const Address = ({ form, errors }: any): JSX.Element => {
                 {errors.state ? (<Required />) : null}
               </>
             )}
+          /> */}
+          <Select
+            placeholder="Estado"
+            value={field?.state?.initials}
+            options={states.map((state: { initials: string; name: string; }) => ({ value: state.initials, label: state.name }))}
+            onSelect={() => {}}
+            fullOptions
+          />
+        </View>
+        <View style={{ flex: 1, marginHorizontal: 8 }}>
+          {/* <Controller
+            name="city"
+            control={form}
+            defaultValue={user?.city?.name}
+            rules={{ required: true }}
+            render={({ onChange, value }) => (
+              <>
+                <Input
+                  type="default"
+                  placeholder="Cidade"
+                  returnKeyType="next"
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  value={value}
+                  onChangeText={onChange}
+                  style={{ marginBottom: 16 }}
+                  error={errors.city}
+                />
+                {errors.city ? (<Required />) : null}
+              </>
+            )}
+          /> */}
+          <Select
+            placeholder="Cidade"
+            value={field?.city?.name}
+            options={[]}
+            onSelect={() => {}}
+            fullOptions
           />
         </View>
       </View>
